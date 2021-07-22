@@ -7,17 +7,30 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "start:dev": "nodemon server/server.js"
+    "start:dev": "node server/server.js"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.2",
+    "@material-ui/icons": "^4.11.2",
     "@prisma/client": "^2.27.0",
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "firebase": "^8.7.1",
+    "heroicons": "^1.0.2",
     "next": "11.0.1",
+    "npm": "^7.20.0",
     "postcss-preset-env": "^6.7.0",
     "react": "17.0.2",
+    "react-awesome-stars-rating": "^0.4.0",
+    "react-card-flip": "^1.1.1",
     "react-dom": "17.0.2",
+    "react-icons": "^4.2.0",
+    "react-rating-stars-component": "^2.2.0",
+    "react-responsive-carousel": "^3.2.19",
+    "react-sidebar": "^3.0.2",
+    "react-star-ratings": "^2.3.0",
     "tailwindcss": "^2.2.4"
   },
   "devDependencies": {
