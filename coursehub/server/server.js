@@ -1,8 +1,12 @@
 const express = require('express')
 const next = require('next')
+const cors = require("cors");
+
+
 
 const PORT = process.env.PORT || 4200
 const dev = process.env.NODE_ENV !== 'production'
+
 
 
 
@@ -11,10 +15,19 @@ const prisma = new PrismaClient()
 
 
 
+var corsOptions = {
+    origin: "http://localhost:8081"
+  };
+  
+  
+
+
 
 const server = express();
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
+server.use(cors(corsOptions));
+
 
 
 
@@ -24,7 +37,11 @@ server.get("/test/user", async (req, res) => {
     return res.status(201).send(students);
 })
 
+// this is the authStudents route we're importing
+require("./routes/authStudents.routes")(server);
+// this is the authTeachers route we're importing
 
+// require("./routes/authStudents.routes")(server);
 
 server.listen(PORT, err => {
     if (err) throw err;

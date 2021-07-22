@@ -1,0 +1,12 @@
+GET http://localhost:4200/api/auth/trying
+authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhvdXNzZW0iLCJpYXQiOjE2MjY3NzcxNDAsImV4cCI6MTYyNjc3NzE1NX0.Mbyn4iM2qC0ZzuhZoGRtkjp5rnz4j11_sG2g8ejf39M
+
+
+
+###
+POST  http://localhost:4200/api/auth/token
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhvdXNzZW0iLCJwYXNzd29yZCI6ImhvdSIsImlhdCI6MTYyNjc3NjYxMX0.Ue9oTAI28ZK7UNuS0UCrSd0ko83kcInwVfemQbFuiqk"
+}

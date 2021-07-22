@@ -10,7 +10,7 @@ datasource db {
 model student {
   student_id Int        @id @default(autoincrement())
   email      String     @unique
-  userName   String
+  userName   String     @unique
   password   String
   education  String
   age        Int
