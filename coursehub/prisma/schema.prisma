@@ -40,13 +40,13 @@ model teacher {
 }
 
 model post {
-  post_id   Int     @id @default(autoincrement())
-  author_id Int
-  title     String
-  body      String
-  Image     String
-  status    String  @default("pending")
-  author    teacher @relation(fields: [author_id], references: [teacher_id])
+  post_id      Int     @id @default(autoincrement())
+  author_id    Int
+  title  String
+  body String
+  Image        String
+  status       String  @default("pending")
+  author       teacher @relation(fields: [author_id], references: [teacher_id])
 }
 
 model review {
@@ -77,15 +77,18 @@ model attachement {
   attachement_id Int           @id @default(autoincrement())
   Type           String
   attachement    String
+  body           String
   free_course    free_course[]
 }
 
 model free_course {
   freeCourse_id Int         @id @default(autoincrement())
   teacher       Int
+  title         String
   category      String
   Status        String      @default("pending")
   document      Int
+  image         String
   attachement   attachement @relation(fields: [document], references: [attachement_id])
   teacher_id    teacher     @relation(fields: [teacher], references: [teacher_id])
 }

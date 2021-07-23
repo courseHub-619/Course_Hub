@@ -33,8 +33,8 @@ CREATE TABLE "teacher" (
 CREATE TABLE "post" (
     "post_id" SERIAL NOT NULL,
     "author_id" INTEGER NOT NULL,
-    "title" TEXT NOT NULL,
-    "body" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "availability" TEXT NOT NULL,
     "Image" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT E'pending',
 
@@ -80,6 +80,7 @@ CREATE TABLE "attachement" (
 CREATE TABLE "free_course" (
     "freeCourse_id" SERIAL NOT NULL,
     "teacher" INTEGER NOT NULL,
+    "title" TEXT NOT NULL,
     "category" TEXT NOT NULL,
     "Status" TEXT NOT NULL DEFAULT E'pending',
     "document" INTEGER NOT NULL,

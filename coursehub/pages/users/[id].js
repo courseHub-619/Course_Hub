@@ -1,6 +1,8 @@
 import axios from "axios";
 import bgImg from "../../img.jpg";
 import ReactStars from "react-rating-stars-component";
+import Image from "next/image";
+import { LikeButton } from "@lyket/react";
 
 export const getStaticPaths = async () => {
   // const id = context.params.teacher_id;
@@ -23,16 +25,20 @@ export const getStaticProps = async (context) => {
   const teacher_id = context.params.id;
   const teacher = await fetch(`http://localhost:4200/teacher/${teacher_id}`);
   let data = await teacher.json();
+  let id = context.params.id;
+  const posts = await fetch(`http://localhost:4200/posts/${id}`);
+  let blogs = await posts.json();
+  console.log(blogs, "blogs here ");
   return {
     props: {
-      data,
+      data: data,
+      blogs: blogs,
     },
   };
 };
 
-const Details = ({ data }) => {
-  console.log(data);
-
+const Details = ({ data, blogs }) => {
+  console.log(blogs[1].body, "where man");
   return (
     <div>
       <div className="max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
@@ -176,10 +182,12 @@ const Details = ({ data }) => {
         </div>
 
         <div className="w-full lg:w-2/5">
-          <img
+          <Image
             src={data.image}
-            className="rounded-none h-2/3 w-2/3 lg:rounded-lg shadow-2xl hidden lg:block"
-          ></img>
+            width={800}
+            height={800}
+            className="rounded-none h-80 w-2/3 lg:rounded-lg shadow-2xl hidden lg:block"
+          />
         </div>
 
         {/* <div className="absolute top-0 right-0 h-12 w-18 p-4">
@@ -188,38 +196,53 @@ const Details = ({ data }) => {
       </div>
 
       {/* posts for now it's just one and later it'll be a map */}
-      <div className=" pt-4 max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
-        <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
-          <div className="p-4 md:p-12 text-center lg:text-left">
-            <div class="flex items-center">
-              <img className="h-12 w-12 rounded-full" src={data.image} />
-              <div className="ml-2">
-                <div className="text-sm ">
-                  <span className="font-semibold">{data.userName}</span>
+      {blogs.length &&
+        blogs.map((blog) => {
+          return (
+            <div className=" pt-4 max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
+              <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
+                <div className="p-4 md:p-12 text-center lg:text-left">
+                  <div className="flex items-center">
+                    <Image
+                      height={60}
+                      width={60}
+                      className="h-12 w-12 rounded-full"
+                      src={data.image}
+                    />
+                    <div className="ml-2">
+                      <div className="text-sm ">
+                        <span className="font-semibold">{data.userName}</span>
+                      </div>
+                      <div className="text-gray-500 text-xs ">
+                        {data.education}
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-gray-800 text-sm mt-2 leading-normal md:leading-relaxed">
+                    {blog.body}
+                  </p>
+                  <div className="text-gray-500 text-xs  flex items-center mt-3">
+                    {/* <Image
+                      height={20}
+                      width={20}
+                      className="mr-0.5"
+                      src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"
+                    /> */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 hover:text-blue-600 "
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                    </svg>
+                    <span className="ml-1">47 • 26 comments</span>
+                  </div>
                 </div>
-                <div className="text-gray-500 text-xs ">{data.education}</div>
               </div>
             </div>
-            <p className="text-gray-800 text-sm mt-2 leading-normal md:leading-relaxed">
-              So, did I just hear three distinct light switch clicks? W-W-What
-              do you mean? I feel like the three sounds I heard could be
-              explained by an initial erroneous flipping of a switch on the
-              right followed by a hasty, corrective flipping of the requested
-              switch. Then during the resultant darkness and silence, a third,
-              shameful unflipping of the initially flipped switch. Is my
-              assessment accurate? Yeah, that’s that’s basically how how it all
-              shaked out.
-            </p>
-            <div className="text-gray-500 text-xs  flex items-center mt-3">
-              <img
-                className="mr-0.5"
-                src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"
-              />
-              <span className="ml-1">47 • 26 comments</span>
-            </div>
-          </div>
-        </div>
-      </div>
+          );
+        })}
       {/*posts ends here */}
     </div>
   );
