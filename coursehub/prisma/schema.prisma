@@ -9,16 +9,16 @@ datasource db {
 
 model student {
   student_id Int        @id @default(autoincrement())
-  email      String     @unique
   userName   String
   password   String
   education  String
   age        Int
   wallet     Int
   image      String
+  email      String     @unique
+  DM         DM[]
   review     review[]
   schedule   schedule[]
-  DM         DM[]
 }
 
 model teacher {
@@ -32,45 +32,45 @@ model teacher {
   image          String
   Availability   String
   Overall_rating String
+  DM             DM[]
+  free_course    free_course[]
   post           post[]
   review         review[]
   schedule       schedule[]
-  free_course    free_course[]
-  DM             DM[]
 }
 
 model post {
-  post_id      Int     @id @default(autoincrement())
-  author_id    Int
-  author       teacher @relation(fields: [author_id], references: [teacher_id])
-  description  String
-  availability String
-  Image        String
-  status       String  @default("pending")
+  post_id   Int     @id @default(autoincrement())
+  author_id Int
+  title     String
+  body      String
+  Image     String
+  status    String  @default("pending")
+  author    teacher @relation(fields: [author_id], references: [teacher_id])
 }
 
 model review {
   Subject             String
   review_id           Int     @id @default(autoincrement())
   student             Int
-  student_id          student @relation(fields: [student], references: [student_id])
   teacher             Int
-  teacher_id          teacher @relation(fields: [teacher], references: [teacher_id])
   pedagogy            Int
   presentation_skills Int
   knowledge           Int
   ponctuality         Int
   comments            String
+  student_id          student @relation(fields: [student], references: [student_id])
+  teacher_id          teacher @relation(fields: [teacher], references: [teacher_id])
 }
 
 model schedule {
   scheduel_id   Int     @id @default(autoincrement())
   student       Int
-  student_id    student @relation(fields: [student], references: [student_id])
   teacher       Int
-  teacher_id    teacher @relation(fields: [teacher], references: [teacher_id])
   appointment   String
   studentCallId Int     @unique
+  student_id    student @relation(fields: [student], references: [student_id])
+  teacher_id    teacher @relation(fields: [teacher], references: [teacher_id])
 }
 
 model attachement {
@@ -83,20 +83,19 @@ model attachement {
 model free_course {
   freeCourse_id Int         @id @default(autoincrement())
   teacher       Int
-  teacher_id    teacher     @relation(fields: [teacher], references: [teacher_id])
   category      String
   Status        String      @default("pending")
   document      Int
   attachement   attachement @relation(fields: [document], references: [attachement_id])
+  teacher_id    teacher     @relation(fields: [teacher], references: [teacher_id])
 }
 
-// needs more reflection
 model DM {
   DM_id            Int     @id @default(autoincrement())
   student          Int
-  student_id       student @relation(fields: [student], references: [student_id])
   teacher          Int
-  teacher_id       teacher @relation(fields: [teacher], references: [teacher_id])
   teacher_messages String
   student_messages String
+  student_id       student @relation(fields: [student], references: [student_id])
+  teacher_id       teacher @relation(fields: [teacher], references: [teacher_id])
 }

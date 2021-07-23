@@ -1,38 +1,61 @@
 import axios from "axios";
 import bgImg from "../../img.jpg";
+import ReactStars from "react-rating-stars-component";
 
-export const getInitialProps = async (context) => {
-  try {
-    // const id = context.params.teacher_id;
-    const res = await axios.get(`http://localhost:4200/user/0`);
-    const data = res.data;
-    console.log(data, "kimochiiiiiiiiiiiiiiiiiiiii");
+export const getStaticPaths = async () => {
+  // const id = context.params.teacher_id;
+  const res = await fetch(`http://localhost:4200/user/teachers`);
+  const data = await res.json();
+  // console.log(data, "kimochiiiiiiiiiiiiiiiiiiiii");
+  const paths = data.map((path) => {
+    let id = path.teacher_id;
     return {
-      props: { data: data },
+      params: { id: id.toString() },
     };
-  } catch (err) {
-    console.log("yameteeeee");
-    return { err };
-  }
+  });
+  return {
+    paths,
+    fallback: false,
+  };
 };
 
-const Details = (props) => {
-  console.log(props);
+export const getStaticProps = async (context) => {
+  const teacher_id = context.params.id;
+  const teacher = await fetch(`http://localhost:4200/teacher/${teacher_id}`);
+  let data = await teacher.json();
+  return {
+    props: {
+      data,
+    },
+  };
+};
+
+const Details = ({ data }) => {
+  console.log(data);
 
   return (
-    <div className="h-screen" style={{ backgroundImage: `url(${bgImg})` }}>
+    <div>
       <div className="max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
         <div
           id="profile"
           className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0"
         >
           <div className="p-4 md:p-12 text-center lg:text-left">
-            <div className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"></div>
-
-            <h1 className="text-3xl font-bold pt-8 lg:pt-0">Your Name</h1>
-            <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25">
-              
+            <div className="flex justify-between">
+              <h1 className="text-3xl font-bold pt-8 lg:pt-0 ">
+                {data.userName}
+              </h1>
+              <ReactStars
+                className=""
+                edit={false}
+                count={5}
+                size={20}
+                value={Number(data.Overall_rating)}
+                activeColor="#FFD700"
+              />
             </div>
+
+            <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
             <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
               <svg
                 className="h-4 fill-current text-green-700 pr-4"
@@ -41,7 +64,7 @@ const Details = (props) => {
               >
                 <path d="M9 12H1v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-8v2H9v-2zm0-1H0V5c0-1.1.9-2 2-2h4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v6h-9V9H9v2zm3-8V2H8v1h4z" />
               </svg>{" "}
-              What you do
+              {data.education}
             </p>
 
             <p className="pt-8 text-sm">
@@ -49,9 +72,12 @@ const Details = (props) => {
               so on.
             </p>
 
-            <div className="pt-12 pb-8">
-              <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
+            <div className="pt-12 pb-8 flex justify-evenly">
+              <button className=" bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
                 Get In Touch
+              </button>
+              <button className=" bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
+                schedule a lecture
               </button>
             </div>
 
@@ -151,14 +177,14 @@ const Details = (props) => {
 
         <div className="w-full lg:w-2/5">
           <img
-            src="https://cdn.w600.comps.canstockphoto.com/chickpeas-in-a-sack-stock-photo_csp61704921.jpg"
-            className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
+            src={data.image}
+            className="rounded-none h-2/3 w-2/3 lg:rounded-lg shadow-2xl hidden lg:block"
           ></img>
         </div>
 
-        <div className="absolute top-0 right-0 h-12 w-18 p-4">
+        {/* <div className="absolute top-0 right-0 h-12 w-18 p-4">
           <button className="js-change-theme focus:outline-none">🌙</button>
-        </div>
+        </div> */}
       </div>
 
       {/* posts for now it's just one and later it'll be a map */}
@@ -166,18 +192,15 @@ const Details = (props) => {
         <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
           <div className="p-4 md:p-12 text-center lg:text-left">
             <div class="flex items-center">
-              <img
-                class="h-12 w-12 rounded-full"
-                src="https://cdn.w600.comps.canstockphoto.com/chickpeas-in-a-sack-stock-photo_csp61704921.jpg"
-              />
-              <div class="ml-2">
-                <div class="text-sm ">
-                  <span class="font-semibold">Rick Sanchez</span>
+              <img className="h-12 w-12 rounded-full" src={data.image} />
+              <div className="ml-2">
+                <div className="text-sm ">
+                  <span className="font-semibold">{data.userName}</span>
                 </div>
-                <div class="text-gray-500 text-xs ">literal god</div>
+                <div className="text-gray-500 text-xs ">{data.education}</div>
               </div>
             </div>
-            <p class="text-gray-800 text-sm mt-2 leading-normal md:leading-relaxed">
+            <p className="text-gray-800 text-sm mt-2 leading-normal md:leading-relaxed">
               So, did I just hear three distinct light switch clicks? W-W-What
               do you mean? I feel like the three sounds I heard could be
               explained by an initial erroneous flipping of a switch on the
@@ -187,12 +210,12 @@ const Details = (props) => {
               assessment accurate? Yeah, that’s that’s basically how how it all
               shaked out.
             </p>
-            <div class="text-gray-500 text-xs flex items-center mt-3">
+            <div className="text-gray-500 text-xs  flex items-center mt-3">
               <img
-                class="mr-0.5"
+                className="mr-0.5"
                 src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"
               />
-              <span class="ml-1">47 • 26 comments</span>
+              <span className="ml-1">47 • 26 comments</span>
             </div>
           </div>
         </div>

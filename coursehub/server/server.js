@@ -17,17 +17,60 @@ server.get("/test/user", async (req, res) => {
   return res.status(201).send(students);
 });
 
-//teacher profile
+// get one teacher profile
 
-server.get("user/0", async (req, res) => {
-  console.log("hereeeeeeeeeeeeeee");
-  const teacher = await prisma.teacher.findUnique({
+server.get("/teacher/:id", async (req, res) => {
+  // console.log("kimotchiiiiiiiii", req.params.id);
+  let teacher = await prisma.teacher.findUnique({
     where: {
-      teacher_id: 0,
+      teacher_id: Number(req.params.id),
     },
   });
   console.log(teacher);
   return res.status(201).send(teacher);
+});
+
+//get all teacher profiles
+
+server.get("/user/teachers", async (req, res) => {
+  const teacher = await prisma.teacher.findMany({});
+  console.log(teacher);
+  return res.status(201).send(teacher);
+});
+
+// make a post
+// const createPost = async (req, res) => {
+//   const { title, body, teacher_id } = req.body;
+
+//   prisma.query(
+//     `INSERT INTO post author_id title body VALUES ($1, $2, $3)`,
+//     [teacher_id, title, body],
+//     (err, result) => {
+//       if (err) {
+//         throw err;
+//       }
+//       console.log("result", result, "response", res);
+//       res.status(201).send("post added");
+//     }
+//   );
+// };
+
+var cors = require("cors");
+server.use(cors());
+
+server.post("/post", async (req, res) => {
+  console.log("wabba lubba dub dub", req.body.body);
+  let data = req.body;
+
+  const post = await prisma.post.create({
+    data: {
+      title: data.body.title,
+      body: data.body.body,
+      author_id: data.body.teacher_id,
+      Image: data.body.image,
+    },
+  });
+  console.log("hajaaaa", post);
 });
 
 server.listen(PORT, (err) => {
