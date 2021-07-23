@@ -42,8 +42,8 @@ model teacher {
 model post {
   post_id      Int     @id @default(autoincrement())
   author_id    Int
-  description  String
-  availability String
+  title  String
+  body String
   Image        String
   status       String  @default("pending")
   author       teacher @relation(fields: [author_id], references: [teacher_id])
@@ -85,10 +85,10 @@ model free_course {
   freeCourse_id Int         @id @default(autoincrement())
   teacher       Int
   title         String
-  image         String
   category      String
   Status        String      @default("pending")
   document      Int
+  image         String
   attachement   attachement @relation(fields: [document], references: [attachement_id])
   teacher_id    teacher     @relation(fields: [teacher], references: [teacher_id])
 }
