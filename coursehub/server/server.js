@@ -2,6 +2,8 @@ const express = require('express')
 const next = require('next')
 const http = require("http")
 
+const app = express();
+
 const PORT = process.env.PORT || 4200
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -11,9 +13,10 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 
+require("dotenv").config({ path: "/custom/path/to/.env" });
 
 
-const app = express();
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
@@ -44,12 +47,6 @@ io.on("connection", (socket) => {
     })
 })
 
-// test
-app.get("/test/user", async (req, res) => {
-    // console.log("hajaaaaaaaaaaaaa")
-    const students = await prisma.student.findMany()
-    return res.status(201).send(students);
-})
 
 
 //freeCourses: al
@@ -72,12 +69,12 @@ app.get(`/freecourse/all/:id`, async (req, res) => {
 
     const oneCourse = await prisma.free_course.findUnique({
         where: {
-            freeCourse_id: Number(req.params.id)
-        }
-    })
+            freeCourse_id: Number(req.params.id),
+        },
+    });
     // console.log(oneCourse, "course here")
     return res.status(201).send(oneCourse);
-})
+});
 
 // freeCourse : one : attacemen
 app.get(`/freecourse/attachement/:id`, async (req, res) => {
@@ -85,20 +82,20 @@ app.get(`/freecourse/attachement/:id`, async (req, res) => {
 
     const attachement = await prisma.attachement.findUnique({
         where: {
-            attachement_id: Number(req.params.id)
-        }
-    })
-    console.log(attachement, "attachement here")
+            attachement_id: Number(req.params.id),
+        },
+    });
+    // console.log(attachement, "attachement here");
     return res.status(201).send(attachement);
-})
+});
 
-// freeCourse: one : teache
+// freeCourse: one : teacher
 app.get(`/freecourse/teacher/:id`, async (req, res) => {
     // console.log("teacher", req.params.id)
 
     const teacher = await prisma.teacher.findUnique({
         where: {
-            teacher_id: 1
+            teacher_id: 0
             // Number(req.params.id)
         }
     })
@@ -123,11 +120,61 @@ app.post("/freecourse/post", async (req, res) => {
             category: data.category,
             image: data.url,
             document: attachement.attachement_id,
-            teacher: 1 // teacher id 
+            teacher: 0 // teacher id 
         },
     })
 
 })
+
+// post : teacher courses
+app.post("/post", async (req, res) => {
+    // console.log("wabba lubba dub dub", req.body.body);
+    let data = req.body;
+
+    const post = await prisma.post.create({
+        data: {
+            title: data.body.title,
+            body: data.body.body,
+            author_id: data.body.teacher_id,
+            Image: data.body.image,
+        },
+    });
+    // console.log("hajaaaa", post);
+});
+
+// get one teacher profile
+
+app.get("/teacher/:id", async (req, res) => {
+    let teacher = await prisma.teacher.findUnique({
+        where: {
+            teacher_id: Number(req.params.id),
+        },
+    });
+    // console.log(teacher);
+    return res.status(201).send(teacher);
+});
+
+//get all teacher profiles
+
+app.get("/user/teachers", async (req, res) => {
+    const teacher = await prisma.teacher.findMany({});
+    // console.log(teacher);
+    return res.status(201).send(teacher);
+})
+
+
+// fetch all the posts by a certain user
+app.get(`/posts/:id`, async (req, res) => {
+    // console.log(req.body);
+    let posts = await prisma.post.findMany({
+        where: {
+            author_id: 0,
+        },
+    });
+    console.log(posts, "ahayyaaaaa");
+    return res.status(201).send(posts);
+});
+
 
 server.listen(PORT, err => {
     if (err) throw err;

@@ -1,9 +1,5 @@
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import TextField from "@material-ui/core/TextField";
-import AssignmentIcon from "@material-ui/icons/Assignment";
-import PhoneIcon from "@material-ui/icons/Phone";
-import { id } from "postcss-selector-parser";
 import React, { useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Peer from "simple-peer"
@@ -28,6 +24,8 @@ const chat = () => {
     const myVideo = useRef()
     const userVideo = useRef()
     const connectionRef = useRef()
+
+
 
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -108,6 +106,7 @@ const chat = () => {
     }
     return (
         <>
+           
 
             <div className="p-4 text-center">
                 <div className="flex justify-between p-2">
