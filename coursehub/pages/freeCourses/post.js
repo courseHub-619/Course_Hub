@@ -23,13 +23,13 @@ const post = () => {
     }
 
 
-    const handleUploadImage = async (e) => {
+    const handleUploadImage = (e) => {
         // var metadata = {
         //     contentType: 'image/png'
         // };
         console.log(e.target.files[0])
         let file = e.target.files[0]
-        await setImage(file)
+        setImage(file)
 
         const uploadTask = storage.ref(`images/${file.name}`).put(file);
         uploadTask.on(
