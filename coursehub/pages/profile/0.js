@@ -1,16 +1,51 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { storage } from "../../firebase";
 
 const makePost = () => {
   let [title, setTitle] = useState("");
   let [body, setBody] = useState("");
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState(null);
+  const [progressImage, setProgressImage] = useState(0);
+
+  const handleUploadImage = async (e) => {
+    console.log(e.target.files[0]);
+    let file = e.target.files[0];
+    setImage(file);
+
+    const uploadTask = storage.ref(`posts/${file.name}`).put(file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgressImage(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        console.log(file.name);
+        storage
+          .ref("posts/")
+          .child(file.name)
+          .getDownloadURL()
+          .then((url) => {
+            console.log(url);
+            setUrl(url);
+          });
+      }
+    );
+  };
 
   let submitValue = () => {
     let postDetails = {
       title: title,
       body: body,
       teacher_id: 0,
-      image: "sth",
+      image: url,
     };
     console.log(postDetails);
 
@@ -44,41 +79,22 @@ const makePost = () => {
         ></textarea>
 
         <div className="icons flex text-gray-500 m-2">
-          <svg
-            className="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-            />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-            />
-          </svg>
-          <svg
-            className="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <svg
+          <input
+            type="file"
+            onChange={(e) => {
+              handleUploadImage(e);
+            }}
+            className="w-100 px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            placeholder="Upload image"
+          />
+          {/* <progress
+            max="100"
+            value={progressImage}
+            className="bg-teal text-xs leading-none py-1 text-center text-white"
+            style={{ width: "10%" }}
+          /> */}
+
+          {/* <svg
             className="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -91,9 +107,9 @@ const makePost = () => {
               strokeWidth="2"
               d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
             />
-          </svg>
+          </svg> */}
           <div className="count ml-auto text-gray-400 text-xs font-semibold">
-            0/300
+            {body.length}/300
           </div>
         </div>
         <div className="buttons flex">

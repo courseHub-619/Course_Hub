@@ -6,6 +6,7 @@ module.exports = {
       "firebasestorage.googleapis.com",
       "cdn.w600.comps.canstockphoto.com",
       "static-exp1.licdn.com",
+      "cdn.flow.page",
     ],
   },
 };
