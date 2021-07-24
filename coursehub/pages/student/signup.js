@@ -1,4 +1,4 @@
-import SignIn from './components/SignIn.jsx';
+import SignIn from '../../components/studentsAuth/SignIn.jsx';
 
 
 function signup() {

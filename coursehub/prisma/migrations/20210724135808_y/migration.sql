@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "student" ALTER COLUMN "wallet" SET DEFAULT 0,
+ALTER COLUMN "token" SET DEFAULT E'';

@@ -51,7 +51,7 @@ exports.signUp = async (req, res) => {
     //here we are going to check if the user we trying to create already exist or not 
     
  students.findUnique({
-      where :{userName : req.body.userName}
+      where :{email : req.body.email}
     })
 
 
@@ -60,7 +60,7 @@ exports.signUp = async (req, res) => {
 
     
 
-      //if we didn't findany user with the same userName 
+      //if we didn't findany user with the same email 
       if (!data) {
         console.log("its getting to the find unique")
               students.create({data: user})
@@ -126,30 +126,52 @@ res.json(mydata.filter(element => element === req.user.userName))
 
     //that's the username and password the the user typed 
     const user = {
-      userName: req.body.userName,
+      email: req.body.email,
       password: req.body.password
     };
 
 
      students.findUnique({
-  where:{userName: req.body.userName}
+  where:{email: req.body.email}
 })
 .then( async data => {
 
+  console.log('yooo',data);
+
+  if (!data) {
+  
+   return res.send(404);}
 
   //here we will compare the typed password against the one saved in the DATABASe
   const validPassword = await bcrypt.compare(user.password, data.password);
 
   if (validPassword) {
     const accessToken = generateAccessToken(user);
-    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+    //this is how we get our accessToken when we log in
+    // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
     //each time we get a token we need to set a refresh token too 
-    refreshTokens.push(refreshToken);
+    // refreshTokens.push(refreshToken);
+    // console.log(refreshTokens);
+ 
+      console.log("heres the token",accessToken )
+      console.log("heres the email",data.email )
+      students.update({
+        where: {email : data.email}
+        ,
+        data: {token:accessToken}
+      })
+      .then(response=>{
+        console.log(response)
+      })
+      .catch(error=>{
+        console.log(error)
+      })
+    
 
     console.log('the password matches')
     res.json({
       accessToken: accessToken,
-      refreshToken: refreshToken
+      // refreshToken: refreshToken
     })  }
   else if (!validPassword){
     console.log('the password does not match')
@@ -179,7 +201,8 @@ res.json(mydata.filter(element => element === req.user.userName))
   exports.authenticateToken = (req, res, next) => {
     //if the token exst it will come from the header of req
 const authHeader = req.headers['authorization'];
-//here either the token is gonna be undifined or the actual token
+//here either the token is gonna be undifined or the actual token 
+//if it's not undefined thenit will have in the header the word bearer then space then the token so we need to split and get the second one
 const token = authHeader && authHeader.split(' ')[1];
 
 
@@ -206,7 +229,7 @@ if (token === null) return res.sendStatus(401)
 
 
   const generateAccessToken = (user)=>{
-    return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15s'})
+    return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET, {expiresIn: '6d'})
   }
 
 
@@ -215,36 +238,38 @@ if (token === null) return res.sendStatus(401)
 //this part need refactor later
 
 
-let refreshTokens = [];
+// let refreshTokens = [];
 
 
 
   //this function for using the refresh token 
 
 
-  exports.token = (req, res)=>{
+  // exports.token = (req, res)=>{
 
-    const refreshToken = req.body.token;
+  //   const refreshToken = req.body.token;
 
-    //we gonna cheack the refresh token
-    if (refreshToken===null) return res.sendStatus(401)
-    if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
+  //   //we gonna cheack the refresh token
+  //   if (refreshToken===null) return res.sendStatus(401)
+  //   if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
 
-    //if it pass the above conditions then we can verify 
-     jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET,(err,user)=>{
-            if (err) return res.sendStatus(403)
-            const accessToken = generateAccessToken({userName : user.userName})
-            res.json({
-              accessToken : accessToken
-            })
-
-
-     })
+  //   //if it pass the above conditions then we can verify 
+  //    jwt.verify(refreshToken,process.env.REFRESH_TOKEN_SECRET,(err,user)=>{
+  //           if (err) return res.sendStatus(403)
+  //           const accessToken = generateAccessToken({userName : user.userName})
+  //           res.json({
+  //             accessToken : accessToken
+  //           })
 
 
+  //    })
+
+  // }
 
 
-    
+//now this is the deauthentication function that will delete accessToken
+// exports.logout = (req, res)=>{
+// refreshTokens = refreshTokens.filter(token => token !== req.body.token)
+// res.sendStatus(204)
+// }
 
-
-  }

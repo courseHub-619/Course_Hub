@@ -9,10 +9,12 @@ module.exports = app => {
     router.post("/logIn",  users.logIn);
 
 
-    router.post("/token",users.token);
-    router.get('/trying',users.authenticateToken,users.trying)
+    // router.post("/token",users.token);
+    router.get('/trying',users.authenticateToken,users.trying);
+    // router.delete('/logout',users.logout);
+
     
   
-        app.use('/api/auth', router);
+        app.use('/api/auth/student', router);
 
 }

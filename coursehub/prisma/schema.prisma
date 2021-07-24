@@ -14,29 +14,33 @@ model student {
   password   String
   education  String
   age        Int
-  wallet     Int
+  wallet     Int         @default(0)
   image      String
+  token      String      @default("")
+  
   review     review[]
   schedule   schedule[]
   DM         DM[]
 }
 
 model teacher {
-  teacher_id     Int           @id @default(autoincrement())
-  email          String        @unique
+  teacher_id     Int    @id @default(autoincrement())
+  email          String @unique
   userName       String
   password       String
-  education      String
+  education      String  
   age            Int
-  wallet         Int
+  wallet         Int    @default(0)
   image          String
-  Availability   String
-  Overall_rating String
-  post           post[]
-  review         review[]
-  schedule       schedule[]
-  free_course    free_course[]
-  DM             DM[]
+  Availability   String @default(" ")
+  Overall_rating String @default(" ")
+  token          String @default("")
+
+  post        post[]
+  review      review[]
+  schedule    schedule[]
+  free_course free_course[]
+  DM          DM[]
 }
 
 model post {

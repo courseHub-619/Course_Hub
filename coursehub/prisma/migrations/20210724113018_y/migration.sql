@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "teacher" ALTER COLUMN "wallet" SET DEFAULT 0,
+ALTER COLUMN "Availability" SET DEFAULT E'',
+ALTER COLUMN "Overall_rating" SET DEFAULT E'',
+ALTER COLUMN "token" SET DEFAULT E'';

@@ -16,7 +16,7 @@ const prisma = new PrismaClient()
 
 
 var corsOptions = {
-    origin: "http://localhost:8081"
+    origin: "http://localhost:3000"
   };
   
   
@@ -41,7 +41,7 @@ server.get("/test/user", async (req, res) => {
 require("./routes/authStudents.routes")(server);
 // this is the authTeachers route we're importing
 
-// require("./routes/authStudents.routes")(server);
+require("./routes/authTeachers.routes")(server);
 
 server.listen(PORT, err => {
     if (err) throw err;
