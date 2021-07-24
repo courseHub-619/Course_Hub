@@ -2,7 +2,7 @@ import axios from "axios";
 import bgImg from "../../img.jpg";
 import ReactStars from "react-rating-stars-component";
 import Image from "next/image";
-import { LikeButton } from "@lyket/react";
+import { useState } from "react";
 
 export const getStaticPaths = async () => {
   // const id = context.params.teacher_id;
@@ -28,7 +28,7 @@ export const getStaticProps = async (context) => {
   let id = context.params.id;
   const posts = await fetch(`http://localhost:4200/posts/${id}`);
   let blogs = await posts.json();
-  console.log(blogs, "blogs here ");
+  // console.log(blogs, "blogs here ");
   return {
     props: {
       data: data,
@@ -38,7 +38,8 @@ export const getStaticProps = async (context) => {
 };
 
 const Details = ({ data, blogs }) => {
-  console.log(blogs[1].body, "where man");
+  let [likes, setLikes] = useState(0);
+  // console.log(blogs[1].body, "where man");
   return (
     <div>
       <div className="max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
@@ -198,6 +199,7 @@ const Details = ({ data, blogs }) => {
       {/* posts for now it's just one and later it'll be a map */}
       {blogs.length &&
         blogs.map((blog) => {
+          // console.log(blog)
           return (
             <div className=" pt-4 max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
               <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
@@ -218,9 +220,15 @@ const Details = ({ data, blogs }) => {
                       </div>
                     </div>
                   </div>
+                  <p className="text-gray-800 text-sm mt-3 leading-normal md:leading-relaxed">
+                    {blog.title}
+                  </p>
                   <p className="text-gray-800 text-sm mt-2 leading-normal md:leading-relaxed">
                     {blog.body}
                   </p>
+                  {blog.Image.length && (
+                    <Image height={200} width={600} src={blog.Image} />
+                  )}
                   <div className="text-gray-500 text-xs  flex items-center mt-3">
                     {/* <Image
                       height={20}
@@ -236,7 +244,9 @@ const Details = ({ data, blogs }) => {
                     >
                       <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
                     </svg>
-                    <span className="ml-1">47 • 26 comments</span>
+                    <span onClick={() => setLikes(likes + 1)} className="ml-1">
+                      {likes} • 26 comments
+                    </span>
                   </div>
                 </div>
               </div>
