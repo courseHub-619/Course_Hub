@@ -58,6 +58,7 @@ const makePost = () => {
   };
 
   return (
+
     <div>
       <div className="heading text-center font-bold text-2xl m-5 text-gray-800">
         New Post
@@ -79,39 +80,29 @@ const makePost = () => {
         ></textarea>
 
         <div className="icons flex text-gray-500 m-2">
+
+          <div className="count ml-auto text-gray-400 text-xs font-semibold">
+            {body.length}/300
+          </div>
+        </div>
+        <div className="flex justify-between">
           <input
             type="file"
             onChange={(e) => {
               handleUploadImage(e);
             }}
-            className="w-100 px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            className="w-100 px-3 py-1 mb-3 text-sm leading-tight text-gray-700 border  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             placeholder="Upload image"
           />
-          {/* <progress
-            max="100"
-            value={progressImage}
-            className="bg-teal text-xs leading-none py-1 text-center text-white"
-            style={{ width: "10%" }}
-          /> */}
 
-          {/* <svg
-            className="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-            />
-          </svg> */}
-          <div className="count ml-auto text-gray-400 text-xs font-semibold">
-            {body.length}/300
-          </div>
         </div>
+        <progress
+          max="100"
+          value={progressImage}
+          className="bg-teal text-xs leading-none text-center text-white"
+          style={{ width: "44%" }}
+        />
+
         <div className="buttons flex">
           <button className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">
             Cancel

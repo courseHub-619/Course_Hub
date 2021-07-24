@@ -98,6 +98,7 @@ const post = () => {
   };
 
   return (
+
     <body className="font-mono bg-gray-200 ">
       <div className="container mx-auto">
         <div className="flex justify-center px-6 my-12">

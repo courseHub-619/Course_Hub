@@ -40,13 +40,13 @@ model teacher {
 }
 
 model post {
-  post_id      Int     @id @default(autoincrement())
-  author_id    Int
-  title  String
-  body String
-  Image        String
-  status       String  @default("pending")
-  author       teacher @relation(fields: [author_id], references: [teacher_id])
+  post_id   Int     @id @default(autoincrement())
+  author_id Int
+  title     String
+  body      String
+  Image     String
+  status    String  @default("pending")
+  author    teacher @relation(fields: [author_id], references: [teacher_id])
 }
 
 model review {

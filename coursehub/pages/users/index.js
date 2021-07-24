@@ -8,7 +8,7 @@ export async function getStaticProps() {
   };
 }
 
-const teacherProfile = (props) => {
+export const teacherProfile = (props) => {
   console.log(props, "log for mee ");
   return <>kimotchiiiiiiiii</>;
 };
