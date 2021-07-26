@@ -93,7 +93,7 @@ Create your account
       />
       <label className="text-left">education:</label>
             <input
-        name="eeducation"
+        name="education"
         type="text"
         onChange={handleChange}
         placeholder="education"

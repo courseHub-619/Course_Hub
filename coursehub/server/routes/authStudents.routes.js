@@ -1,7 +1,7 @@
+var router = require("express").Router();
 
-module.exports = app => {
+
     const users = require("../controllers/authStudents.controller.js");
-    var router = require("express").Router();
 
 
        
@@ -15,6 +15,5 @@ module.exports = app => {
 
     
   
-        app.use('/api/auth/student', router);
 
-}
+module.exports = router;

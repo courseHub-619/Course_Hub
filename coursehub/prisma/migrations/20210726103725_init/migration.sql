@@ -1,20 +1,16 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "student" (
+    "student_id" SERIAL NOT NULL,
+    "userName" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "education" TEXT NOT NULL,
+    "age" INTEGER NOT NULL,
+    "wallet" INTEGER NOT NULL,
+    "image" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
 
-  - You are about to drop the column `gmail` on the `student` table. All the data in the column will be lost.
-  - A unique constraint covering the columns `[email]` on the table `student` will be added. If there are existing duplicate values, this will fail.
-  - A unique constraint covering the columns `[userName]` on the table `student` will be added. If there are existing duplicate values, this will fail.
-  - Added the required column `email` to the `student` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `token` to the `student` table without a default value. This is not possible if the table is not empty.
-
-*/
--- DropIndex
-DROP INDEX "student.gmail_unique";
-
--- AlterTable
-ALTER TABLE "student" DROP COLUMN "gmail",
-ADD COLUMN     "email" TEXT NOT NULL,
-ADD COLUMN     "token" TEXT NOT NULL;
+    PRIMARY KEY ("student_id")
+);
 
 -- CreateTable
 CREATE TABLE "teacher" (
@@ -28,7 +24,6 @@ CREATE TABLE "teacher" (
     "image" TEXT NOT NULL,
     "Availability" TEXT NOT NULL,
     "Overall_rating" TEXT NOT NULL,
-    "token" TEXT NOT NULL,
 
     PRIMARY KEY ("teacher_id")
 );
@@ -37,8 +32,8 @@ CREATE TABLE "teacher" (
 CREATE TABLE "post" (
     "post_id" SERIAL NOT NULL,
     "author_id" INTEGER NOT NULL,
-    "description" TEXT NOT NULL,
-    "availability" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "body" TEXT NOT NULL,
     "Image" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT E'pending',
 
@@ -76,6 +71,7 @@ CREATE TABLE "attachement" (
     "attachement_id" SERIAL NOT NULL,
     "Type" TEXT NOT NULL,
     "attachement" TEXT NOT NULL,
+    "body" TEXT NOT NULL,
 
     PRIMARY KEY ("attachement_id")
 );
@@ -84,9 +80,11 @@ CREATE TABLE "attachement" (
 CREATE TABLE "free_course" (
     "freeCourse_id" SERIAL NOT NULL,
     "teacher" INTEGER NOT NULL,
+    "title" TEXT NOT NULL,
     "category" TEXT NOT NULL,
     "Status" TEXT NOT NULL DEFAULT E'pending',
     "document" INTEGER NOT NULL,
+    "image" TEXT NOT NULL,
 
     PRIMARY KEY ("freeCourse_id")
 );
@@ -103,16 +101,13 @@ CREATE TABLE "DM" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "student.email_unique" ON "student"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "teacher.email_unique" ON "teacher"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "schedule.studentCallId_unique" ON "schedule"("studentCallId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "student.email_unique" ON "student"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "student.userName_unique" ON "student"("userName");
 
 -- AddForeignKey
 ALTER TABLE "post" ADD FOREIGN KEY ("author_id") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -130,10 +125,10 @@ ALTER TABLE "schedule" ADD FOREIGN KEY ("student") REFERENCES "student"("student
 ALTER TABLE "schedule" ADD FOREIGN KEY ("teacher") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "free_course" ADD FOREIGN KEY ("teacher") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "free_course" ADD FOREIGN KEY ("document") REFERENCES "attachement"("attachement_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "free_course" ADD FOREIGN KEY ("document") REFERENCES "attachement"("attachement_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "free_course" ADD FOREIGN KEY ("teacher") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "DM" ADD FOREIGN KEY ("student") REFERENCES "student"("student_id") ON DELETE CASCADE ON UPDATE CASCADE;
