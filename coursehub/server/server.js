@@ -1,11 +1,19 @@
 const express = require('express')
 const next = require('next')
 const http = require("http")
+const cors = require("cors");
 
 const app = express();
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+app.use(cors());
 const PORT = process.env.PORT || 4200
 const dev = process.env.NODE_ENV !== 'production'
+require("dotenv").config({ path: "/custom/path/to/.env" });
+
+
 
 
 
@@ -13,15 +21,9 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 
-require("dotenv").config({ path: "/custom/path/to/.env" });
 
 
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-
-var cors = require('cors');
-app.use(cors());
 
 const server = http.createServer(app)
 const io = require("socket.io")(server, {
@@ -41,6 +43,18 @@ io.on("connection", (socket) => {
     socket.on("callUser", (data) => {
         io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
     })
+
+var corsOptions = {
+    origin: "http://localhost:3000"
+  };
+  
+  
+
+
+
+
+
+
 
     socket.on("answerCall", (data) => {
         io.to(data.to).emit("callAccepted", data.signal)
@@ -126,6 +140,7 @@ app.post("/freecourse/post", async (req, res) => {
 
 })
 
+
 // post : teacher courses
 app.post("/post", async (req, res) => {
     // console.log("wabba lubba dub dub", req.body.body);
@@ -176,9 +191,15 @@ app.get(`/posts/:id`, async (req, res) => {
 });
 
 
-server.listen(PORT, err => {
+
+// require("./routes/authTeachers.routes")(app);
+app.use('/api/auth/teacher',require("./routes/authTeachers.routes.js"))
+
+// require("./routes/authStudents.routes")(app);
+app.use('/api/auth/student',require("./routes/authStudents.routes.js"))
+
+
+app.listen(PORT, err => {
     if (err) throw err;
     console.log(`Example app listening at http://localhost:${PORT}`)
 })
-
-

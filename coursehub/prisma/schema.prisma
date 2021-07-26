@@ -1,26 +1,24 @@
+
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model student {
   student_id Int        @id @default(autoincrement())
   userName   String
   password   String
   education  String
   age        Int
-  wallet     Int
+  wallet     Int        @default(0)
   image      String
   email      String     @unique
   DM         DM[]
   review     review[]
   schedule   schedule[]
 }
-
 model teacher {
   teacher_id     Int           @id @default(autoincrement())
   email          String        @unique
@@ -28,17 +26,16 @@ model teacher {
   password       String
   education      String
   age            Int
-  wallet         Int
+  wallet         Int        @default(0)
   image          String
   Availability   String
-  Overall_rating String
+  Overall_rating Int       @default(0)
   DM             DM[]
   free_course    free_course[]
   post           post[]
   review         review[]
   schedule       schedule[]
 }
-
 model post {
   post_id   Int     @id @default(autoincrement())
   author_id Int
@@ -48,7 +45,6 @@ model post {
   status    String  @default("pending")
   author    teacher @relation(fields: [author_id], references: [teacher_id])
 }
-
 model review {
   Subject             String
   review_id           Int     @id @default(autoincrement())
@@ -62,7 +58,6 @@ model review {
   student_id          student @relation(fields: [student], references: [student_id])
   teacher_id          teacher @relation(fields: [teacher], references: [teacher_id])
 }
-
 model schedule {
   scheduel_id   Int     @id @default(autoincrement())
   student       Int
@@ -72,7 +67,6 @@ model schedule {
   student_id    student @relation(fields: [student], references: [student_id])
   teacher_id    teacher @relation(fields: [teacher], references: [teacher_id])
 }
-
 model attachement {
   attachement_id Int           @id @default(autoincrement())
   Type           String
@@ -80,7 +74,6 @@ model attachement {
   body           String
   free_course    free_course[]
 }
-
 model free_course {
   freeCourse_id Int         @id @default(autoincrement())
   teacher       Int
@@ -92,7 +85,6 @@ model free_course {
   attachement   attachement @relation(fields: [document], references: [attachement_id])
   teacher_id    teacher     @relation(fields: [teacher], references: [teacher_id])
 }
-
 model DM {
   DM_id            Int     @id @default(autoincrement())
   student          Int

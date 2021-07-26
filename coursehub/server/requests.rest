@@ -1,0 +1,35 @@
+GET http://localhost:4200/api/auth/trying
+authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhvdXNzZW0iLCJwYXNzd29yZCI6ImhvdSIsImlhdCI6MTYyNjk4MjI0NSwiZXhwIjoxNjI2OTgyMzA1fQ.8pZRGEXNbyXkJx4jUSLMArlN1ZrZz56mB3XyLmA4ldc
+
+###
+
+DELETE http://localhost:4200/api/auth/logout
+
+
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhvdXNzZW0iLCJwYXNzd29yZCI6ImhvdSIsImlhdCI6MTYyNjk3Mjg0NH0.A8pTkM6irnbkflI7Uj5dh-gCd27UagKyz44_SsPbhK4"
+}
+
+###
+POST  http://localhost:4200/api/auth/token
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhvdXNzZW0iLCJwYXNzd29yZCI6ImhvdSIsImlhdCI6MTYyNjk3Mjg0NH0.A8pTkM6irnbkflI7Uj5dh-gCd27UagKyz44_SsPbhK4"
+}
+###
+POST http://localhost:4200/api/auth/teacher/signUp
+Content-Type: application/json
+{
+    "email": "azizteacher@gmail.com",
+    "userName": "azizteacher",
+    "password": "chkara7oms",
+    "education": "random",
+    "age": 40,
+    "wallet": 420,
+    "image": " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+    "Availability": "true",
+    "Overall_rating" : "1"
+}

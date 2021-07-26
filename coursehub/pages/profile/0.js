@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { storage } from "../../firebase";
 
-const makePost = () => {
+const MakePost = () => {
   let [title, setTitle] = useState("");
   let [body, setBody] = useState("");
   const [image, setImage] = useState(null);
@@ -119,4 +119,4 @@ const makePost = () => {
   );
 };
 
-export default makePost;
+export default MakePost;

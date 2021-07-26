@@ -10,7 +10,7 @@ import { FiPhoneCall } from "react-icons/fi";
 const socket = io.connect("http://localhost:4200")
 
 
-const chat = () => {
+const Chat = () => {
     const [me, setMe] = useState("")
     const [stream, setStream] = useState("")
     const [receivingCall, setReceivingCall] = useState(false)
@@ -172,4 +172,4 @@ const chat = () => {
     );
 }
 
-export default chat;
+export default Chat;
