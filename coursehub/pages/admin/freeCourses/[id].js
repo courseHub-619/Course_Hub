@@ -46,7 +46,7 @@ export const getStaticProps = async (context) => {
     };
 };
 
-const course = ({ course, attachement, teacher }) => {
+const Course = ({ course, attachement, teacher }) => {
     console.log(attachement);
     const [status, setStatus] = useState(course.Status);
     const router = useRouter();
@@ -160,4 +160,4 @@ const course = ({ course, attachement, teacher }) => {
     );
 };
 
-export default course;
+export default Course;

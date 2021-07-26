@@ -1,15 +1,11 @@
 const express = require('express')
 const next = require('next')
 const http = require("http")
+const cors = require("cors");
 
 const app = express();
 
-var cors = require('cors');
 app.use(cors());
-
-
-
-
 
 const PORT = process.env.PORT || 4200
 const dev = process.env.NODE_ENV !== 'production'
@@ -42,6 +38,18 @@ io.on("connection", (socket) => {
     socket.on("callUser", (data) => {
         io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
     })
+
+    var corsOptions = {
+        origin: "http://localhost:3000"
+    };
+
+
+
+
+
+
+
+
 
     socket.on("answerCall", (data) => {
         io.to(data.to).emit("callAccepted", data.signal)
@@ -138,6 +146,7 @@ app.post("/freecourse/post", async (req, res) => {
     })
 
 })
+
 
 // post : teacher courses
 app.post("/post", async (req, res) => {
@@ -480,9 +489,15 @@ app.delete(`/admin/post/delete/:id`, async (req, res) => {
 })
 
 
-server.listen(PORT, err => {
+
+// require("./routes/authTeachers.routes")(app);
+app.use('/api/auth/teacher', require("./routes/authTeachers.routes.js"))
+
+// require("./routes/authStudents.routes")(app);
+app.use('/api/auth/student', require("./routes/authStudents.routes.js"))
+
+
+app.listen(PORT, err => {
     if (err) throw err;
     console.log(`Example app listening at http://localhost:${PORT}`)
 })
-
-

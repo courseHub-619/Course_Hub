@@ -39,7 +39,7 @@ export const getStaticProps = async (context) => {
   };
 };
 
-const course = ({ course, teacher }) => {
+const Course = ({ course, teacher }) => {
   console.log(course, teacher);
 
   const [status, setStatus] = useState(course.status);
@@ -153,4 +153,4 @@ const course = ({ course, teacher }) => {
   );
 };
 
-export default course;
+export default Course;

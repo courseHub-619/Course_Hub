@@ -35,7 +35,7 @@ export const getStaticProps = async (context) => {
 
 
 
-const teacher = ({ teacher }) => {
+const Teacher = ({ teacher }) => {
     console.log(teacher);
     const router = useRouter()
     const deleteProfile = () => {
@@ -123,4 +123,4 @@ const teacher = ({ teacher }) => {
     );
 };
 
-export default teacher;
+export default Teacher;
