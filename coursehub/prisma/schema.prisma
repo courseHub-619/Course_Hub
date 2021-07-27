@@ -27,6 +27,7 @@ model teacher {
   userName       String
   password       String
   education      String
+  description    String
   age            Int
   wallet         Int
   image          String
@@ -41,26 +42,23 @@ model teacher {
 
 model post {
   post_id      Int     @id @default(autoincrement())
-  author_id    Int
-  title  String
-  body String
-  Image        String
+  author_id    Int    
+  title        String
+  body         String
+  Image        String  @default("")
   status       String  @default("pending")
-  author       teacher @relation(fields: [author_id], references: [teacher_id])
+  author       teacher  @relation(fields: [author_id], references: [teacher_id])
 }
 
 model review {
-  Subject             String
   review_id           Int     @id @default(autoincrement())
-  student             Int
-  teacher             Int
-  pedagogy            Int
-  presentation_skills Int
-  knowledge           Int
-  ponctuality         Int
-  comments            String
-  student_id          student @relation(fields: [student], references: [student_id])
-  teacher_id          teacher @relation(fields: [teacher], references: [teacher_id])
+  overallRating       Int
+  ratesNumber         Int
+  student_id             Int
+  teacher_id          Int
+  comments            String  @default("")
+  student          student @relation(fields: [student_id], references: [student_id])
+  teacher          teacher  @relation(fields: [teacher_id], references: [teacher_id])
 }
 
 model schedule {

@@ -43,6 +43,8 @@ server.get("/user/teachers", async (req, res) => {
 var cors = require("cors");
 server.use(cors());
 
+//upload a post by a certain teacher according to his id
+
 server.post("/post", async (req, res) => {
   // console.log("wabba lubba dub dub", req.body.body);
   let data = req.body;
@@ -58,21 +60,10 @@ server.post("/post", async (req, res) => {
   // console.log("hajaaaa", post);
 });
 
-// server.listen(PORT, (err) => {
-//   if (err) throw err;
-//   console.log(`Example app listening at http://localhost:${PORT}`);
-// });
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 var cors = require("cors");
 server.use(cors());
-
-// test
-server.get("/test/user", async (req, res) => {
-  // console.log("hajaaaaaaaaaaaaa")
-  const students = await prisma.student.findMany();
-  return res.status(201).send(students);
-});
 
 //freeCourses: all
 server.get("/freecourse/all", async (req, res) => {
@@ -159,8 +150,46 @@ server.get(`/posts/:id`, async (req, res) => {
       author_id: 0,
     },
   });
-  console.log(posts, "ahayyaaaaa");
+  // console.log(posts, "ahayyaaaaa");
   return res.status(201).send(posts);
+});
+
+//update the data of a teacher
+
+server.put(`/update/profile/:id`, async (req, res) => {
+  console.log(req.body, req.params.id);
+  let update = await prisma.teacher.update({
+    where: {
+      teacher_id: Number(req.params.id),
+    },
+    data: {
+      // description: req.body.description,
+      image: req.body.url,
+      education: req.body.subject,
+    },
+  });
+});
+
+// feedback about the lecture
+server.put(`/form/feedback:id`, async (req, res) => {
+  console.log(
+    "average",
+    req.body.body.average,
+    req.params.id,
+    "the whole body",
+    req.body
+  );
+  let feedback = await prisma.review.upsert({
+    where: {
+      teacher_id: Number(req.params.id),
+    },
+    update: {
+      overallRating: { increment: req.body.body.average },
+      ratesNumber: { increment: 1 },
+      student_id: req.body.body.student_id,
+      comments: req.body.body.comment,
+    },
+  });
 });
 
 server.listen(PORT, (err) => {
