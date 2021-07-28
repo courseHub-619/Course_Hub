@@ -3,6 +3,7 @@ import axios from "axios";
 import ReactStars from "react-rating-stars-component";
 import Image from "next/image";
 import { useState } from "react";
+import moment from "moment";
 
 export const getStaticPaths = async () => {
   // const id = context.params.teacher_id;
@@ -74,10 +75,7 @@ const Details = ({ data, blogs }) => {
               {data.education}
             </p>
 
-            <p className="pt-8 text-sm">
-              Totally optional short description about yourself, what you do and
-              so on.
-            </p>
+            <p className="pt-8 text-sm">{data.description}</p>
 
             <div className="pt-12 pb-8 flex justify-evenly">
               <button className=" bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
@@ -182,13 +180,22 @@ const Details = ({ data, blogs }) => {
           </div>
         </div>
 
-        <div className="w-full lg:w-2/5">
-          <Image
-            src={data.image}
-            width={800}
-            height={800}
-            className="rounded-none h-80 w-2/3 lg:rounded-lg shadow-2xl hidden lg:block"
-          />
+        <div className="w-full  lg:w-2/5">
+          {data.image ? (
+            <Image
+              src={data.image}
+              width={800}
+              height={800}
+              className="rounded-none h-80 w-2/3 lg:rounded-lg shadow-2xl hidden lg:block"
+            />
+          ) : (
+            <Image
+              src="https://firebasestorage.googleapis.com/v0/b/coursehub-619.appspot.com/o/posts%2F109815470-man-avatar-profile-male-face-icon-vector-illustration-.jpg?alt=media&token=63ccf798-686d-48db-9df7-2d17f16faac4"
+              width={800}
+              height={800}
+              className="rounded-none h-80 w-2/3 lg:rounded-lg shadow-2xl hidden lg:block"
+            />
+          )}
         </div>
 
         {/* <div className="absolute top-0 right-0 h-12 w-18 p-4">
@@ -197,20 +204,29 @@ const Details = ({ data, blogs }) => {
       </div>
 
       {/* posts for now it's just one and later it'll be a map */}
-      {blogs.length &&
-        blogs.map((blog) => {
+      {blogs &&
+        blogs.map((blog, index) => {
           // console.log(blog)
           return (
             <div key={blogs.indexOf(blog)} className=" pt-4 max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
               <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
                 <div className="p-4 md:p-12 text-center lg:text-left">
                   <div className="flex items-center">
-                    <Image
-                      height={60}
-                      width={60}
-                      className="h-12 w-12 rounded-full"
-                      src={data.image}
-                    />
+                    {data.image ? (
+                      <Image
+                        src={data.image}
+                        width={60}
+                        height={60}
+                        className="rounded-full"
+                      />
+                    ) : (
+                      <Image
+                        src="https://firebasestorage.googleapis.com/v0/b/coursehub-619.appspot.com/o/posts%2F109815470-man-avatar-profile-male-face-icon-vector-illustration-.jpg?alt=media&token=63ccf798-686d-48db-9df7-2d17f16faac4"
+                        width={60}
+                        height={60}
+                        className="rounded-full"
+                      />
+                    )}
                     <div className="ml-2">
                       <div className="text-sm ">
                         <span className="font-semibold">{data.userName}</span>
@@ -226,7 +242,7 @@ const Details = ({ data, blogs }) => {
                   <p className="text-gray-800 text-sm mt-2 leading-normal md:leading-relaxed">
                     {blog.body}
                   </p>
-                  {blog.Image.length && (
+                  {blog.Image && (
                     <Image height={200} width={600} src={blog.Image} />
                   )}
                   <div className="text-gray-500 text-xs  flex items-center mt-3">
@@ -241,12 +257,11 @@ const Details = ({ data, blogs }) => {
                       className="h-5 w-5 hover:text-blue-600 "
                       viewBox="0 0 20 20"
                       fill="currentColor"
+                      onClick={() => setLikes(likes + 1)}
                     >
                       <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
                     </svg>
-                    <span onClick={() => setLikes(likes + 1)} className="ml-1">
-                      {likes} • 26 comments
-                    </span>
+                    <span className="ml-1">{likes} • 26 comments</span>
                   </div>
                 </div>
               </div>
@@ -259,3 +274,5 @@ const Details = ({ data, blogs }) => {
 };
 
 export default Details;
+
+// {moment(oneBlog.createdAt).fromNow()}
