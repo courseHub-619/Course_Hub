@@ -1,5 +1,4 @@
 import axios from "axios";
-import bgImg from "../../img.jpg";
 import ReactStars from "react-rating-stars-component";
 import Image from "next/image";
 import { useState } from "react";
@@ -75,7 +74,7 @@ const Details = ({ data, blogs }) => {
               {data.education}
             </p>
 
-            <p className="pt-8 text-sm">ka3ba jelbana's future husband</p>
+            <p className="pt-8 text-sm">{data.description}</p>
 
             <div className="pt-12 pb-8 flex justify-evenly">
               <button className=" bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">

@@ -22,8 +22,10 @@ model student {
 }
 
 model teacher {
-  teacher_id     Int           @id @default(autoincrement())
-  email          String        @unique
+  teacher_id     Int            @id @default(autoincrement())
+  numberOfaRtes   Int           
+  sumOfRates      Int           
+  email          String         @unique
   userName       String
   password       String
   education      String

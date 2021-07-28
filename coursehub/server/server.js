@@ -171,7 +171,7 @@ server.put(`/update/profile/:id`, async (req, res) => {
 });
 
 // feedback about the lecture
-server.put(`/form/feedback:id`, async (req, res) => {
+server.put(`/form/feedback/:id`, async (req, res) => {
   console.log(
     "average",
     req.body.body.average,
@@ -179,22 +179,20 @@ server.put(`/form/feedback:id`, async (req, res) => {
     "the whole body",
     req.body
   );
-  let feedback = await prisma.review.upsert({
+  let feedback = await prisma.teacher.update({
     where: {
       teacher_id: Number(req.params.id),
     },
-    update: {
-      overallRating: { increment: req.body.body.average },
-      ratesNumber: { increment: 1 },
-      student_id: req.body.body.student_id,
-      comments: req.body.body.comment,
+    data: {
+      sumOfRates: { increment: req.body.body.average },
+      numberOfaRtes: { increment: 1 },
     },
   });
 });
 
 server.listen(PORT, (err) => {
-  // if (err) {
-  //   throw err;
-  // }
+  if (err) {
+    throw err;
+  }
   console.log(`Example app listening at http://localhost:${PORT}`);
 });
