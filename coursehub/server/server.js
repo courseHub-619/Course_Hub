@@ -1,51 +1,60 @@
 const express = require("express");
-const next = require("next");
-require("dotenv").config({ path: "/custom/path/to/.env" });
+const http = require("http");
+const cors = require("cors");
+
+const app = express();
+
+app.use(cors());
 
 const PORT = process.env.PORT || 4200;
 const dev = process.env.NODE_ENV !== "production";
-
-// console.log(process.env);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const server = express();
-server.use(express.json());
-server.use(express.urlencoded({ extended: false }));
+require("dotenv").config({ path: "/custom/path/to/.env" });
+const { Server } = require("socket.io");
+const server = http.createServer(app);
 
-server.get("/test/user", async (req, res) => {
-  // console.log("hajaaaaaaaaaaaaa");
-  const students = await prisma.student.findMany();
-  return res.status(201).send(students);
+// server.use(express.json());
+// server.use(express.urlencoded({ extended: false }));
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
 });
 
-// get one teacher profile
+io.on("connection", (socket) => {
+  socket.emit("me", socket.id);
 
-server.get("/teacher/:id", async (req, res) => {
-  let teacher = await prisma.teacher.findUnique({
-    where: {
-      teacher_id: Number(req.params.id),
-    },
+  socket.on("disconnect", () => {
+    socket.broadcast.emit("callEnded");
   });
-  // console.log(teacher);
-  return res.status(201).send(teacher);
+
+  socket.on("callUser", (data) => {
+    io.to(data.userToCall).emit("callUser", {
+      signal: data.signalData,
+      from: data.from,
+      name: data.name,
+    });
+  });
+
+  var corsOptions = {
+    origin: "http://localhost:3000",
+  };
+
+  socket.on("answerCall", (data) => {
+    io.to(data.to).emit("callAccepted", data.signal);
+  });
 });
-
-//get all teacher profiles
-
-server.get("/user/teachers", async (req, res) => {
-  const teacher = await prisma.teacher.findMany({});
-  // console.log(teacher);
-  return res.status(201).send(teacher);
-});
-
-var cors = require("cors");
-server.use(cors());
 
 //upload a post by a certain teacher according to his id
 
-server.post("/post", async (req, res) => {
+app.post("/post", async (req, res) => {
   // console.log("wabba lubba dub dub", req.body.body);
   let data = req.body;
 
@@ -60,28 +69,30 @@ server.post("/post", async (req, res) => {
   // console.log("hajaaaa", post);
 });
 
-server.use(express.json());
-server.use(express.urlencoded({ extended: false }));
-var cors = require("cors");
-server.use(cors());
-
 //freeCourses: all
-server.get("/freecourse/all", async (req, res) => {
+app.get("/freecourse/all", async (req, res) => {
   // console.log("free course")
   const course = await prisma.free_course.findMany({});
   return res.status(201).send(course);
 });
 
-//freeCourses: Teachers
-server.get("/freecourse/all/teacher", async (req, res) => {
+//freeCourses: al
+app.get("/freecourse/all", async (req, res) => {
+  // console.log("free course")
+  const course = await prisma.free_course.findMany({});
+  return res.status(201).send(course);
+});
+
+//freeCourses: Teacher
+app.get("/freecourse/all/teacher", async (req, res) => {
   // console.log("teachers")
   const teacher = await prisma.teacher.findMany({});
   return res.status(201).send(teacher);
 });
 
-// FreeCourses: one freeCourse
-server.get(`/freecourse/all/:id`, async (req, res) => {
-  // console.log("one freeCourse", req.params.id);
+// FreeCourses: one freeCours
+app.get(`/freecourse/all/:id`, async (req, res) => {
+  console.log("one freeCourse", req.params.id);
 
   const oneCourse = await prisma.free_course.findUnique({
     where: {
@@ -92,13 +103,19 @@ server.get(`/freecourse/all/:id`, async (req, res) => {
   return res.status(201).send(oneCourse);
 });
 
-// freeCourse : one : attacement
-server.get(`/freecourse/attachement/:id`, async (req, res) => {
-  // console.log("attachement", req.params.id);
+// freeCourse : one : attachement
+app.get(`/freecourse/attachement/:id`, async (req, res) => {
+  console.log("attachement", req.params.id);
+
+  const freeCourse = await prisma.free_course.findUnique({
+    where: {
+      freeCourse_id: Number(req.params.id),
+    },
+  });
 
   const attachement = await prisma.attachement.findUnique({
     where: {
-      attachement_id: Number(req.params.id),
+      attachement_id: Number(freeCourse.document),
     },
   });
   // console.log(attachement, "attachement here");
@@ -106,22 +123,21 @@ server.get(`/freecourse/attachement/:id`, async (req, res) => {
 });
 
 // freeCourse: one : teacher
-server.get(`/freecourse/teacher/:id`, async (req, res) => {
+app.get(`/freecourse/teacher/:id`, async (req, res) => {
   // console.log("teacher", req.params.id)
 
   const teacher = await prisma.teacher.findUnique({
     where: {
-      teacher_id: 1,
+      teacher_id: 0,
       // Number(req.params.id)
     },
   });
-  // console.log(teacher, "teacher here");
+  console.log(teacher, "teacher here");
   return res.status(201).send(teacher);
 });
 
 // freeCourse : post
-
-server.post("/freecourse/post", async (req, res) => {
+app.post("/freecourse/post", async (req, res) => {
   // console.log("boooddddyyyyyyy", req.body)
   let data = req.body;
   const attachement = await prisma.attachement.create({
@@ -137,13 +153,49 @@ server.post("/freecourse/post", async (req, res) => {
       category: data.category,
       image: data.url,
       document: attachement.attachement_id,
-      teacher: 1, // teacher id
+      teacher: 0, // teacher id
     },
   });
 });
 
+// post : teacher courses
+app.post("/post", async (req, res) => {
+  // console.log("wabba lubba dub dub", req.body.body);
+  let data = req.body;
+
+  const post = await prisma.post.create({
+    data: {
+      title: data.body.title,
+      body: data.body.body,
+      author_id: data.body.teacher_id,
+      Image: data.body.image,
+    },
+  });
+  // console.log("hajaaaa", post);
+});
+
+// get one teacher profile
+
+app.get("/teacher/:id", async (req, res) => {
+  let teacher = await prisma.teacher.findUnique({
+    where: {
+      teacher_id: Number(req.params.id),
+    },
+  });
+  // console.log(teacher);
+  return res.status(201).send(teacher);
+});
+
+//get all teacher profiles
+
+app.get("/user/teachers", async (req, res) => {
+  const teacher = await prisma.teacher.findMany({});
+  // console.log(teacher);
+  return res.status(201).send(teacher);
+});
+
 // fetch all the posts by a certain user
-server.get(`/posts/:id`, async (req, res) => {
+app.get(`/posts/:id`, async (req, res) => {
   // console.log(req.body);
   let posts = await prisma.post.findMany({
     where: {
@@ -156,7 +208,7 @@ server.get(`/posts/:id`, async (req, res) => {
 
 //update the data of a teacher
 
-server.put(`/update/profile/:id`, async (req, res) => {
+app.put(`/update/profile/:id`, async (req, res) => {
   console.log(req.body, req.params.id);
   let update = await prisma.teacher.update({
     where: {
@@ -171,7 +223,7 @@ server.put(`/update/profile/:id`, async (req, res) => {
 });
 
 // feedback about the lecture
-server.put(`/form/feedback/:id`, async (req, res) => {
+app.put(`/form/feedback/:id`, async (req, res) => {
   console.log(
     "average",
     req.body.body.average,
@@ -190,9 +242,26 @@ server.put(`/form/feedback/:id`, async (req, res) => {
   });
 });
 
+app.get(`/posts/:id`, async (req, res) => {
+  // console.log(req.body);
+  let posts = await prisma.post.findMany({
+    where: {
+      author_id: 0,
+    },
+  });
+  console.log(posts, "ahayyaaaaa");
+  return res.status(201).send(posts);
+});
+
+// require("./routes/authTeachers.routes")(app);
+app.use("/api/auth/teacher", require("./routes/authTeachers.routes.js"));
+
+// require("./routes/authStudents.routes")(app);
+app.use("/api/auth/student", require("./routes/authStudents.routes.js"));
+
+app.use("/admin", require("./routes/admin.routes.js"));
+
 server.listen(PORT, (err) => {
-  if (err) {
-    throw err;
-  }
+  if (err) throw err;
   console.log(`Example app listening at http://localhost:${PORT}`);
 });

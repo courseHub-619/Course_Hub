@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "teacher" ALTER COLUMN "numberOfaRtes" DROP DEFAULT,
-ALTER COLUMN "sumOfRates" DROP DEFAULT;

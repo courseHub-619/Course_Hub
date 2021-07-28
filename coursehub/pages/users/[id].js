@@ -1,4 +1,5 @@
 import axios from "axios";
+// import bgImg from "../../img.jpg";
 import ReactStars from "react-rating-stars-component";
 import Image from "next/image";
 import { useState } from "react";
@@ -207,10 +208,7 @@ const Details = ({ data, blogs }) => {
         blogs.map((blog, index) => {
           // console.log(blog)
           return (
-            <div
-              key={index}
-              className=" pt-4 max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0"
-            >
+            <div key={blogs.indexOf(blog)} className=" pt-4 max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
               <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
                 <div className="p-4 md:p-12 text-center lg:text-left">
                   <div className="flex items-center">

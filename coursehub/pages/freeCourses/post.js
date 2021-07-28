@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import axios from "axios";
 
-const post = () => {
+const Post = () => {
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
   const [progressImage, setProgressImage] = useState(0);
@@ -81,7 +81,7 @@ const post = () => {
     );
   };
 
-  const post = () => {
+  const postCourse = () => {
     console.log(fileUrl, "url file");
     axios
       .post("http://localhost:4200/freecourse/post", {
@@ -98,6 +98,7 @@ const post = () => {
   };
 
   return (
+
     <body className="font-mono bg-gray-200 ">
       <div className="container mx-auto">
         <div className="flex justify-center px-6 my-12">
@@ -196,7 +197,7 @@ const post = () => {
                 <div className="mb-6 text-center">
                   <button
                     onClick={() => {
-                      post();
+                      postCourse();
                     }}
                     className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                     type="button"
@@ -213,4 +214,4 @@ const post = () => {
   );
 };
 
-export default post;
+export default Post;
