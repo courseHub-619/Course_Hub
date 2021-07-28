@@ -32,10 +32,10 @@ CREATE TABLE "teacher" (
 CREATE TABLE "post" (
     "post_id" SERIAL NOT NULL,
     "author_id" INTEGER NOT NULL,
-    "title" TEXT NOT NULL,
-    "body" TEXT NOT NULL,
     "Image" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT E'pending',
+    "body" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
 
     PRIMARY KEY ("post_id")
 );
