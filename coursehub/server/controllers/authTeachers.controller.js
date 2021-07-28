@@ -42,7 +42,7 @@ exports.signUp = async (req, res) => {
       education: req.body.signupdata.education,
       age: req.body.signupdata.age,
       wallet: req.body.signupdata.wallet,
-      image: req.body.signupdata.image,
+      image: req.body.url,
       Overall_rating: req.body.signupdata.Overall_rating,
 
     };
