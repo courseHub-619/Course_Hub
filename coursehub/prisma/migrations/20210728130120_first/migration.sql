@@ -22,10 +22,38 @@ CREATE TABLE "teacher" (
     "age" INTEGER NOT NULL,
     "wallet" INTEGER NOT NULL,
     "image" TEXT NOT NULL,
-    "Availability" TEXT NOT NULL,
-    "Overall_rating" TEXT NOT NULL,
+    "Overall_rating" TEXT NOT NULL DEFAULT E'0',
 
     PRIMARY KEY ("teacher_id")
+);
+
+-- CreateTable
+CREATE TABLE "weekDay" (
+    "weekDay_id" SERIAL NOT NULL,
+    "teacher_id" INTEGER NOT NULL,
+    "monday" BOOLEAN NOT NULL DEFAULT false,
+    "tuesday" BOOLEAN NOT NULL DEFAULT false,
+    "wednesday" BOOLEAN NOT NULL DEFAULT false,
+    "thursday" BOOLEAN NOT NULL DEFAULT false,
+    "friday" BOOLEAN NOT NULL DEFAULT false,
+    "saturday" BOOLEAN NOT NULL DEFAULT false,
+    "sunday" BOOLEAN NOT NULL DEFAULT false,
+
+    PRIMARY KEY ("weekDay_id")
+);
+
+-- CreateTable
+CREATE TABLE "sessions" (
+    "sessions_id" SERIAL NOT NULL,
+    "teacher_id" INTEGER NOT NULL,
+    "one" BOOLEAN NOT NULL DEFAULT false,
+    "two" BOOLEAN NOT NULL DEFAULT false,
+    "three" BOOLEAN NOT NULL DEFAULT false,
+    "four" BOOLEAN NOT NULL DEFAULT false,
+    "five" BOOLEAN NOT NULL DEFAULT false,
+    "six" BOOLEAN NOT NULL DEFAULT false,
+
+    PRIMARY KEY ("sessions_id")
 );
 
 -- CreateTable
@@ -60,7 +88,8 @@ CREATE TABLE "schedule" (
     "scheduel_id" SERIAL NOT NULL,
     "student" INTEGER NOT NULL,
     "teacher" INTEGER NOT NULL,
-    "appointment" TEXT NOT NULL,
+    "day" INTEGER NOT NULL,
+    "session" INTEGER NOT NULL,
     "studentCallId" INTEGER NOT NULL,
 
     PRIMARY KEY ("scheduel_id")
@@ -110,6 +139,12 @@ CREATE UNIQUE INDEX "teacher.email_unique" ON "teacher"("email");
 CREATE UNIQUE INDEX "schedule.studentCallId_unique" ON "schedule"("studentCallId");
 
 -- AddForeignKey
+ALTER TABLE "weekDay" ADD FOREIGN KEY ("teacher_id") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "sessions" ADD FOREIGN KEY ("teacher_id") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "post" ADD FOREIGN KEY ("author_id") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -123,6 +158,12 @@ ALTER TABLE "schedule" ADD FOREIGN KEY ("student") REFERENCES "student"("student
 
 -- AddForeignKey
 ALTER TABLE "schedule" ADD FOREIGN KEY ("teacher") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "schedule" ADD FOREIGN KEY ("day") REFERENCES "weekDay"("weekDay_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "schedule" ADD FOREIGN KEY ("session") REFERENCES "sessions"("sessions_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "free_course" ADD FOREIGN KEY ("document") REFERENCES "attachement"("attachement_id") ON DELETE CASCADE ON UPDATE CASCADE;
