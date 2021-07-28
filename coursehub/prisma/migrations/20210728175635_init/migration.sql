@@ -15,14 +15,18 @@ CREATE TABLE "student" (
 -- CreateTable
 CREATE TABLE "teacher" (
     "teacher_id" SERIAL NOT NULL,
+    "numberOfaRtes" INTEGER NOT NULL,
+    "sumOfRates" INTEGER NOT NULL,
     "email" TEXT NOT NULL,
     "userName" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "education" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "age" INTEGER NOT NULL,
     "wallet" INTEGER NOT NULL,
     "image" TEXT NOT NULL,
     "Overall_rating" TEXT NOT NULL DEFAULT E'0',
+    "price" INTEGER NOT NULL,
 
     PRIMARY KEY ("teacher_id")
 );
@@ -70,15 +74,12 @@ CREATE TABLE "post" (
 
 -- CreateTable
 CREATE TABLE "review" (
-    "Subject" TEXT NOT NULL,
     "review_id" SERIAL NOT NULL,
-    "student" INTEGER NOT NULL,
-    "teacher" INTEGER NOT NULL,
-    "pedagogy" INTEGER NOT NULL,
-    "presentation_skills" INTEGER NOT NULL,
-    "knowledge" INTEGER NOT NULL,
-    "ponctuality" INTEGER NOT NULL,
-    "comments" TEXT NOT NULL,
+    "overallRating" INTEGER NOT NULL,
+    "ratesNumber" INTEGER NOT NULL,
+    "student_id" INTEGER NOT NULL,
+    "teacher_id" INTEGER NOT NULL,
+    "comments" TEXT NOT NULL DEFAULT E'',
 
     PRIMARY KEY ("review_id")
 );
@@ -148,10 +149,10 @@ ALTER TABLE "sessions" ADD FOREIGN KEY ("teacher_id") REFERENCES "teacher"("teac
 ALTER TABLE "post" ADD FOREIGN KEY ("author_id") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "review" ADD FOREIGN KEY ("student") REFERENCES "student"("student_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "review" ADD FOREIGN KEY ("student_id") REFERENCES "student"("student_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "review" ADD FOREIGN KEY ("teacher") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "review" ADD FOREIGN KEY ("teacher_id") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "schedule" ADD FOREIGN KEY ("student") REFERENCES "student"("student_id") ON DELETE CASCADE ON UPDATE CASCADE;

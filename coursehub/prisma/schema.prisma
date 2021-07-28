@@ -25,11 +25,14 @@ model student {
 }
 
 model teacher {
-  teacher_id     Int           @id @default(autoincrement())
-  email          String        @unique
+  teacher_id     Int            @id @default(autoincrement())
+  numberOfaRtes   Int           
+  sumOfRates      Int           
+  email          String         @unique
   userName       String
   password       String
   education      String
+  description    String
   age            Int
   wallet         Int
   image          String
@@ -41,6 +44,7 @@ model teacher {
   schedule       schedule[]
   weekDay        weekDay[]
   sessions       sessions[]
+  price           Int
 }
 
 model weekDay {
@@ -81,17 +85,14 @@ model post {
 }
 
 model review {
-  Subject             String
   review_id           Int     @id @default(autoincrement())
-  student             Int
-  teacher             Int
-  pedagogy            Int
-  presentation_skills Int
-  knowledge           Int
-  ponctuality         Int
-  comments            String
-  student_id          student @relation(fields: [student], references: [student_id])
-  teacher_id          teacher @relation(fields: [teacher], references: [teacher_id])
+  overallRating       Int
+  ratesNumber         Int
+  student_id             Int
+  teacher_id          Int
+  comments            String  @default("")
+  student          student @relation(fields: [student_id], references: [student_id])
+  teacher          teacher  @relation(fields: [teacher_id], references: [teacher_id])
 }
 
 model schedule {
