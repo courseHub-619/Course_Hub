@@ -253,6 +253,20 @@ app.get(`/posts/:id`, async (req, res) => {
   return res.status(201).send(posts);
 });
 
+//get all posts to display on the posts main page
+
+app.get(`/all/blogs`, async (req, res) => {
+  let blogs = await prisma.post.findMany({});
+  return res.status(200).send(blogs);
+});
+
+//get all teachers cuz i need them for sth else
+
+app.get(`/all/teachers`, async (req, res) => {
+  let teachers = await prisma.teacher.findMany({});
+  return res.status(201).send(teachers);
+});
+
 // require("./routes/authTeachers.routes")(app);
 app.use("/api/auth/teacher", require("./routes/authTeachers.routes.js"));
 
