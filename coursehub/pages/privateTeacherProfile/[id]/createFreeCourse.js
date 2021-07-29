@@ -1,9 +1,42 @@
-import { storage } from "../../firebase";
+import { storage } from "../../../firebase";
 import Image from "next/image";
 import React, { useState } from "react";
 import axios from "axios";
 
-const Post = () => {
+
+
+export const getStaticPaths = async () => {
+  const response = await fetch('http://localhost:4200/admin/teacher/all');
+  const data = await response.json();
+  const paths = data.map((teacher) => {
+      let id = teacher.teacher_id;
+      // console.log("id", id)
+      return {
+          params: { id: id.toString() },
+      };
+  });
+  return {
+      paths,
+      fallback: false,
+  };
+};
+export const getStaticProps = async (context) => {
+
+  const id = context.params.id;
+  
+  return {
+      props: {
+           id 
+      },
+  };
+};
+
+
+
+const Post = ({id}) => {
+
+  console.log(id, "ahayaaaaaaaa")
+
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
   const [progressImage, setProgressImage] = useState(0);
@@ -90,6 +123,7 @@ const Post = () => {
         body,
         fileUrl,
         url,
+        id 
       })
       .then((res) => console.log(res.data))
       .catch(function (error) {
@@ -99,9 +133,9 @@ const Post = () => {
 
   return (
 
-    <body className="font-mono bg-gray-200 ">
+    <body className="font-mono ">
       <div className="container mx-auto">
-        <div className="flex justify-center px-6 my-12">
+        <div className="flex justify-center px-6 my-12 ">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
             <div>
               <Image

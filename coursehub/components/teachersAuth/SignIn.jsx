@@ -2,9 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { storage } from "../../firebase";
+import { useRouter } from "next/router";
+import Swal from 'sweetalert2'
 
 
 export default function SignIn() {
+  const router = useRouter()
+
   const [monday, setmonday] = useState(false)
   const [styleMonday, setStyleMonday] = useState("flex items-center p-4 bg-blue-200 rounded-lg shadow-xs cursor-pointer hover:bg-blue-500 hover:text-gray-100")
 
@@ -115,8 +119,15 @@ export default function SignIn() {
     axios
       .post(" http://localhost:4200/api/auth/teacher/signUp", data)
 
-      .then((response) => {
+      .then(async (response) => {
+        console.log(response)
         console.log("new user was created successfully");
+        await Swal.fire(
+          'Created!',
+          'You have successfully created an account.',
+          'success'
+        )
+        await router.push("/teacher/login")
       })
       .catch((err) => {
         console.log("whyyyyy");

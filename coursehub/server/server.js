@@ -52,22 +52,43 @@ io.on("connection", (socket) => {
   });
 });
 
-//upload a post by a certain teacher according to his id
+//upload a post by a certain teacher according to his id   // Lotfi new
 
 app.post("/post", async (req, res) => {
   // console.log("wabba lubba dub dub", req.body.body);
   let data = req.body;
+  const teacher = await prisma.teacher.findUnique({
+    where: {
+      teacher_id: Number(data.body.teacher_id),
+    },
+  });
+
+  console.log("tescherrrrr", teacher);
 
   const post = await prisma.post.create({
     data: {
       title: data.body.title,
       body: data.body.body,
-      author_id: data.body.teacher_id,
+      author_id: teacher.teacher_id,
       Image: data.body.image,
+      price: Number(data.body.price),
     },
   });
-  // console.log("hajaaaa", post);
+  console.log("hajaaaa", post);
 });
+
+//get all students
+
+app.get("/student/all", async (req, res) => {
+  // console.log("free course")
+  const student = await prisma.student.findMany({});
+  return res.status(201).send(student);
+});
+
+
+
+
+
 
 //freeCourses: all
 app.get("/freecourse/all", async (req, res) => {
@@ -138,7 +159,7 @@ app.get(`/freecourse/teacher/:id`, async (req, res) => {
 
 // freeCourse : post
 app.post("/freecourse/post", async (req, res) => {
-  // console.log("boooddddyyyyyyy", req.body)
+  console.log("boooddddyyyyyyy", req.body);
   let data = req.body;
   const attachement = await prisma.attachement.create({
     data: {
@@ -153,7 +174,7 @@ app.post("/freecourse/post", async (req, res) => {
       category: data.category,
       image: data.url,
       document: attachement.attachement_id,
-      teacher: 0, // teacher id
+      teacher: Number(data.id), // teacher id
     },
   });
 });
@@ -265,6 +286,44 @@ app.get(`/all/blogs`, async (req, res) => {
 app.get(`/all/teachers`, async (req, res) => {
   let teachers = await prisma.teacher.findMany({});
   return res.status(201).send(teachers);
+});
+
+//profile of the teacher, private:
+
+app.get("/profile/teacher/week/:id", async (req, res) => {
+  let teacher = await prisma.teacher.findUnique({
+    where: {
+      teacher_id: Number(req.params.id),
+    },
+  });
+
+  console.log(teacher, "hererererer");
+
+  let days = await prisma.weekDay.findUnique({
+    where: {
+      weekDay_id: Number(teacher.teacher_id),
+    },
+  });
+
+  return res.status(201).send(days);
+});
+
+app.get("/profile/teacher/session/:id", async (req, res) => {
+  let teacher = await prisma.teacher.findUnique({
+    where: {
+      teacher_id: Number(req.params.id),
+    },
+  });
+
+  console.log(teacher, "hererererer");
+
+  let session = await prisma.sessions.findUnique({
+    where: {
+      sessions_id: Number(teacher.teacher_id),
+    },
+  });
+
+  return res.status(201).send(session);
 });
 
 // require("./routes/authTeachers.routes")(app);
