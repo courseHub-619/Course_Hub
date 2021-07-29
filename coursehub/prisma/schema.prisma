@@ -16,7 +16,8 @@ model student {
   password   String
   education  String
   age        Int
-  wallet     Int
+  wallet     Int @default(0)
+  token          String    @unique  @default("")
   image      String
   email      String     @unique
   DM         DM[]
@@ -24,19 +25,23 @@ model student {
   schedule   schedule[]
 }
 
+
+
+
 model teacher {
   teacher_id     Int            @id @default(autoincrement())
-  numberOfaRtes   Int           
-  sumOfRates      Int           
+  numberOfRates   Int            @default(0)
+  sumOfRates      Int             @default(0)
   email          String         @unique
   userName       String
   password       String
-  education      String
-  description    String
+  education      String             
+  description    String          @default("")
   age            Int
-  wallet         Int
+  wallet         Int @default(0)
   image          String
-  Overall_rating String        @default("0")
+  Overall_rating Int        @default(0)
+  token          String    @unique @default("")
   DM             DM[]
   free_course    free_course[]
   post           post[]
@@ -44,12 +49,12 @@ model teacher {
   schedule       schedule[]
   weekDay        weekDay[]
   sessions       sessions[]
-  price           Int
 }
+
 
 model weekDay {
   weekDay_id Int        @id @default(autoincrement())
-  teacher_id Int
+  teacher_id Int         @unique
   monday     Boolean    @default(false)
   tuesday    Boolean    @default(false)
   wednesday  Boolean    @default(false)
@@ -63,7 +68,7 @@ model weekDay {
 
 model sessions {
   sessions_id Int        @id @default(autoincrement())
-  teacher_id  Int
+  teacher_id  Int        @unique
   one         Boolean    @default(false)
   two         Boolean    @default(false)
   three       Boolean    @default(false)
@@ -76,11 +81,12 @@ model sessions {
 
 model post {
   post_id   Int     @id @default(autoincrement())
-  author_id Int
+  author_id Int     @unique
   Image     String
   status    String  @default("pending")
   body      String
   title     String
+  price     Int
   author    teacher @relation(fields: [author_id], references: [teacher_id])
 }
 

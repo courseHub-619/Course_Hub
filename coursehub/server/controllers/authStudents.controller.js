@@ -24,7 +24,7 @@ exports.signUp = async (req, res) => {
     //here we create the salt and hash the password
 
     const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(req.body.password,salt)
+    const hashedPassword = await bcrypt.hash(req.body.signupdata.password,salt)
     console.log(hashedPassword);
 
 
@@ -34,13 +34,13 @@ exports.signUp = async (req, res) => {
 
     //that's the user we gonna add to the data base
     const user = {
-      email : req.body.email,
-      userName : req.body.userName,
+      email : req.body.signupdata.email,
+      userName : req.body.signupdata.userName,
        password : hashedPassword,
-       education : req.body.education,
-       age : req.body.age,
-       wallet : req.body.wallet,
-       image : req.body.image,
+       education : req.body.signupdata.education,
+       age : req.body.signupdata.age,
+       wallet : req.body.signupdata.wallet,
+       image : req.body.url,
    
     };
 
@@ -51,7 +51,7 @@ exports.signUp = async (req, res) => {
     //here we are going to check if the user we trying to create already exist or not 
     
  students.findUnique({
-      where :{email : req.body.email}
+      where :{email : req.body.signupdata.email}
     })
 
 
@@ -71,6 +71,7 @@ exports.signUp = async (req, res) => {
                 .then(data => {
                    res.send(data)
                    console.log("bro good job you created user !",data)
+
                     })
                     .catch(err => {
                      console.log(err,"something werong")
@@ -123,7 +124,7 @@ res.json(mydata.filter(element => element === req.user.userName))
 
 
   exports.logIn =  (req, res) => {
-
+   let result;
     //that's the username and password the the user typed 
     const user = {
       email: req.body.email,
@@ -133,14 +134,14 @@ res.json(mydata.filter(element => element === req.user.userName))
 
      students.findUnique({
   where:{email: req.body.email}
-})
-.then( async data => {
+ })
+  .then( async data => {
 
   console.log('yooo',data);
 
   if (!data) {
   
-   return res.send(404);}
+   return res.sendStatus(404);}
 
   //here we will compare the typed password against the one saved in the DATABASe
   const validPassword = await bcrypt.compare(user.password, data.password);
@@ -161,7 +162,16 @@ res.json(mydata.filter(element => element === req.user.userName))
         data: {token:accessToken}
       })
       .then(response=>{
-        console.log(response)
+        
+        result = response
+        console.log(result, "ressssssss")
+        res.json({
+          // accessToken: accessToken,
+          result : result
+          
+          // refreshToken: refreshToken
+        }) 
+        
       })
       .catch(error=>{
         console.log(error)
@@ -169,10 +179,8 @@ res.json(mydata.filter(element => element === req.user.userName))
     
 
     console.log('the password matches')
-    res.json({
-      accessToken: accessToken,
-      // refreshToken: refreshToken
-    })  }
+     
+  }
   else if (!validPassword){
     console.log('the password does not match')
     res.status(201).send({
@@ -209,7 +217,7 @@ const token = authHeader && authHeader.split(' ')[1];
 if (token === null) return res.sendStatus(401)
   
 // here we're going to make sure that the token match
-  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,(err,user) => {
     if (err) {
       return res.sendStatus(403)
     }

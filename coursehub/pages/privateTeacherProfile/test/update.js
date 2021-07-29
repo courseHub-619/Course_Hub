@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { storage } from "../../firebase";
+import { storage } from "../../../firebase";
 import { useRouter } from "next/dist/client/router";
 
-const makePost = () => {
+const MakePost = () => {
   let [title, setTitle] = useState("");
   let [body, setBody] = useState("");
   const [image, setImage] = useState(null);
@@ -127,6 +127,8 @@ const makePost = () => {
   };
 
   return (
+
+   
     <div>
       <div className="flex h-screen bg-gray-200 items-center justify-center  mt-32 mb-32">
         <div className="grid bg-white rounded-lg shadow-xl w-11/12 md:w-9/12 lg:w-1/2">
@@ -308,4 +310,4 @@ const makePost = () => {
   );
 };
 
-export default makePost;
+export default MakePost;
