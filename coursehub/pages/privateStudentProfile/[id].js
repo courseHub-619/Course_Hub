@@ -94,12 +94,14 @@ const Student = ({ student }) => {
               >
                 Recharge wallet
               </a>
-              <a
-                href=""
-                className="bg font-bold text-sm text-gray-600 w-full text-center py-3 hover:bg-gray-600 hover:text-white hover:shadow-lg"
-              >
-                Chat room
-              </a>
+              <Link href={`/videoChat`}>
+                <a
+                  href=""
+                  className="bg font-bold text-sm text-gray-600 w-full text-center py-3 hover:bg-gray-600 hover:text-white hover:shadow-lg"
+                >
+                  Chat room
+                </a>
+              </Link>
             </div>
 
             <div className="w-full">

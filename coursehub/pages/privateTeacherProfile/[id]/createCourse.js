@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { storage } from "../../../firebase";
+import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
   const response = await fetch("http://localhost:4200/admin/teacher/all");
@@ -82,7 +83,14 @@ const Course = ({ stdId }) => {
       .post(`http://localhost:4200/post`, {
         body: postDetails,
       })
-      .then((res) => console.log(res))
+      .then(async (res) => {
+        console.log(res);
+        await Swal.fire(
+          "Done!",
+          "Your post have been successfully created",
+          "success"
+        );
+      })
       .catch((err) => console.log(err));
   };
 

@@ -80,8 +80,8 @@ const Teacher = ({ teacher, days, sessions }) => {
                         <div className="flex justify-evenly my-5">
                            <Link href={`/privateTeacherProfile/${teacher.teacher_id}/createCourse`} ><a href="" className="bg font-bold text-sm text-blue-800 w-full text-center py-3 hover:bg-blue-800 hover:text-white hover:shadow-lg">Create a post</a></Link> 
                            <Link href={`/privateTeacherProfile/${teacher.teacher_id}/createFreeCourse`} ><a href="" className="bg font-bold text-sm text-blue-400 w-full text-center py-3 hover:bg-blue-400 hover:text-white hover:shadow-lg">Post a free course</a></Link> 
-                            <a href="" className="bg font-bold text-sm text-yellow-600 w-full text-center py-3 hover:bg-yellow-600 hover:text-white hover:shadow-lg">Update information</a>
-                            <a href="" className="bg font-bold text-sm text-gray-600 w-full text-center py-3 hover:bg-gray-600 hover:text-white hover:shadow-lg">Update availability</a>
+                           <Link href={`/privateTeacherProfile/${teacher.teacher_id}/scheduel`} ><a href="" className="bg font-bold text-sm text-yellow-600 w-full text-center py-3 hover:bg-yellow-600 hover:text-white hover:shadow-lg">Check scheduel</a></Link> 
+                            <a href="" className="bg font-bold text-sm text-gray-600 w-full text-center py-3 hover:bg-gray-600 hover:text-white hover:shadow-lg">Update information</a>
                         </div>
 
                         <div className="w-full">
