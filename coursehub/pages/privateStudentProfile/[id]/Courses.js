@@ -150,7 +150,7 @@ const Post = ({ teachers, blogs, stdId }) => {
           .then(async (result) => {
             console.log(result);
             await axios
-              .post(`http://localhost:4200/reservation/scheduel`, {
+              .post(`http://localhost:4200/reservaition/scheduel`, {
                 id,
                 teacherId,
                 session,
