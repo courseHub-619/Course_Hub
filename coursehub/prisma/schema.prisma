@@ -63,7 +63,7 @@ model weekDay {
   saturday   Boolean    @default(false)
   sunday     Boolean    @default(false)
   teacher    teacher    @relation(fields: [teacher_id], references: [teacher_id])
-  schedule   schedule[]
+ 
 }
 
 model sessions {
@@ -76,12 +76,12 @@ model sessions {
   five        Boolean    @default(false)
   six         Boolean    @default(false)
   teacher     teacher    @relation(fields: [teacher_id], references: [teacher_id])
-  schedule    schedule[]
+  
 }
 
 model post {
   post_id   Int     @id @default(autoincrement())
-  author_id Int     @unique
+  author_id Int     
   Image     String
   status    String  @default("pending")
   body      String
@@ -94,7 +94,7 @@ model review {
   review_id           Int     @id @default(autoincrement())
   overallRating       Int
   ratesNumber         Int
-  student_id             Int
+  student_id          Int
   teacher_id          Int
   comments            String  @default("")
   student          student @relation(fields: [student_id], references: [student_id])
@@ -103,15 +103,12 @@ model review {
 
 model schedule {
   scheduel_id      Int      @id @default(autoincrement())
-  student          Int
-  teacher          Int
-  day              Int
-  session          Int
-  studentCallId    Int      @unique
+  student          Int      
+  teacher          Int      
+  day              String   
+  session          String   
   student_id       student  @relation(fields: [student], references: [student_id])
   teacher_id       teacher  @relation(fields: [teacher], references: [teacher_id])
-  day_relation     weekDay  @relation(fields: [day], references: [weekDay_id])
-  session_relation sessions @relation(fields: [session], references: [sessions_id])
 }
 
 model attachement {
