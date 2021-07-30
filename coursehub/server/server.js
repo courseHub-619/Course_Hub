@@ -197,11 +197,16 @@ app.get("/reservaition/scheduel/:id", async (req, res) => {
     },
   });
   return res.status(201).send(scheduel);
-})
+});
 
-
-
-
+app.delete("/reservaition/scheduel/delete/:id", async (req, res) => {
+  const scheduel = await prisma.schedule.delete({
+    where: {
+      scheduel_id: Number(req.params.id),
+    },
+  });
+  return res.status(201).send("deleted");
+});
 
 //freeCourses: all
 app.get("/freecourse/all", async (req, res) => {
