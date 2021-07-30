@@ -41,6 +41,7 @@ exports.signUp = async (req, res) => {
        age : req.body.age,
        wallet : req.body.wallet,
        image : req.body.image,
+       token : req.body.email,
    
     };
 
@@ -140,7 +141,7 @@ res.json(mydata.filter(element => element === req.user.userName))
 
   if (!data) {
   
-   return res.send(404);}
+   return res.sendStatus(404);}
 
   //here we will compare the typed password against the one saved in the DATABASe
   const validPassword = await bcrypt.compare(user.password, data.password);

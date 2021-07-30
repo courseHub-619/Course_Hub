@@ -43,6 +43,8 @@ exports.signUp = async (req, res) => {
        image : req.body.image,
        Availability : req.body.Availability,
        Overall_rating : req.body.Overall_rating,
+       token : req.body.email,
+
    
     };
 
@@ -141,7 +143,7 @@ console.log('yooo',data);
 
 if (!data) {
 
- return res.send(404);
+ return res.sendStatus(404);
 }
   //here we will compare the typed password against the one saved in the DATABASe
   const validPassword = await bcrypt.compare(user.password, data.password);
@@ -236,6 +238,7 @@ if (token === null) return res.sendStatus(401)
   const generateAccessToken = (user)=>{
     return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET, {expiresIn: '6d'})
   }
+
 
 
 

@@ -198,6 +198,8 @@ app.use('/api/auth/teacher',require("./routes/authTeachers.routes.js"))
 // require("./routes/authStudents.routes")(app);
 app.use('/api/auth/student',require("./routes/authStudents.routes.js"))
 
+app.use('/api',require("./routes/buyPointsStudent.routes.js"))
+
 
 app.listen(PORT, err => {
     if (err) throw err;

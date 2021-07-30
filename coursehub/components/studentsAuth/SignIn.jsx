@@ -10,7 +10,8 @@ export default function SignIn() {
     education: "",
     age: 0,
     image: "",
-    wallet : 0
+    wallet : 0,
+    token: "",
   });
   const handleChange = (e) => {
     const name = e.target.name;
@@ -121,16 +122,7 @@ Create your account
           "w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
         }
       />
-  <label className="text-left">availability:</label>
-        <input
-        name="availability"
-        type="text"
-        onChange={handleChange}
-        placeholder="availability"
-        className={
-          "w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
-        }
-      />
+
       
       <div className="flex items-center mt-3 justify-center">
         <button
