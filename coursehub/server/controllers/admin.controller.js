@@ -91,7 +91,7 @@ exports.getOneTeacherPost = async (req, res) => {
 
     const teacher = await prisma.teacher.findUnique({
         where: {
-            teacher_id: 0                                                // Number(req.params.id) Refactor
+            teacher_id: Number(req.params.id)                                                  // Number(req.params.id) Refactor
 
         }
     })
