@@ -15,25 +15,28 @@ exports.signUp = async (req, res) => {
     //here we create the salt and hash the password
 
     const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await bcrypt.hash(
+      req.body.signupdata.password,
+      salt
+    );
     console.log(hashedPassword);
 
     //that's the user we gonna add to the data base
     const user = {
-      email: req.body.email,
-      userName: req.body.userName,
+      email: req.body.signupdata.email,
+      userName: req.body.signupdata.userName,
       password: hashedPassword,
-      education: req.body.education,
-      age: req.body.age,
-      wallet: req.body.wallet,
-      image: req.body.image,
+      education: req.body.signupdata.education,
+      age: req.body.signupdata.age,
+      wallet: req.body.signupdata.wallet,
+      image: req.body.url,
     };
 
     //here we are going to check if the user we trying to create already exist or not
 
     students
       .findUnique({
-        where: { email: req.body.email },
+        where: { email: req.body.signupdata.email },
       })
 
       .then((data) => {
@@ -90,6 +93,7 @@ exports.trying = (req, res) => {
 //now we take care of the singin part to make sure the user who trying to log in has the the same data
 
 exports.logIn = (req, res) => {
+  let result;
   //that's the username and password the the user typed
   const user = {
     email: req.body.email,
@@ -104,7 +108,7 @@ exports.logIn = (req, res) => {
       console.log("yooo", data);
 
       if (!data) {
-        return res.send(404);
+        return res.sendStatus(404);
       }
 
       //here we will compare the typed password against the one saved in the DATABASe
@@ -126,17 +130,20 @@ exports.logIn = (req, res) => {
             data: { token: accessToken },
           })
           .then((response) => {
-            console.log(response);
+            result = response;
+            console.log(result, "ressssssss");
+            res.json({
+              // accessToken: accessToken,
+              result: result,
+
+              // refreshToken: refreshToken
+            });
           })
           .catch((error) => {
             console.log(error);
           });
 
         console.log("the password matches");
-        res.json({
-          accessToken: accessToken,
-          // refreshToken: refreshToken
-        });
       } else if (!validPassword) {
         console.log("the password does not match");
         res.status(201).send({

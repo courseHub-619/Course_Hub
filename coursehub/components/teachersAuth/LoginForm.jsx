@@ -1,8 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function LoginForm() {
+  const router = useRouter()
   const [loginData, setloginData] = useState({
     email: "",
     password: "",
@@ -24,6 +26,7 @@ export default function LoginForm() {
       .then((response) => {
         console.log(response.data);
         localStorage.setItem('token', response.data.accessToken);
+        router.push(`/privateTeacherProfile/${response.data.result.teacher_id}`)
       })
       .catch((err) => {
         console.log("something went wrong make sure the email and password are correct");

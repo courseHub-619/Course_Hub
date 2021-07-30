@@ -42,8 +42,11 @@ exports.signUp = async (req, res) => {
       education: req.body.signupdata.education,
       age: req.body.signupdata.age,
       wallet: req.body.signupdata.wallet,
-      image: req.body.signupdata.image,
+      image: req.body.url,
       Overall_rating: req.body.signupdata.Overall_rating,
+      numberOfRates: 0,
+      sumOfRates: 0,
+      description: "Describe yourself here"
 
     };
 
@@ -158,6 +161,7 @@ exports.trying = (req, res) => {
 
 
 exports.logIn = (req, res) => {
+  let result;
 
   //that's the username and password the the user typed 
   const user = {
@@ -197,6 +201,15 @@ exports.logIn = (req, res) => {
           data: { token: accessToken }
         })
           .then(response => {
+
+            result = response
+        console.log(result, "ressssssss")
+        res.json({
+          accessToken: accessToken,
+          result : result
+          
+          // refreshToken: refreshToken
+        }) 
             console.log(response)
           })
           .catch(error => {
@@ -206,10 +219,7 @@ exports.logIn = (req, res) => {
 
         console.log(data.token, "the token");
         console.log('the password matches')
-        res.json({
-          accessToken: accessToken,
-
-        })
+       
       }
       else if (!validPassword) {
         console.log('the password does not match')

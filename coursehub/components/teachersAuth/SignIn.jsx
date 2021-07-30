@@ -1,9 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { storage } from "../../firebase";
+import { useRouter } from "next/router";
+import Swal from 'sweetalert2'
 
 
 export default function SignIn() {
+  const router = useRouter()
+
   const [monday, setmonday] = useState(false)
   const [styleMonday, setStyleMonday] = useState("flex items-center p-4 bg-blue-200 rounded-lg shadow-xs cursor-pointer hover:bg-blue-500 hover:text-gray-100")
 
@@ -56,13 +61,16 @@ export default function SignIn() {
     }
 
   }
+  const [url, setUrl] = useState(null);
+  const [progressImage, setProgressImage] = useState(0);
+
   const [signupdata, setsignupdata] = useState({
     email: "",
     userName: "",
     password: "",
     education: "",
     age: "",
-    image: "",
+    image: url,
     wallet: 0,
   });
   const handleChange = (e) => {
@@ -104,19 +112,57 @@ export default function SignIn() {
       four: Four,
       five: Five,
       six: Six,
-      signupdata: signupdata
+      signupdata: signupdata,
+      url: url
     }
 
     axios
       .post(" http://localhost:4200/api/auth/teacher/signUp", data)
 
-      .then((response) => {
+      .then(async (response) => {
+        console.log(response)
         console.log("new user was created successfully");
+        await Swal.fire(
+          'Created!',
+          'You have successfully created an account.',
+          'success'
+        )
+        await router.push("/teacher/login")
       })
       .catch((err) => {
         console.log("whyyyyy");
         console.log(err);
       });
+  };
+  
+
+  const handleUploadImage = async (e) => {
+    console.log("is that the link", e.target.files[0]);
+    let file = e.target.files[0];
+    const uploadTask = storage.ref(`images/${file.name}`).put(file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgressImage(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        console.log(file.name);
+        storage
+          .ref("images/")
+          .child(file.name)
+          .getDownloadURL()
+          .then((url) => {
+            console.log(url, "urlllllllllllllllllllllllllllllllll");
+            setUrl(url);
+          });
+      }
+    );
   };
 
   console.log(monday, "here")
@@ -185,15 +231,47 @@ export default function SignIn() {
               }
             />
             <label className="text-left">image:</label>
-            <input
-              name="image"
-              type="text"
-              onChange={handleChange}
-              placeholder="image"
-              className={
-                "w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
-              }
-            />
+<label className="flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-purple-300 group">
+                <div className="flex flex-col items-center justify-center pt-7">
+                  <svg
+                    className="w-10 h-10 text-purple-400 group-hover:text-purple-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    ></path>
+                  </svg>
+                  <p className="lowercase text-sm text-gray-400 group-hover:text-purple-600 pt-1 tracking-wider">
+                    Select a photo
+                  </p>
+                </div>
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    handleUploadImage(e);
+                  }}
+                  className="hidden"
+                />
+              </label>
+
+
+
+
+
+
+
+            <progress
+                  max="100"
+                  value={progressImage}
+                  className="bg-teal text-xs leading-none py-1 text-center text-white"
+                  style={{ width: "100%" }}
+                />
             <label className="text-left"> Weekdays available:</label>
             {/* <input
               name="availability"

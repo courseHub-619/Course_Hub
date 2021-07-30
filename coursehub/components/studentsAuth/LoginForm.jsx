@@ -1,9 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 
 export default function LoginForm() {
+
+  const router = useRouter()
 
 
   const [loginData, setloginData] = useState({
@@ -27,13 +30,14 @@ export default function LoginForm() {
     ) {
       console.log("some inputs are empty !!");
     }
-console.log(loginData)
+    console.log(loginData)
     axios
       .post("http://localhost:4200/api/auth/student/logIn", loginData)
 
       .then((response) => {
         localStorage.setItem('token', response.data.accessToken);
-        console.log(response);
+        console.log("ahaayyaaaaaaaaaa",response.data);
+        router.push(`/privateStudentProfile/${response.data.result.student_id}`)
       })
       .catch((err) => {
         console.log("whyyyyy");
