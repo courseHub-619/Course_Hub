@@ -5,37 +5,39 @@ import Sidebar from "./sidebar.js";
 import IconButton from '@material-ui/core/IconButton';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import axios from 'axios';
+import { useRouter } from "next/router";
 
 
 
 const Navbar = () => {
     const [token,settoken] = useState("")
-     
+    const router = useRouter()
+    const [loggedIn,setloggedIn] = useState(true);
     
     useEffect(() => {
         settoken(localStorage.getItem('token'))
          
          console.log(token);
     },[])
-const logout = () => {
-   
-
+const logout = (e) => {
+            
+  setloggedIn(false)
    
             localStorage.clear();
-            checkToken()
-       
+            router.push(`/`)
+
 
 }
 
-    const checkToken = ()=>{
- 
+    const checkToken = (e)=>{
+
    
-        if (!token || token.length<100) {
+        if (!token || token.length<100 && !loggedIn) {
             return     ( <div className="p-4">
             <FaUserCircle size={35} color={"#3881AB"} />
         </div>)
         }
-        else if (token.length>100){
+        else if (token.length>100 && loggedIn){
             return (<div>
                 <IconButton onClick={logout}>
                     logout
@@ -62,7 +64,8 @@ const logout = () => {
             </div>
 
         </div>
-    );
-}
+
+  );
+};
 
 export default Navbar;

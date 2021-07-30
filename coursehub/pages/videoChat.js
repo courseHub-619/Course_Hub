@@ -7,6 +7,8 @@ import io from "socket.io-client"
 import { FcVideoCall, FcEndCall } from "react-icons/fc";
 import { FiPhoneCall } from "react-icons/fi";
 
+import emailjs from 'emailjs-com';
+
 const socket = io.connect("http://localhost:4200")
 
 
@@ -104,9 +106,24 @@ const Chat = () => {
         connectionRef.current.destroy()
 
     }
+
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        emailjs.sendForm('gmail', 'template_k587coq', e.target, 'user_56lJhug4ndqlyx6Mq1JTq')
+            .then((result) => {
+                console.log(result.text);
+            }, (error) => {
+                console.log(error.text);
+            });
+
+        e.target.reset()
+    }
+
     return (
         <>
-           
+
 
             <div className="p-4 text-center">
                 <div className="flex justify-between p-2">
@@ -166,6 +183,47 @@ const Chat = () => {
                             </div>
                         </div>
                     ) : null}
+                </div>
+            </div>
+
+            <div className="min-h-screen  py-6 flex flex-col justify-center sm:py-12">
+                <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+                    <div
+                        className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+                    </div>
+                    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+                        <div className="max-w-md mx-auto">
+                            <div>
+                                <h1 className="text-2xl font-semibold">Send you Call-ID here</h1>
+                            </div>
+                            <form onSubmit={sendEmail}>
+                                <div className="divide-y divide-gray-200">
+                                    <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                                        <div className="relative">
+                                            <input name="from_name" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Enter your name" />
+                                            <label className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Sender name</label>
+                                        </div>
+                                        <div className="relative">
+                                            <input name="to_name" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" />
+                                            <label className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Receiver name</label>
+                                        </div>
+                                        <div className="relative">
+                                            <input id="email" name="user_email" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
+                                            <label className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Receiver Email Address</label>
+                                        </div>
+                                        <div className="relative">
+                                            <input id="password" name="message" type="password" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Call ID" />
+                                            <label className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Call-ID</label>
+                                        </div>
+                                        <div className="relative">
+
+                                            <input type="submit" className="bg-blue-500 text-white rounded-md px-2 py-1" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
