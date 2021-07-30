@@ -7,7 +7,7 @@ import moment from "moment";
 
 export const getStaticPaths = async () => {
   // const id = context.params.teacher_id;
-  const res = await fetch(`http://localhost:4200/user/teachers`);
+  const res = await fetch(`http://localhost:4200/teacher/user/teachers`);
   const data = await res.json();
   // console.log(data, "kimochiiiiiiiiiiiiiiiiiiiii");
   const paths = data.map((path) => {
@@ -24,10 +24,12 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const teacher_id = context.params.id;
-  const teacher = await fetch(`http://localhost:4200/teacher/${teacher_id}`);
+  const teacher = await fetch(
+    `http://localhost:4200/teacher/oneUser/${teacher_id}`
+  );
   let data = await teacher.json();
   let id = context.params.id;
-  const posts = await fetch(`http://localhost:4200/posts/${id}`);
+  const posts = await fetch(`http://localhost:4200/teacher/all/posts/${id}`);
   let blogs = await posts.json();
   // console.log(blogs, "blogs here ");
   return {
@@ -208,64 +210,66 @@ const Details = ({ data, blogs }) => {
         blogs.map((blog, index) => {
           // console.log(blog)
           return (
-            <div key={blogs.indexOf(blog)} className=" pt-4 max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
-              <div className="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
-                <div className="p-4 md:p-12 text-center lg:text-left">
-                  <div className="flex items-center">
-                    {data.image ? (
-                      <Image
-                        src={data.image}
-                        width={60}
-                        height={60}
-                        className="rounded-full"
-                      />
-                    ) : (
-                      <Image
-                        src="https://firebasestorage.googleapis.com/v0/b/coursehub-619.appspot.com/o/posts%2F109815470-man-avatar-profile-male-face-icon-vector-illustration-.jpg?alt=media&token=63ccf798-686d-48db-9df7-2d17f16faac4"
-                        width={60}
-                        height={60}
-                        className="rounded-full"
-                      />
-                    )}
-                    <div className="ml-2">
-                      <div className="text-sm ">
-                        <span className="font-semibold">{data.userName}</span>
+            <>
+              <div
+                key={index}
+                className=" flex  max-w-4xl my-10 bg-gray-100 shadow-md rounded-lg overflow-hidden mx-auto"
+              >
+                <div className=" grid-cols-3 min-w-full flex justify-between ">
+                  <div className="text-gray-400 font-medium text-sm mb-6 mt-6 mx-3 px-2 min-h-full max-w-lg">
+                    <img
+                      className="rounded justify-center"
+                      alt="Description"
+                      src={blog.Image}
+                    />
+                  </div>
+
+                  <div className=" relative pl-4 w-80">
+                    <header className="border-b border-grey-400">
+                      <a
+                        href="#"
+                        className=" cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
+                      >
+                        <img
+                          src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                          className="h-16 w-16 rounded-full object-cover"
+                          alt="user"
+                          src={data.image}
+                        />
+                        <p className="block ml-2 font-bold">{data.userName}</p>
+                      </a>
+                    </header>
+                    <div>
+                      <div className="pt-1 ">
+                        <div className="text-sm mb-2 flex  flex-start items-center">
+                          <p className="font-bold ml-2">
+                            <span className="text-gray-700 font-medium text-2xl ml-3">
+                              {blog.title}
+                            </span>
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-gray-500 text-xs ">
-                        {data.education}
+                      <div className="text-sm mb-2 min-h-full flex flex-start items-center">
+                        <p className="font-bold ml-2">
+                          <span className="text-gray-700 mx-auto font-medium ml-1">
+                            {blog.body}{" "}
+                          </span>
+                        </p>
                       </div>
                     </div>
-                  </div>
-                  <p className="text-gray-800 text-sm mt-3 leading-normal md:leading-relaxed">
-                    {blog.title}
-                  </p>
-                  <p className="text-gray-800 text-sm mt-2 leading-normal md:leading-relaxed">
-                    {blog.body}
-                  </p>
-                  {blog.Image && (
-                    <Image height={200} width={600} src={blog.Image} />
-                  )}
-                  <div className="text-gray-500 text-xs  flex items-center mt-3">
-                    {/* <Image
-                      height={20}
-                      width={20}
-                      className="mr-0.5"
-                      src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"
-                    /> */}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 hover:text-blue-600 "
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      onClick={() => setLikes(likes + 1)}
-                    >
-                      <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                    </svg>
-                    <span className="ml-1">{likes} • 26 comments</span>
+
+                    <div className="flex place-content-end justify-between md:gap-8 gap-4 pr-4 pt-8 pb-4">
+                      <button className="w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2">
+                        button 1
+                      </button>
+                      <button className="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2">
+                        button 2
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </>
           );
         })}
       {/*posts ends here */}

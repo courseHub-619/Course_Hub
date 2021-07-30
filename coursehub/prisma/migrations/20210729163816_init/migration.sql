@@ -64,6 +64,7 @@ CREATE TABLE "sessions" (
 CREATE TABLE "post" (
     "post_id" SERIAL NOT NULL,
     "author_id" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "Image" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT E'pending',
     "body" TEXT NOT NULL,

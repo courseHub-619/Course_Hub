@@ -52,23 +52,6 @@ io.on("connection", (socket) => {
   });
 });
 
-//upload a post by a certain teacher according to his id
-
-app.post("/post", async (req, res) => {
-  // console.log("wabba lubba dub dub", req.body.body);
-  let data = req.body;
-
-  const post = await prisma.post.create({
-    data: {
-      title: data.body.title,
-      body: data.body.body,
-      author_id: data.body.teacher_id,
-      Image: data.body.image,
-    },
-  });
-  // console.log("hajaaaa", post);
-});
-
 //freeCourses: all
 app.get("/freecourse/all", async (req, res) => {
   // console.log("free course")
@@ -158,114 +141,116 @@ app.post("/freecourse/post", async (req, res) => {
   });
 });
 
-// post : teacher courses
-app.post("/post", async (req, res) => {
-  // console.log("wabba lubba dub dub", req.body.body);
-  let data = req.body;
+//upload a post by a certain teacher according to his id
 
-  const post = await prisma.post.create({
-    data: {
-      title: data.body.title,
-      body: data.body.body,
-      author_id: data.body.teacher_id,
-      Image: data.body.image,
-    },
-  });
-  // console.log("hajaaaa", post);
-});
+// app.post("/post", async (req, res) => {
+//   console.log("wabba lubba dub dub", req.body.body);
+//   let data = req.body;
+
+//   const post = await prisma.post.create({
+//     data: {
+//       title: data.body.title,
+//       body: data.body.body,
+//       author: Number(data.body.teacher_id),
+//       Image: data.body.image,
+//     },
+//   });
+//   // console.log("hajaaaa", post);
+// });
 
 // get one teacher profile
 
-app.get("/teacher/:id", async (req, res) => {
-  let teacher = await prisma.teacher.findUnique({
-    where: {
-      teacher_id: Number(req.params.id),
-    },
-  });
-  // console.log(teacher);
-  return res.status(201).send(teacher);
-});
+// app.get("/teacher/:id", async (req, res) => {
+//   let teacher = await prisma.teacher.findUnique({
+//     where: {
+//       teacher_id: Number(req.params.id),
+//     },
+//   });
+//   // console.log(teacher);
+//   return res.status(201).send(teacher);
+// });
 
 //get all teacher profiles
 
-app.get("/user/teachers", async (req, res) => {
-  const teacher = await prisma.teacher.findMany({});
-  // console.log(teacher);
-  return res.status(201).send(teacher);
-});
+// app.get("/user/teachers", async (req, res) => {
+//   const teacher = await prisma.teacher.findMany({});
+//   // console.log(teacher);
+//   return res.status(201).send(teacher);
+// });
 
 // fetch all the posts by a certain user
-app.get(`/posts/:id`, async (req, res) => {
-  // console.log(req.body);
-  let posts = await prisma.post.findMany({
-    where: {
-      author_id: 0,
-    },
-  });
-  // console.log(posts, "ahayyaaaaa");
-  return res.status(201).send(posts);
-});
+
+// app.get(`/posts/:id`, async (req, res) => {
+//   // console.log(req.body);
+//   let posts = await prisma.post.findMany({
+//     where: {
+//       author_id: 0,
+//     },
+//   });
+//   // console.log(posts, "ahayyaaaaa");
+//   return res.status(201).send(posts);
+// });
 
 //update the data of a teacher
 
-app.put(`/update/profile/:id`, async (req, res) => {
-  console.log(req.body, req.params.id);
-  let update = await prisma.teacher.update({
-    where: {
-      teacher_id: Number(req.params.id),
-    },
-    data: {
-      // description: req.body.description,
-      image: req.body.url,
-      education: req.body.subject,
-    },
-  });
-});
+// app.put(`/update/profile/:id`, async (req, res) => {
+//   console.log(req.body, req.params.id);
+//   let update = await prisma.teacher.update({
+//     where: {
+//       teacher_id: Number(req.params.id),
+//     },
+//     data: {
+//       // description: req.body.description,
+//       image: req.body.url,
+//       education: req.body.subject,
+//     },
+//   });
+// });
 
 // feedback about the lecture
-app.put(`/form/feedback/:id`, async (req, res) => {
-  console.log(
-    "average",
-    req.body.body.average,
-    req.params.id,
-    "the whole body",
-    req.body
-  );
-  let feedback = await prisma.teacher.update({
-    where: {
-      teacher_id: Number(req.params.id),
-    },
-    data: {
-      sumOfRates: { increment: req.body.body.average },
-      numberOfaRtes: { increment: 1 },
-    },
-  });
-});
+// app.put(`/form/feedback/:id`, async (req, res) => {
+//   console.log(
+//     "average",
+//     req.body.body.average,
+//     req.params.id,
+//     "the whole body",
+//     req.body
+//   );
+//   let feedback = await prisma.teacher.update({
+//     where: {
+//       teacher_id: Number(req.params.id),
+//     },
+//     data: {
+//       sumOfRates: { increment: req.body.body.average },
+//       numberOfaRtes: { increment: 1 },
+//     },
+//   });
+// });
 
-app.get(`/posts/:id`, async (req, res) => {
-  // console.log(req.body);
-  let posts = await prisma.post.findMany({
-    where: {
-      author_id: 0,
-    },
-  });
-  console.log(posts, "ahayyaaaaa");
-  return res.status(201).send(posts);
-});
+// app.get(`/posts/:id`, async (req, res) => {
+//   // console.log(req.body);
+//   let posts = await prisma.post.findMany({
+//     where: {
+//       author_id: 0,
+//     },
+//   });
+//   console.log(posts, "ahayyaaaaa");
+//   return res.status(201).send(posts);
+// });
 
 //get all posts to display on the posts main page
 
-app.get(`/all/blogs`, async (req, res) => {
-  let blogs = await prisma.post.findMany({});
-  return res.status(200).send(blogs);
-});
+// app.get(`/all/blogs`, async (req, res) => {
+//   let blogs = await prisma.post.findMany({});
+//   return res.status(200).send(blogs);
+// });
 
 //get all teachers cuz i need them for sth else
 
-app.get(`/all/teachers`, async (req, res) => {
-  let teachers = await prisma.teacher.findMany({});
-  return res.status(201).send(teachers);
-});
+// app.get(`/all/teachers`, async (req, res) => {
+//   let teachers = await prisma.teacher.findMany({});
+//   return res.status(201).send(teachers);
+// });
 
 // require("./routes/authTeachers.routes")(app);
 app.use("/api/auth/teacher", require("./routes/authTeachers.routes.js"));
@@ -274,6 +259,8 @@ app.use("/api/auth/teacher", require("./routes/authTeachers.routes.js"));
 app.use("/api/auth/student", require("./routes/authStudents.routes.js"));
 
 app.use("/admin", require("./routes/admin.routes.js"));
+
+app.use(`/teacher`, require("./routes/teacher.routes.js"));
 
 server.listen(PORT, (err) => {
   if (err) throw err;

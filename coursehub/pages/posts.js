@@ -3,9 +3,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export const getStaticProps = async () => {
-  const res = await fetch(`http://localhost:4200/all/blogs`);
+  const res = await fetch(`http://localhost:4200/teacher/all/blogs`);
   const blogs = await res.json();
-  const tutor = await fetch(`http://localhost:4200/all/teachers`);
+  const tutor = await fetch(`http://localhost:4200/teacher/all/teachers`);
   const teachers = await tutor.json();
   return {
     props: {
@@ -16,8 +16,6 @@ export const getStaticProps = async () => {
 };
 
 const Post = ({ teachers, blogs }) => {
-  console.log(teachers, blogs);
-
   return (
     <>
       {teachers.map((teacher, index) => {

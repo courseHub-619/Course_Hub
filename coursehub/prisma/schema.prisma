@@ -77,6 +77,7 @@ model sessions {
 model post {
   post_id   Int     @id @default(autoincrement())
   author_id Int
+  createdAt DateTime  @default(now())
   Image     String
   status    String  @default("pending")
   body      String
