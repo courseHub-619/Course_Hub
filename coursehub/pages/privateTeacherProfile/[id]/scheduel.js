@@ -37,9 +37,9 @@ export const getStaticProps = async (context) => {
   };
 };
 
-const scheduel = ({ id, scheduel, students }) => {
-  const [Id, setId] = useState(id);
-  const router = useRouter();
+const Scheduel = ({ id, scheduel, students }) => {
+//   const [Id, setId] = useState(id);
+//   const router = useRouter();
 
   console.log(scheduel, "scheeee");
 
@@ -115,4 +115,4 @@ const scheduel = ({ id, scheduel, students }) => {
   });
 };
 
-export default scheduel;
+export default Scheduel;

@@ -30,7 +30,6 @@
     "firebase": "^8.7.1",
     "heroicons": "^1.0.2",
     "jsonwebtoken": "^8.5.1",
-
     "next-redux-wrapper": "^7.0.2",
     "moment": "^2.29.1",
     "netstat": "^0.0.2",

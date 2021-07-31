@@ -1,27 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { React, useState } from "react"
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { React, useState } from "react";
+import styles from "../styles/Home.module.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from 'react-responsive-carousel';
-import Card from '@material-ui/core/Card';
-import ReactCardFlip from 'react-card-flip';
-
-
-
-
-
-
+import { Carousel } from "react-responsive-carousel";
+import Card from "@material-ui/core/Card";
+import ReactCardFlip from "react-card-flip";
+import Link from "next/link";
 
 export default function Home() {
-
-  const [flip1, setflip1] = useState(false)
-  const [flip2, setflip2] = useState(false)
-  const [flip3, setflip3] = useState(false)
+  const [flip1, setflip1] = useState(false);
+  const [flip2, setflip2] = useState(false);
+  const [flip3, setflip3] = useState(false);
 
   function handleClick(e, func, val) {
     e.preventDefault();
-    func(!val)
+    func(!val);
   }
 
   return (
@@ -37,7 +31,8 @@ export default function Home() {
             showArrows={false}
             infiniteLoop={true}
             autoPlay={true}
-            showThumbs={false}>
+            showThumbs={false}
+          >
             <div>
               <Image src="/home12.jpg" width={1300} height={400} alt={""} />
             </div>
@@ -50,110 +45,191 @@ export default function Home() {
           </Carousel>
         </div>
         <div className="flex justify-center">
-          <h1 className="text-center text-4xl font-serif py-2 px-2 " style={{ "color": "#3881AB" }}>CourseHub</h1>
+          <h1
+            className="text-center text-4xl font-serif py-2 px-2 "
+            style={{ color: "#3881AB" }}
+          >
+            CourseHub
+          </h1>
           <div className="text-center text-3xl ">
-            <button style={{ "backgroundColor": "#08958F" }} className=" text-white text-center  font-bold py-2 px-4 rounded">
-              Start now
-            </button>
+            <Link href="/Auth">
+              <button
+                style={{ backgroundColor: "#08958F" }}
+                className=" text-white text-center  font-bold py-2 px-4 rounded"
+              >
+                Start now
+              </button>
+            </Link>
           </div>
         </div>
 
-
-
-        <div className="flex justify-center p-8" style={{ "color": "#3881AB" }}>
+        <div className="flex justify-center p-8" style={{ color: "#3881AB" }}>
           <div>
-            <h1 className=" p-4 text-center text-l font-serif font-medium ">  “The beautiful thing about learning is that nobody can take it away from you.” – B.B. King</h1>
+            <h1 className=" p-4 text-center text-l font-serif font-medium ">
+              {" "}
+              “The beautiful thing about learning is that nobody can take it
+              away from you.” – B.B. King
+            </h1>
 
-            <p className=" p-4 text-l text-center font-serif font-medium ">Let`s embrace together the new learning process! A wide variety of teachers
-              are ready to help you overtake all your difficulties. Join our community now!  </p>
+            <p className=" p-4 text-l text-center font-serif font-medium ">
+              Let`s embrace together the new learning process! A wide variety of
+              teachers are ready to help you overtake all your difficulties.
+              Join our community now!{" "}
+            </p>
             <div className="text-center">
-              <button style={{ "backgroundColor": "#1B4D70" }} className=" text-white text-2xl  font-bold py-2 px-4 rounded">
-                Check courses
-              </button>
+              <Link href="/posts">
+                <button
+                  style={{ backgroundColor: "#1B4D70" }}
+                  className=" text-white text-2xl  font-bold py-2 px-4 rounded"
+                >
+                  Check courses
+                </button>
+              </Link>
             </div>
-
           </div>
           <div>
             <Image src="/homex12.png" width={800} height={350} alt={""} />
           </div>
         </div>
 
-
-
-        <div style={{ "color": "#3881AB" }}>
-          <h1 className="py-8 text-center text-3xl font-serif font-medium">What CourseHub users think about us</h1>
+        <div style={{ color: "#3881AB" }}>
+          <h1 className="py-8 text-center text-3xl font-serif font-medium">
+            What CourseHub users think about us
+          </h1>
         </div>
-
-
 
         <div className="flex justify-between p-8">
           <ReactCardFlip isFlipped={flip1} flipDirection="horizontal">
-
-            <Card style={{ "width": "300px", "height": "370px" }} className="text-center">
-              <Image src="/std.jpg" width={300} height={250} className="text-center" alt={""} />
+            <Card
+              style={{ width: "300px", height: "370px" }}
+              className="text-center"
+            >
+              <Image
+                src="/std.jpg"
+                width={300}
+                height={250}
+                className="text-center"
+                alt={""}
+              />
               <div className="p-2">Angelina</div>
               <div className="p-2">Science student</div>
-              <div style={{ "color": "#3881AB" }}>
-                <button className="text-center" onClick={(e) => handleClick(e, setflip1, flip1)}>Read preview</button>
+              <div style={{ color: "#3881AB" }}>
+                <button
+                  className="text-center"
+                  onClick={(e) => handleClick(e, setflip1, flip1)}
+                >
+                  Read preview
+                </button>
               </div>
             </Card>
 
-            <Card style={{ "width": "300px", "height": "370px" }} className="text-center" >
+            <Card
+              style={{ width: "300px", height: "370px" }}
+              className="text-center"
+            >
               <div className="p-2">HelloWorld</div>
-              <p className="p-4">I am a science student at Cambridge college. Coursehub really helped to understand life</p>
-              <div style={{ "color": "#3881AB" }}>
-                <button className="text-center" onClick={(e) => handleClick(e, setflip1, flip1)}>Click to flip</button>
+              <p className="p-4">
+                I am a science student at Cambridge college. Coursehub really
+                helped to understand life
+              </p>
+              <div style={{ color: "#3881AB" }}>
+                <button
+                  className="text-center"
+                  onClick={(e) => handleClick(e, setflip1, flip1)}
+                >
+                  Click to flip
+                </button>
               </div>
             </Card>
           </ReactCardFlip>
           <ReactCardFlip isFlipped={flip2} flipDirection="horizontal">
-
-            <Card style={{ "width": "300px", "height": "370px" }} className="text-center">
-              <Image src="/std3.jpg" width={300} height={250} className="text-center" alt={""} />
+            <Card
+              style={{ width: "300px", height: "370px" }}
+              className="text-center"
+            >
+              <Image
+                src="/std3.jpg"
+                width={300}
+                height={250}
+                className="text-center"
+                alt={""}
+              />
               <div className="p-2">Joseph</div>
               <div className="p-2">Science student</div>
-              <div style={{ "color": "#3881AB" }}>
-                <button className="text-center" onClick={(e) => handleClick(e, setflip2, flip2)}>Read preview</button>
+              <div style={{ color: "#3881AB" }}>
+                <button
+                  className="text-center"
+                  onClick={(e) => handleClick(e, setflip2, flip2)}
+                >
+                  Read preview
+                </button>
               </div>
             </Card>
 
-            <Card style={{ "width": "300px", "height": "370px" }} className="text-center" >
+            <Card
+              style={{ width: "300px", height: "370px" }}
+              className="text-center"
+            >
               <div className="p-2">HelloWorld</div>
-              <p className="p-4">I am a science student at Cambridge college. Coursehub really helped to understand life</p>
-              <div style={{ "color": "#3881AB" }}>
-                <button className="text-center" onClick={(e) => handleClick(e, setflip2, flip2)}>Click to flip</button>
+              <p className="p-4">
+                I am a science student at Cambridge college. Coursehub really
+                helped to understand life
+              </p>
+              <div style={{ color: "#3881AB" }}>
+                <button
+                  className="text-center"
+                  onClick={(e) => handleClick(e, setflip2, flip2)}
+                >
+                  Click to flip
+                </button>
               </div>
             </Card>
           </ReactCardFlip>
           <ReactCardFlip isFlipped={flip3} flipDirection="horizontal">
-
-            <Card style={{ "width": "300px", "height": "370px" }} className="text-center">
-              <Image src="/std2.jpg" width={300} height={250} className="text-center" alt={""} />
+            <Card
+              style={{ width: "300px", height: "370px" }}
+              className="text-center"
+            >
+              <Image
+                src="/std2.jpg"
+                width={300}
+                height={250}
+                className="text-center"
+                alt={""}
+              />
               <div className="p-2">Anna</div>
               <div className="p-2">Science student</div>
-              <div style={{ "color": "#3881AB" }}>
-                <button className="text-center" onClick={(e) => handleClick(e, setflip3, flip3)}>Read preview</button>
+              <div style={{ color: "#3881AB" }}>
+                <button
+                  className="text-center"
+                  onClick={(e) => handleClick(e, setflip3, flip3)}
+                >
+                  Read preview
+                </button>
               </div>
             </Card>
 
-            <Card style={{ "width": "300px", "height": "370px" }} className="text-center" >
+            <Card
+              style={{ width: "300px", height: "370px" }}
+              className="text-center"
+            >
               <div className="p-2">HelloWorld</div>
-              <p className="p-4">I am a science student at Cambridge college. Coursehub really helped to understand life</p>
-              <div style={{ "color": "#3881AB" }}>
-                <button className="text-center" onClick={(e) => handleClick(e, setflip3, flip3)}>Click to flip</button>
+              <p className="p-4">
+                I am a science student at Cambridge college. Coursehub really
+                helped to understand life
+              </p>
+              <div style={{ color: "#3881AB" }}>
+                <button
+                  className="text-center"
+                  onClick={(e) => handleClick(e, setflip3, flip3)}
+                >
+                  Click to flip
+                </button>
               </div>
             </Card>
           </ReactCardFlip>
         </div>
       </div>
-
-
-
-
-
-
-
-
     </>
-  )
+  );
 }

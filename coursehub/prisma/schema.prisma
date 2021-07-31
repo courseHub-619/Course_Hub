@@ -1,53 +1,48 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model student {
-  student_id Int    @id @default(autoincrement())
+  student_id Int        @id @default(autoincrement())
   userName   String
   password   String
   education  String
   age        Int
-  wallet     Int    @default(0)
+  wallet     Int        @default(0)
   image      String
-  email      String @unique
-  token      String @unique
-
-  DM       DM[]
-  review   review[]
-  schedule schedule[]
+  email      String     @unique
+  token      String     @unique @default("")
+  DM         DM[]
+  review     review[]
+  schedule   schedule[]
 }
 
 model teacher {
-  teacher_id     Int    @id @default(autoincrement())
-  numberOfRates  Int    @default(0)
-  sumOfRates     Int    @default(0)
-  email          String @unique
+  teacher_id     Int           @id @default(autoincrement())
+  sumOfRates     Int           @default(0)
+  email          String        @unique
   userName       String
   password       String
   education      String
-  description    String @default("")
+  description    String        @default("")
   age            Int
-  wallet         Int    @default(0)
+  wallet         Int           @default(0)
   image          String
-  Overall_rating Int    @default(0)
-  token          String @unique
-
-  DM          DM[]
-  free_course free_course[]
-  post        post[]
-  review      review[]
-  schedule    schedule[]
-  weekDay     weekDay[]
-  sessions    sessions[]
+  token          String        @unique @default("")
+  Overall_rating Int           @default(0)
+  numberOfRates  Int           @default(0)
+  DM             DM[]
+  free_course    free_course[]
+  post           post[]
+  review         review[]
+  schedule       schedule[]
+  sessions       sessions?
+  weekDay        weekDay?
 }
 
 model weekDay {
@@ -61,7 +56,6 @@ model weekDay {
   saturday   Boolean @default(false)
   sunday     Boolean @default(false)
   teacher    teacher @relation(fields: [teacher_id], references: [teacher_id])
-
 }
 
 model sessions {
@@ -74,19 +68,17 @@ model sessions {
   five        Boolean @default(false)
   six         Boolean @default(false)
   teacher     teacher @relation(fields: [teacher_id], references: [teacher_id])
-
 }
 
 model post {
-  post_id   Int      @id @default(autoincrement())
+  post_id   Int     @id @default(autoincrement())
   author_id Int
-  createdAt DateTime @default(now())
   Image     String
-  status    String   @default("pending")
+  status    String  @default("pending")
   body      String
   title     String
   price     Int
-  author    teacher  @relation(fields: [author_id], references: [teacher_id])
+  author    teacher @relation(fields: [author_id], references: [teacher_id])
 }
 
 model review {

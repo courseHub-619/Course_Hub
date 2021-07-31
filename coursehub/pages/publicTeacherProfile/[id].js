@@ -219,10 +219,12 @@ const Details = ({ data, blogs, teacherId }) => {
             >
               <div className=" grid-cols-3 min-w-full flex justify-between ">
                 <div className="text-gray-400 font-medium text-sm mb-6 mt-6 mx-3 px-2 min-h-full max-w-lg">
-                  <img
+                  <Image
                     className="rounded justify-center"
                     alt="Description"
                     src={blog.Image}
+                    height={100}
+                    width={250}
                   />
                 </div>
 
@@ -232,11 +234,13 @@ const Details = ({ data, blogs, teacherId }) => {
                       href="#"
                       className=" cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
                     >
-                      <img
-                        src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                      <Image
+                        // src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
                         className="h-16 w-16 rounded-full object-cover"
                         alt="user"
                         src={data.image}
+                        height={100}
+                        width={200}
                       />
                       <p className="block ml-2 font-bold">{data.userName}</p>
                     </a>

@@ -102,6 +102,14 @@ const Student = ({ student }) => {
                   Chat room
                 </a>
               </Link>
+              <Link href={`/privateStudentProfile/${student.student_id}/form`}>
+                <a
+                  href=""
+                  className="bg font-bold text-sm text-blue-800 w-full text-center py-3 hover:bg-blue-800 hover:text-white hover:shadow-lg"
+                >
+                  Feedback
+                </a>
+              </Link>
             </div>
 
             <div className="w-full">

@@ -3,20 +3,48 @@ import Star from "react-rating-stars-component";
 // import Star from "react-star-ratings";
 import { useRouter } from "next/dist/client/router";
 import axios from "axios";
+import Link from "next/link";
 
-const StarRating = ({ totalStars }) => {
+export const getStaticPaths = async () => {
+  const response = await fetch("http://localhost:4200/admin/students/all");
+  const data = await response.json();
+  const paths = data.map((student) => {
+    let id = student.student_id;
+    // console.log("id", id)
+    return {
+      params: { id: id.toString() },
+    };
+  });
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async (context) => {
+  const stdId = context.params.id;
+
+  return {
+    props: {
+      stdId,
+    },
+  };
+};
+
+const StarRating = ({ totalStars, stdId }) => {
   const router = useRouter();
   const { id } = router.query;
   let [comment, setComment] = useState("");
+  let [Sid, setid] = useState(stdId);
 
   const [starsSelected, selectStar] = useState(0);
 
   const sendFeedback = async () => {
     console.log(starsSelected, comment);
     const feedback = await axios
-      .put(`http://localhost:4200/teacher/form/feedback/${0}`, {
+      .put(`http://localhost:4200/teacher/form/feedback/${Sid}`, {
         body: {
-          // student_id: 0,
+          student_id: Sid,
           average: starsSelected,
           comment: comment,
         },
@@ -72,13 +100,13 @@ const StarRating = ({ totalStars }) => {
             </div>
           </div>
           <div className="h-20 flex items-center justify-center">
-            <a href="#" className="text-gray-600">
-              Maybe later
-            </a>
+            <Link href={`/privateStudentProfile/${Sid}`}>
+              <a href="#" className="text-gray-600">
+                Maybe later
+              </a>
+            </Link>
           </div>
         </div>
-
-        <div className="mt-8 text-gray-700">your feedback helps us</div>
       </div>
     </div>
   );
