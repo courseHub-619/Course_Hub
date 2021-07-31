@@ -101,6 +101,8 @@ app.use("/api/auth/teacher", require("./routes/authTeachers.routes.js"));
 // require("./routes/authStudents.routes")(app);
 app.use("/api/auth/student", require("./routes/authStudents.routes.js"));
 
+app.use('/api',require("./routes/buyPointsStudent.routes.js"))
+
 app.use("/admin", require("./routes/admin.routes.js"));
 
 app.use(`/teacher`, require("./routes/teacher.routes.js"));

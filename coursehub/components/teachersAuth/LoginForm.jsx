@@ -25,7 +25,7 @@ export default function LoginForm() {
 
       .then((response) => {
         console.log(response.data);
-        localStorage.setItem('token', response.data.accessToken);
+        localStorage.setItem('token', response.data.result.token);
         router.push(`/privateTeacherProfile/${response.data.result.teacher_id}`)
       })
       .catch((err) => {

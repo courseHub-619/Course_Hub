@@ -89,7 +89,7 @@ const Student = ({ student }) => {
                 </a>
               </Link>
               <a
-                href=""
+                href="http://localhost:3000/Payment"
                 className="bg font-bold text-sm text-yellow-600 w-full text-center py-3 hover:bg-yellow-600 hover:text-white hover:shadow-lg"
               >
                 Recharge wallet
