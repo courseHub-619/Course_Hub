@@ -50,7 +50,7 @@ exports.signUp = async (req, res) => {
 
     //here we are going to check if the user we trying to create already exist or not 
     
- students.findUnique({
+    students.findUnique({
       where :{email : req.body.signupdata.email}
     })
 
