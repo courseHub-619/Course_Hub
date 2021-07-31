@@ -80,7 +80,7 @@ const Course = ({ stdId }) => {
     console.log(typeof postDetails.teacher_id);
 
     const sendPost = await axios
-      .post(`http://localhost:4200/post`, {
+      .post(`http://localhost:4200/teacher/post`, {
         body: postDetails,
       })
       .then(async (res) => {

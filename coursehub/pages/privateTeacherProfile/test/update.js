@@ -97,10 +97,10 @@ const MakePost = () => {
       teacher_id: 0,
       image: url,
     };
-    console.log(typeof postDetails.teacher_id);
+    console.log(postDetails);
 
     const sendPost = await axios
-      .post(`http://localhost:4200/post`, {
+      .post(`http://localhost:4200/teacher/post`, {
         body: postDetails,
       })
       .then((res) => console.log(res))
@@ -117,7 +117,7 @@ const MakePost = () => {
     );
     let teacherId = 0;
     axios
-      .put(`http://localhost:4200/update/profile/${teacherId}`, {
+      .put(`http://localhost:4200/teacher/update/profile/${teacherId}`, {
         url: updatedUrl,
         subject: subject,
         description: description,

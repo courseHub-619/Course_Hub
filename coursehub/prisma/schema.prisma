@@ -81,12 +81,13 @@ model sessions {
 
 model post {
   post_id   Int     @id @default(autoincrement())
-  author_id Int     
+  author_id Int
+  createdAt DateTime  @default(now())
   Image     String
   status    String  @default("pending")
   body      String
   title     String
-  price     Int
+  price     Int 
   author    teacher @relation(fields: [author_id], references: [teacher_id])
 }
 

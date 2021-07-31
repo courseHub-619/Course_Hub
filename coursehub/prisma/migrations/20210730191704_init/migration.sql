@@ -5,7 +5,8 @@ CREATE TABLE "student" (
     "password" TEXT NOT NULL,
     "education" TEXT NOT NULL,
     "age" INTEGER NOT NULL,
-    "wallet" INTEGER NOT NULL,
+    "wallet" INTEGER NOT NULL DEFAULT 0,
+    "token" TEXT NOT NULL DEFAULT E'',
     "image" TEXT NOT NULL,
     "email" TEXT NOT NULL,
 
@@ -15,18 +16,18 @@ CREATE TABLE "student" (
 -- CreateTable
 CREATE TABLE "teacher" (
     "teacher_id" SERIAL NOT NULL,
-    "numberOfaRtes" INTEGER NOT NULL,
-    "sumOfRates" INTEGER NOT NULL,
+    "numberOfRates" INTEGER NOT NULL DEFAULT 0,
+    "sumOfRates" INTEGER NOT NULL DEFAULT 0,
     "email" TEXT NOT NULL,
     "userName" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "education" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "description" TEXT NOT NULL DEFAULT E'',
     "age" INTEGER NOT NULL,
-    "wallet" INTEGER NOT NULL,
+    "wallet" INTEGER NOT NULL DEFAULT 0,
     "image" TEXT NOT NULL,
-    "Overall_rating" TEXT NOT NULL DEFAULT E'0',
-    "price" INTEGER NOT NULL,
+    "Overall_rating" INTEGER NOT NULL DEFAULT 0,
+    "token" TEXT NOT NULL DEFAULT E'',
 
     PRIMARY KEY ("teacher_id")
 );
@@ -64,10 +65,12 @@ CREATE TABLE "sessions" (
 CREATE TABLE "post" (
     "post_id" SERIAL NOT NULL,
     "author_id" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "Image" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT E'pending',
     "body" TEXT NOT NULL,
     "title" TEXT NOT NULL,
+    "price" INTEGER NOT NULL,
 
     PRIMARY KEY ("post_id")
 );
@@ -89,9 +92,8 @@ CREATE TABLE "schedule" (
     "scheduel_id" SERIAL NOT NULL,
     "student" INTEGER NOT NULL,
     "teacher" INTEGER NOT NULL,
-    "day" INTEGER NOT NULL,
-    "session" INTEGER NOT NULL,
-    "studentCallId" INTEGER NOT NULL,
+    "day" TEXT NOT NULL,
+    "session" TEXT NOT NULL,
 
     PRIMARY KEY ("scheduel_id")
 );
@@ -131,13 +133,22 @@ CREATE TABLE "DM" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "student.token_unique" ON "student"("token");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "student.email_unique" ON "student"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "teacher.email_unique" ON "teacher"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "schedule.studentCallId_unique" ON "schedule"("studentCallId");
+CREATE UNIQUE INDEX "teacher.token_unique" ON "teacher"("token");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "weekDay.teacher_id_unique" ON "weekDay"("teacher_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "sessions.teacher_id_unique" ON "sessions"("teacher_id");
 
 -- AddForeignKey
 ALTER TABLE "weekDay" ADD FOREIGN KEY ("teacher_id") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -159,12 +170,6 @@ ALTER TABLE "schedule" ADD FOREIGN KEY ("student") REFERENCES "student"("student
 
 -- AddForeignKey
 ALTER TABLE "schedule" ADD FOREIGN KEY ("teacher") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "schedule" ADD FOREIGN KEY ("day") REFERENCES "weekDay"("weekDay_id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "schedule" ADD FOREIGN KEY ("session") REFERENCES "sessions"("sessions_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "free_course" ADD FOREIGN KEY ("document") REFERENCES "attachement"("attachement_id") ON DELETE CASCADE ON UPDATE CASCADE;

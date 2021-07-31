@@ -14,7 +14,7 @@ const StarRating = ({ totalStars }) => {
   const sendFeedback = async () => {
     console.log(starsSelected, comment);
     const feedback = await axios
-      .put(`http://localhost:4200/form/feedback/${0}`, {
+      .put(`http://localhost:4200/teacher/form/feedback/${0}`, {
         body: {
           // student_id: 0,
           average: starsSelected,
