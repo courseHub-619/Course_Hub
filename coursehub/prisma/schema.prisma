@@ -11,107 +11,103 @@ generator client {
 }
 
 model student {
-  student_id Int        @id @default(autoincrement())
+  student_id Int    @id @default(autoincrement())
   userName   String
   password   String
   education  String
   age        Int
-  wallet     Int @default(0)
+  wallet     Int    @default(0)
   image      String
-  email      String     @unique
-  token      String     @unique  
+  email      String @unique
+  token      String @unique
 
-  DM         DM[]
-  review     review[]
-  schedule   schedule[]
+  DM       DM[]
+  review   review[]
+  schedule schedule[]
 }
-
-
-
 
 model teacher {
-  teacher_id     Int            @id @default(autoincrement())
-  numberOfRates   Int            @default(0)
-  sumOfRates      Int             @default(0)
-  email          String         @unique
+  teacher_id     Int    @id @default(autoincrement())
+  numberOfRates  Int    @default(0)
+  sumOfRates     Int    @default(0)
+  email          String @unique
   userName       String
   password       String
-  education      String             
-  description    String          @default("")
+  education      String
+  description    String @default("")
   age            Int
-  wallet         Int @default(0)
+  wallet         Int    @default(0)
   image          String
-  Availability   String
-  Overall_rating Int       @default(0)
-  token          String    @unique 
+  Overall_rating Int    @default(0)
+  token          String @unique
 
-  DM             DM[]
-  free_course    free_course[]    
-  post           post[]
-  review         review[]
-  schedule       schedule[]
-  weekDay        weekDay[]
-  sessions       sessions[]
+  DM          DM[]
+  free_course free_course[]
+  post        post[]
+  review      review[]
+  schedule    schedule[]
+  weekDay     weekDay[]
+  sessions    sessions[]
 }
 
-
 model weekDay {
-  weekDay_id Int        @id @default(autoincrement())
-  teacher_id Int         @unique
-  monday     Boolean    @default(false)
-  tuesday    Boolean    @default(false)
-  wednesday  Boolean    @default(false)
-  thursday   Boolean    @default(false)
-  friday     Boolean    @default(false)
-  saturday   Boolean    @default(false)
-  sunday     Boolean    @default(false)
-  teacher    teacher    @relation(fields: [teacher_id], references: [teacher_id])
- 
+  weekDay_id Int     @id @default(autoincrement())
+  teacher_id Int     @unique
+  monday     Boolean @default(false)
+  tuesday    Boolean @default(false)
+  wednesday  Boolean @default(false)
+  thursday   Boolean @default(false)
+  friday     Boolean @default(false)
+  saturday   Boolean @default(false)
+  sunday     Boolean @default(false)
+  teacher    teacher @relation(fields: [teacher_id], references: [teacher_id])
+
 }
 
 model sessions {
-  sessions_id Int        @id @default(autoincrement())
-  teacher_id  Int        @unique
-  one         Boolean    @default(false)
-  two         Boolean    @default(false)
-  three       Boolean    @default(false)
-  four        Boolean    @default(false)
-  five        Boolean    @default(false)
-  six         Boolean    @default(false)
-  teacher     teacher    @relation(fields: [teacher_id], references: [teacher_id])
-  
+  sessions_id Int     @id @default(autoincrement())
+  teacher_id  Int     @unique
+  one         Boolean @default(false)
+  two         Boolean @default(false)
+  three       Boolean @default(false)
+  four        Boolean @default(false)
+  five        Boolean @default(false)
+  six         Boolean @default(false)
+  teacher     teacher @relation(fields: [teacher_id], references: [teacher_id])
+
 }
 
 model post {
-  post_id   Int     @id @default(autoincrement())
-  author_id Int     
+  post_id   Int      @id @default(autoincrement())
+  author_id Int
+  createdAt DateTime @default(now())
   Image     String
-  status    String  @default("pending")
+  status    String   @default("pending")
   body      String
   title     String
   price     Int
-  author    teacher @relation(fields: [author_id], references: [teacher_id])
+  author    teacher  @relation(fields: [author_id], references: [teacher_id])
 }
 
 model review {
-  review_id           Int     @id @default(autoincrement())
-  overallRating       Int
-  ratesNumber         Int
-  student_id          Int
-  teacher_id          Int
-  comments            String  @default("")
-  student          student @relation(fields: [student_id], references: [student_id])
-  teacher          teacher  @relation(fields: [teacher_id], references: [teacher_id])
+  review_id     Int     @id @default(autoincrement())
+  overallRating Int
+  ratesNumber   Int
+  student_id    Int
+  teacher_id    Int
+  comments      String  @default("")
+  student       student @relation(fields: [student_id], references: [student_id])
+  teacher       teacher @relation(fields: [teacher_id], references: [teacher_id])
 }
 
 model schedule {
-  scheduel_id      Int      @id @default(autoincrement())
-  student          Int      
-  teacher          Int      
-  day              String   
-  session          String   
-  student_id       student  @relation(fields: [student], references: [student_id])
-  teacher_id       teacher  @relation(fields: [teacher], references: [teacher_id])
+  scheduel_id Int     @id @default(autoincrement())
+  student     Int
+  teacher     Int
+  day         String
+  session     String
+  student_id  student @relation(fields: [student], references: [student_id])
+  teacher_id  teacher @relation(fields: [teacher], references: [teacher_id])
 }
 
 model attachement {

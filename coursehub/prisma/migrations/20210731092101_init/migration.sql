@@ -66,6 +66,7 @@ CREATE TABLE "sessions" (
 CREATE TABLE "post" (
     "post_id" SERIAL NOT NULL,
     "author_id" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "Image" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT E'pending',
     "body" TEXT NOT NULL,
@@ -92,9 +93,8 @@ CREATE TABLE "schedule" (
     "scheduel_id" SERIAL NOT NULL,
     "student" INTEGER NOT NULL,
     "teacher" INTEGER NOT NULL,
-    "day" INTEGER NOT NULL,
-    "session" INTEGER NOT NULL,
-    "studentCallId" INTEGER NOT NULL,
+    "day" TEXT NOT NULL,
+    "session" TEXT NOT NULL,
 
     PRIMARY KEY ("scheduel_id")
 );
@@ -151,12 +151,6 @@ CREATE UNIQUE INDEX "weekDay.teacher_id_unique" ON "weekDay"("teacher_id");
 -- CreateIndex
 CREATE UNIQUE INDEX "sessions.teacher_id_unique" ON "sessions"("teacher_id");
 
--- CreateIndex
-CREATE UNIQUE INDEX "post.author_id_unique" ON "post"("author_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "schedule.studentCallId_unique" ON "schedule"("studentCallId");
-
 -- AddForeignKey
 ALTER TABLE "weekDay" ADD FOREIGN KEY ("teacher_id") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -177,12 +171,6 @@ ALTER TABLE "schedule" ADD FOREIGN KEY ("student") REFERENCES "student"("student
 
 -- AddForeignKey
 ALTER TABLE "schedule" ADD FOREIGN KEY ("teacher") REFERENCES "teacher"("teacher_id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "schedule" ADD FOREIGN KEY ("day") REFERENCES "weekDay"("weekDay_id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "schedule" ADD FOREIGN KEY ("session") REFERENCES "sessions"("sessions_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "free_course" ADD FOREIGN KEY ("document") REFERENCES "attachement"("attachement_id") ON DELETE CASCADE ON UPDATE CASCADE;

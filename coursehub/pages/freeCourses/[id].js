@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ReactStars from "react-rating-stars-component";
+import Link from "next/link";
 
 export const getStaticPaths = async () => {
   const response = await fetch("http://localhost:4200/freecourse/all");
@@ -30,7 +31,9 @@ export const getStaticProps = async (context) => {
   const attachement = await response.json();
 
   const teacher_id = context.params.id;
-  const teacher = await fetch(`http://localhost:4200/freecourse/teacher/1`);
+  const teacher = await fetch(
+    `http://localhost:4200/freecourse/teacher/${teacher_id}`
+  );
   const TeacherName = await teacher.json();
 
   return {
@@ -104,10 +107,12 @@ const course = ({ course, attachement, teacher }) => {
                   />
                 </div>
               </div>
-              <button className="px-2 py-1 text-gray-100 bg-green-700 flex w-full items-center justify-center rounded">
-                Check profile
-                <i className="bx bx-user-plus ml-2"></i>
-              </button>
+              <Link href={`/publicTeacherProfile/${teacher.teacher_id}`}>
+                <button className="px-2 py-1 text-gray-100 bg-green-700 flex w-full items-center justify-center rounded">
+                  Check profile
+                  <i className="bx bx-user-plus ml-2"></i>
+                </button>
+              </Link>
             </div>
           </div>
         </div>

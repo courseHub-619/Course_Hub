@@ -2,6 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { currentUserId } from '../../store/actions/profileAction';
+
 
 
 export default function LoginForm() {
@@ -14,6 +18,7 @@ export default function LoginForm() {
     password: ""
 
   });
+
   const handleChange = (e) => {
     setloginData({ ...loginData, [e.target.name]: e.target.value });
     console.log(loginData, e.target.value);
@@ -103,3 +108,5 @@ export default function LoginForm() {
   </figure>
   );
 }
+
+

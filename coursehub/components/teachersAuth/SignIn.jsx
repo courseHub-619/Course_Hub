@@ -90,8 +90,7 @@ export default function SignIn() {
       signupdata.email === "" ||
       signupdata.education === "" ||
       signupdata.age === null ||
-      signupdata.image === "" ||
-      signupdata.Availability === ""
+      signupdata.image === "" 
     ) {
       console.log("some inputs are empty !!");
     }
