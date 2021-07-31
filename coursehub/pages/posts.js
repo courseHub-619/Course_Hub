@@ -27,9 +27,9 @@ const Post = ({ teachers, blogs }) => {
                 className=" flex  max-w-4xl my-10 bg-gray-100 shadow-md rounded-lg overflow-hidden mx-auto"
               >
                 <div className=" grid-cols-3 min-w-full flex justify-between ">
-                  <div className="text-gray-400 font-medium text-sm mb-6 mt-6 mx-3 px-2 min-h-full max-w-lg">
+                  <div className="text-gray-400  font-medium text-sm mb-6 mt-6 mx-3 px-2 min-h-full max-w-lg">
                     <img
-                      className="rounded justify-center"
+                      className="rounded object-cover "
                       // src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
                       // src="https://www.publicbooks.org/wp-content/uploads/2017/01/book-e1484158615982.jpg"
                       // src="https://ychef.files.bbci.co.uk/live/624x351/p03gg1lc.jpg"
@@ -47,7 +47,7 @@ const Post = ({ teachers, blogs }) => {
                       >
                         <img
                           src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-                          className="h-16 w-16 rounded-full object-cover"
+                          className="h-16  w-16 rounded-full object-cover"
                           alt="user"
                           src={teacher.image}
                         />

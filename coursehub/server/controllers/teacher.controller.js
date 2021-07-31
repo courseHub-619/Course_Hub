@@ -7,7 +7,7 @@ exports.makePost = async (req, res) => {
   const teacher = await prisma.teacher.findUnique({
     where: { teacher_id: Number(data.body.teacher_id) },
   });
-  console.log("tescherrrrr", teacher);
+  // console.log("tescherrrrr", teacher);
   const post = await prisma.post.create({
     data: {
       title: data.body.title,
@@ -17,7 +17,7 @@ exports.makePost = async (req, res) => {
       price: Number(data.body.price),
     },
   });
-  console.log("hajaaaa", post);
+  // console.log("hajaaaa", post);
 };
 
 exports.updateTeacherProfile = async (req, res) => {
@@ -70,12 +70,13 @@ exports.feedBackForm = async (req, res) => {
 };
 
 exports.getAllteachersPosts = async (req, res) => {
+  console.log(req.params.id, "whereeeeeeeeeeeeeeeeeeeeeeeee");
   let posts = await prisma.post.findMany({
     where: {
-      author_id: 0,
+      author_id: Number(req.params.id),
     },
   });
-  console.log(posts, "ahayyaaaaa");
+  // console.log(posts, "ahayyaaaaa");
   return res.status(201).send(posts);
 };
 

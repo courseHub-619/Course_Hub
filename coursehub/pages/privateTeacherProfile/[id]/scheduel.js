@@ -2,6 +2,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import axios from "axios";
 
+import { useRouter } from "next/router";
+
 export const getStaticPaths = async () => {
   const response = await fetch("http://localhost:4200/admin/teacher/all");
   const data = await response.json();
@@ -37,18 +39,32 @@ export const getStaticProps = async (context) => {
 
 const scheduel = ({ id, scheduel, students }) => {
   const [Id, setId] = useState(id);
+  const router = useRouter();
 
   console.log(scheduel, "scheeee");
+
+  const deleteScheduel = async (sId) => {
+    await axios
+      .delete(`http://localhost:4200/reservaition/scheduel/delete/${sId}`)
+      .then((res) => {
+        console.log(res.data);
+        router.push(`/privateTeacherProfile/${Id}/scheduel`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return scheduel.map((data) => {
     return students.map((std) => {
       if (std.student_id === data.student) {
         return (
-          <div className=" flex  bg-white shadow-2xl mx-auto  p-3">
-            <div className=" relative flex">
+          <div className=" flex justify-between w-3/4 bg-white shadow-2xl h-55 mx-auto mt-20 p-5">
+            <div className=" relative flex justify-around">
               <Image
                 src="https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTd8fGNvdXJzZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
                 height={100}
-                width={180}
+                width={250}
                 className="my-auto h-24 w-24 border-gray-500 rounded-full border-4"
               />
               <div>
@@ -84,7 +100,10 @@ const scheduel = ({ id, scheduel, students }) => {
                     {std.email}
                   </p>
                 </div>
-                <button className=" flex justify-center border-t-2 border-gray-100 font-medium text-gray-600 py-2 px-2 hover:bg-red-500 transition duration-150">
+                <button
+                  onClick={() => deleteScheduel(data.scheduel_id)}
+                  className=" flex justify-center border-t-2 border-gray-100 font-medium text-gray-600 py-2 px-2 hover:bg-red-500 transition duration-150"
+                >
                   Delete session
                 </button>
               </div>

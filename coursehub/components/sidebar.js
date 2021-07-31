@@ -1,118 +1,3 @@
-// import { FaUserCircle, FaBars } from "react-icons/fa";
-// import Link from "next/link";
-// import React from "react";
-// import clsx from "clsx";
-// import { makeStyles } from "@material-ui/core/styles";
-// import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-// import Button from "@material-ui/core/Button";
-// import List from "@material-ui/core/List";
-
-// const useStyles = makeStyles({
-//   list: {
-//     width: 250,
-//   },
-//   fullList: {
-//     width: "auto",
-//   },
-// });
-
-// export default function SwipeableTemporaryDrawer() {
-//   const classes = useStyles();
-//   const [state, setState] = React.useState({
-//     top: false,
-//     left: false,
-//     bottom: false,
-//     right: false,
-//   });
-
-//   const toggleDrawer = (anchor, open) => (event) => {
-//     if (
-//       event &&
-//       event.type === "keydown" &&
-//       (event.key === "Tab" || event.key === "Shift")
-//     ) {
-//       return;
-//     }
-
-//     setState({ ...state, [anchor]: open });
-//   };
-
-//   const list = (anchor) => (
-//     <div
-//       className={clsx(classes.list, {
-//         [classes.fullList]: anchor === "top" || anchor === "bottom",
-//       })}
-//       role="presentation"
-//       onClick={toggleDrawer(anchor, false)}
-//       onKeyDown={toggleDrawer(anchor, false)}
-//     >
-//       <List>
-//         <div
-//           style={{ color: "#5F9EA0" }}
-//           className="p-2  text-center text-xl font-serif font-medium"
-//         >
-//           {" "}
-//           <Link href="/">
-//             <a>Homepage</a>
-//           </Link>
-//         </div>
-//         <div
-//           style={{ color: "#5F9EA0" }}
-//           className="p-2  text-center text-xl font-serif font-medium"
-//         >
-//           Courses
-//         </div>
-//         <div
-//           style={{ color: "#5F9EA0" }}
-//           className="p-2  text-center text-xl font-serif font-medium"
-//         >
-//           {" "}
-//           <Link href="/freeCourses">
-//             <a>Free Courses</a>
-//           </Link>
-//         </div>
-//         <div
-//           style={{ color: "#5F9EA0" }}
-//           className="p-2  text-center text-xl font-serif font-medium"
-//         >
-//           {" "}
-//           <Link href="/videoChat">
-//             <a>Chat room</a>
-//           </Link>
-//         </div>
-//         <div
-//           style={{ color: "#5F9EA0" }}
-//           className="p-2  text-center text-xl font-serif font-medium"
-//         >
-//           {" "}
-//           <Link href="/about">
-//             <a>About</a>
-//           </Link>
-//         </div>
-//       </List>
-//     </div>
-//   );
-
-//   return (
-//     <div style={{ color: "#b5c6e0" }} className="">
-//       {" "}
-//       {["left"].map((anchor) => (
-//         <React.Fragment key={anchor}>
-//           <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-//           <SwipeableDrawer
-//             anchor={anchor}
-//             open={state[anchor]}
-//             onClose={toggleDrawer(anchor, false)}
-//             onOpen={toggleDrawer(anchor, true)}
-//           >
-//             {list(anchor)}
-//           </SwipeableDrawer>
-//         </React.Fragment>
-//       ))}{" "}
-//     </div>
-//   );
-// }
-
 import React from "react";
 /* You'll need to install @reach/portal which simplify creating portal*/
 import Portal from "@reach/portal";
@@ -153,7 +38,7 @@ const DrawerPage = () => {
         <DrawerBody>
           <div class="mt-10 mb-4">
             <ul class="ml-4">
-              <li class="mb-2 px-4 py-4 text-gray-900 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -174,15 +59,8 @@ const DrawerPage = () => {
                   <span class="ml-2">profile</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-900 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
-                  {/* <svg class="fill-current h-5 w-5 " viewBox="0 0 24 24">
-                    <path
-                      d="M16 20h4v-4h-4m0-2h4v-4h-4m-6-2h4V4h-4m6
-                        4h4V4h-4m-6 10h4v-4h-4m-6 4h4v-4H4m0 10h4v-4H4m6
-                        4h4v-4h-4M4 8h4V4H4v4z"
-                    ></path>
-                  </svg> */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -202,7 +80,7 @@ const DrawerPage = () => {
                   <span class="ml-2">Homepage</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-900 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -223,7 +101,7 @@ const DrawerPage = () => {
                   <span class="ml-2">Courses</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-900 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +124,7 @@ const DrawerPage = () => {
                   <span class="ml-2">Free Courses</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-900 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -267,7 +145,7 @@ const DrawerPage = () => {
                   <span class="ml-2">Chat room</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-900 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -288,37 +166,31 @@ const DrawerPage = () => {
                   <span class="ml-2">About us</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-900 flex flex-row object-bottom  border-gray-300 hover:text-black align end  hover:bg-gray-300  hover:font-bold rounded ">
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    />
-                  </svg>
-                </span>
-                <a href="#">
-                  <span class="ml-2">Log out</span>
-                </a>
-              </li>
             </ul>
           </div>
         </DrawerBody>
         <DrawerFooter>
-          <button
-            onClick={toggle}
-            className="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2"
-          >
-            Confirm
-          </button>
+          <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row object-bottom  border-gray-300 hover:text-black align end  hover:bg-gray-300  hover:font-bold rounded ">
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
+            </span>
+            <a href="#">
+              <span class="ml-2">Log out</span>
+            </a>
+          </li>
         </DrawerFooter>
       </Drawer>
     </div>
@@ -333,12 +205,12 @@ const style = {
     left: "animate-drawer-left ",
   },
   body: `flex-shrink bg-gray-100 flex-grow p-4 `,
-  headerTitle: `text-2xl md:text-3xl font-light`,
+  headerTitle: `text-2xl md:text-3xl w-60 font-light`,
   content: `relative flex flex-col bg-white pointer-events-auto`,
   header: `items-start bg-gray-100 justify-between p-4 border-b border-gray-300`,
   container: `fixed top-0 left-0 z-40 w-full h-full m-0 overflow-hidden`,
   overlay: `fixed top-0 left-0 z-30 w-screen h-screen bg-black opacity-50`,
-  footer: `flex bg-gray-100 justify-center p-3 border-t border-gray-300`,
+  footer: `flex bg-gray-100  p-3 pl-7 border-t border-gray-300`,
 };
 function Drawer({ children, isOpen, toggle }) {
   const ref = React.useRef(null);

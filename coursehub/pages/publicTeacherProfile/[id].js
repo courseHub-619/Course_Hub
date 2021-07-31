@@ -24,25 +24,28 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const teacher_id = context.params.id;
+  console.log(teacher_id);
   const teacher = await fetch(
     `http://localhost:4200/teacher/oneUser/${teacher_id}`
   );
   let data = await teacher.json();
   let id = context.params.id;
-  const posts = await fetch(`http://localhost:4200/teacher/all/posts/${id}`);
+  const posts = await fetch(
+    `http://localhost:4200/teacher/all/posts/${teacher_id}`
+  );
   let blogs = await posts.json();
   // console.log(blogs, "blogs here ");
   return {
     props: {
       data: data,
       blogs: blogs,
+      teacherId: teacherId,
     },
   };
 };
 
-const Details = ({ data, blogs }) => {
-  let [likes, setLikes] = useState(0);
-  // console.log(blogs[1].body, "where man");
+const Details = ({ data, blogs, teacherId }) => {
+  console.log(teacherId, "where man");
   return (
     <div>
       <div className="max-w-7xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
@@ -210,66 +213,67 @@ const Details = ({ data, blogs }) => {
         blogs.map((blog, index) => {
           // console.log(blog)
           return (
-            <>
-              <div
-                key={index}
-                className=" flex  max-w-4xl my-10 bg-gray-100 shadow-md rounded-lg overflow-hidden mx-auto"
-              >
-                <div className=" grid-cols-3 min-w-full flex justify-between ">
-                  <div className="text-gray-400 font-medium text-sm mb-6 mt-6 mx-3 px-2 min-h-full max-w-lg">
-                    <img
-                      className="rounded justify-center"
-                      alt="Description"
-                      src={blog.Image}
-                    />
-                  </div>
+            <div
+              key={index}
+              className=" flex  max-w-4xl my-10 bg-gray-100 shadow-md rounded-lg overflow-hidden mx-auto"
+            >
+              <div className=" grid-cols-3 min-w-full flex justify-between ">
+                <div className="text-gray-400 font-medium text-sm mb-6 mt-6 mx-3 px-2 min-h-full max-w-lg">
+                  <img
+                    className="rounded justify-center"
+                    alt="Description"
+                    src={blog.Image}
+                  />
+                </div>
 
-                  <div className=" relative pl-4 w-80">
-                    <header className="border-b border-grey-400">
-                      <a
-                        href="#"
-                        className=" cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
-                      >
-                        <img
-                          src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-                          className="h-16 w-16 rounded-full object-cover"
-                          alt="user"
-                          src={data.image}
-                        />
-                        <p className="block ml-2 font-bold">{data.userName}</p>
-                      </a>
-                    </header>
-                    <div>
-                      <div className="pt-1 ">
-                        <div className="text-sm mb-2 flex  flex-start items-center">
-                          <p className="font-bold ml-2">
-                            <span className="text-gray-700 font-medium text-2xl ml-3">
-                              {blog.title}
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-sm mb-2 min-h-full flex flex-start items-center">
+                <div className=" relative pl-4 w-80">
+                  <header className="border-b border-grey-400">
+                    <a
+                      href="#"
+                      className=" cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
+                    >
+                      <img
+                        src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                        className="h-16 w-16 rounded-full object-cover"
+                        alt="user"
+                        src={data.image}
+                      />
+                      <p className="block ml-2 font-bold">{data.userName}</p>
+                    </a>
+                    <p className="text-xs text-right text-gray-500 ">
+                      {moment(blog.createdAt).fromNow()}
+                    </p>
+                  </header>
+                  <div>
+                    <div className="pt-1 ">
+                      <div className="text-sm mb-2 flex  flex-start items-center">
                         <p className="font-bold ml-2">
-                          <span className="text-gray-700 mx-auto font-medium ml-1">
-                            {blog.body}{" "}
+                          <span className="text-gray-700 font-medium text-2xl ml-3">
+                            {blog.title}
                           </span>
                         </p>
                       </div>
                     </div>
-
-                    <div className="flex place-content-end justify-between md:gap-8 gap-4 pr-4 pt-8 pb-4">
-                      <button className="w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2">
-                        button 1
-                      </button>
-                      <button className="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2">
-                        button 2
-                      </button>
+                    <div className="text-sm mb-2 min-h-full flex flex-start items-center">
+                      <p className="font-bold ml-2">
+                        <span className="text-gray-700 mx-auto font-medium ml-1">
+                          {blog.body}{" "}
+                        </span>
+                      </p>
                     </div>
+                  </div>
+
+                  <div className="flex place-content-end justify-between md:gap-8 gap-4 pr-4 pt-8 pb-4">
+                    <button className="w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2">
+                      button 1
+                    </button>
+                    <button className="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2">
+                      button 2
+                    </button>
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           );
         })}
       {/*posts ends here */}

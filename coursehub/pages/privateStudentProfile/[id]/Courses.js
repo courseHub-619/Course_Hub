@@ -25,7 +25,7 @@ export const getStaticProps = async (context) => {
 
   const res = await fetch(`http://localhost:4200/all/blogs`);
   const blogs = await res.json();
-  const tutor = await fetch(`http://localhost:4200/all/teachers`);
+  const tutor = await fetch(`http://localhost:4200/teacher/all/teachers`);
   const teachers = await tutor.json();
   return {
     props: {
@@ -99,7 +99,6 @@ const Post = ({ teachers, blogs, stdId }) => {
     } else if (data.wallet >= price) {
       console.log("sucess");
 
-
       const avail = await fetch(
         `http://localhost:4200/reservaition/available/${teacherId}`
       );
@@ -150,7 +149,7 @@ const Post = ({ teachers, blogs, stdId }) => {
           .then(async (result) => {
             console.log(result);
             await axios
-              .post(`http://localhost:4200/reservation/scheduel`, {
+              .post(`http://localhost:4200/reservaition/scheduel`, {
                 id,
                 teacherId,
                 session,
