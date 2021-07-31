@@ -79,224 +79,88 @@ app.post("/post", async (req, res) => {
 
 //get all students
 
-app.get("/student/all", async (req, res) => {
-  // console.log("free course")
-  const student = await prisma.student.findMany({});
-  return res.status(201).send(student);
-});
-
-//check available days
-
-// app.get("/reservaition/day/available/:id", async (req, res) => {
-//   const days = await prisma.weekDay.findUnique({
-//     where: {
-//       teacher_id: Number(req.params.id),
-//     },
-//   });
-//   return res.status(201).send(days);
-// });
-
-//check available sessions
-
-// app.get("/reservaition/session/available/:id", async (req, res) => {
-//   const session = await prisma.sessions.findUnique({
-//     where: {
-//       teacher_id: Number(req.params.id),
-//     },
-//   });
-//   return res.status(201).send(session);
-// });
-
-//check student balance
-
-// app.get("/reservaition/balance/:id", async (req, res) => {
-//   const balance = await prisma.student.findUnique({
-//     where: {
-//       student_id: Number(req.params.id),
-//     },
-//   });
-//   return res.status(201).send(balance);
-// });
-
-//minus student account
-
-// app.put("/reservaition/balance/:id/:price/:tId", async (req, res) => {
-//   let data = req.params;
-//   console.log(data);
-//   const teacher = await prisma.teacher.findUnique({
-//     where: {
-//       teacher_id: Number(req.params.tId),
-//     },
-//   });
-
-//   console.log(teacher.wallet, "heeeeeeeeeee");
-//   const balance1 = await prisma.teacher.update({
-//     where: {
-//       teacher_id: Number(req.params.tId),
-//     },
-//     data: {
-//       wallet: Number(teacher.wallet) + Number(req.params.price),
-//     },
-//   });
-
-//   const student = await prisma.student.findUnique({
-//     where: {
-//       student_id: Number(req.params.id),
-//     },
-//   });
-//   const balance = await prisma.student.update({
-//     where: {
-//       student_id: Number(req.params.id),
-//     },
-//     data: {
-//       wallet: student.wallet - req.params.price,
-//     },
-//   });
-
-//   return res.status(201).send("updated");
-// });
-
-// scheduel
-
-// app.post("/reservaition/scheduel", async (req, res) => {
-//   console.log(req.body, "bodyyyyyy");
-//   const scheduel = await prisma.schedule.create({
-//     data: {
-//       student: Number(req.body.id),
-//       teacher: Number(req.body.teacherId),
-//       day: req.body.day,
-//       session: req.body.session,
-//     },
-//   });
-//   return res.status(201).send(scheduel);
-// });
-
-//Check teacher availability
-// app.get("/reservaition/available/:id", async (req, res) => {
-//   const scheduel = await prisma.schedule.findMany({
-//     where: {
-//       teacher: Number(req.params.id),
-//     },
-//   });
-//   return res.status(201).send(scheduel);
-// });
-
-// app.get("/reservaition/available/:id/:day", async (req, res) => {
-//   const scheduel = await prisma.schedule.findMany({
-//     where: {
-//       teacher: Number(req.params.id),
-//       day: req.params.day,
-//     },
-//   });
-//   return res.status(201).send(scheduel);
-// });
-
-// app.get("/reservaition/scheduel/:id", async (req, res) => {
-//   const scheduel = await prisma.schedule.findMany({
-//     where: {
-//       teacher: Number(req.params.id),
-//     },
-//   });
-//   return res.status(201).send(scheduel);
-// });
-
-// app.delete("/reservaition/scheduel/delete/:id", async (req, res) => {
-//   const scheduel = await prisma.schedule.delete({
-//     where: {
-//       scheduel_id: Number(req.params.id),
-//     },
-//   });
-//   return res.status(201).send("deleted");
-// });
-
-//freeCourses: all
-app.get("/freecourse/all", async (req, res) => {
-  // console.log("free course")
-  const course = await prisma.free_course.findMany({});
-  return res.status(201).send(course);
-});
-
 //freeCourses: al
-app.get("/freecourse/all", async (req, res) => {
-  // console.log("free course")
-  const course = await prisma.free_course.findMany({});
-  return res.status(201).send(course);
-});
+// app.get("/freecourse/all", async (req, res) => {
+//   // console.log("free course")
+//   const course = await prisma.free_course.findMany({});
+//   return res.status(201).send(course);
+// });
 
-//freeCourses: Teacher
-app.get("/freecourse/all/teacher", async (req, res) => {
-  // console.log("teachers")
-  const teacher = await prisma.teacher.findMany({});
-  return res.status(201).send(teacher);
-});
+// //freeCourses: Teacher
+// app.get("/freecourse/all/teacher", async (req, res) => {
+//   // console.log("teachers")
+//   const teacher = await prisma.teacher.findMany({});
+//   return res.status(201).send(teacher);
+// });
 
-// FreeCourses: one freeCours
-app.get(`/freecourse/all/:id`, async (req, res) => {
-  console.log("one freeCourse", req.params.id);
+// // FreeCourses: one freeCours
+// app.get(`/freecourse/all/:id`, async (req, res) => {
+//   console.log("one freeCourse", req.params.id);
 
-  const oneCourse = await prisma.free_course.findUnique({
-    where: {
-      freeCourse_id: Number(req.params.id),
-    },
-  });
-  // console.log(oneCourse, "course here")
-  return res.status(201).send(oneCourse);
-});
+//   const oneCourse = await prisma.free_course.findUnique({
+//     where: {
+//       freeCourse_id: Number(req.params.id),
+//     },
+//   });
+//   // console.log(oneCourse, "course here")
+//   return res.status(201).send(oneCourse);
+// });
 
 // freeCourse : one : attachement
-app.get(`/freecourse/attachement/:id`, async (req, res) => {
-  console.log("attachement", req.params.id);
 
-  const freeCourse = await prisma.free_course.findUnique({
-    where: {
-      freeCourse_id: Number(req.params.id),
-    },
-  });
+// app.get(`/freecourse/attachement/:id`, async (req, res) => {
+//   console.log("attachement", req.params.id);
 
-  const attachement = await prisma.attachement.findUnique({
-    where: {
-      attachement_id: Number(freeCourse.document),
-    },
-  });
-  // console.log(attachement, "attachement here");
-  return res.status(201).send(attachement);
-});
+//   const freeCourse = await prisma.free_course.findUnique({
+//     where: {
+//       freeCourse_id: Number(req.params.id),
+//     },
+//   });
+
+//   const attachement = await prisma.attachement.findUnique({
+//     where: {
+//       attachement_id: Number(freeCourse.document),
+//     },
+//   });
+//   // console.log(attachement, "attachement here");
+//   return res.status(201).send(attachement);
+// });
 
 // freeCourse: one : teacher
-app.get(`/freecourse/teacher/:id`, async (req, res) => {
-  // console.log("teacher", req.params.id)
+// app.get(`/freecourse/teacher/:id`, async (req, res) => {
+//   // console.log("teacher", req.params.id)
 
-  const teacher = await prisma.teacher.findUnique({
-    where: {
-      teacher_id: 0,
-      // Number(req.params.id)
-    },
-  });
-  console.log(teacher, "teacher here");
-  return res.status(201).send(teacher);
-});
+//   const teacher = await prisma.teacher.findUnique({
+//     where: {
+//       teacher_id: 0,
+//       // Number(req.params.id)
+//     },
+//   });
+//   console.log(teacher, "teacher here");
+//   return res.status(201).send(teacher);
+// });
 
 // freeCourse : post
-app.post("/freecourse/post", async (req, res) => {
-  console.log("boooddddyyyyyyy", req.body);
-  let data = req.body;
-  const attachement = await prisma.attachement.create({
-    data: {
-      Type: "text",
-      attachement: data.fileUrl,
-      body: data.body,
-    },
-  });
-  const post = await prisma.free_course.create({
-    data: {
-      title: data.title,
-      category: data.category,
-      image: data.url,
-      document: attachement.attachement_id,
-      teacher: Number(data.id), // teacher id
-    },
-  });
-});
+// app.post("/freecourse/post", async (req, res) => {
+//   console.log("boooddddyyyyyyy", req.body);
+//   let data = req.body;
+//   const attachement = await prisma.attachement.create({
+//     data: {
+//       Type: "text",
+//       attachement: data.fileUrl,
+//       body: data.body,
+//     },
+//   });
+//   const post = await prisma.free_course.create({
+//     data: {
+//       title: data.title,
+//       category: data.category,
+//       image: data.url,
+//       document: attachement.attachement_id,
+//       teacher: Number(data.id), // teacher id
+//     },
+//   });
+// });
 
 // post : teacher courses
 app.post("/post", async (req, res) => {
@@ -454,6 +318,8 @@ app.use("/api/auth/student", require("./routes/authStudents.routes.js"));
 app.use("/admin", require("./routes/admin.routes.js"));
 
 app.use("/reservaition", require("./routes/reservation.routes.js"));
+
+app.use("/freecourse", require("./routes/freecourse.routes.js"));
 
 server.listen(PORT, (err) => {
   if (err) throw err;
