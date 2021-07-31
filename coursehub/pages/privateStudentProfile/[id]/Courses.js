@@ -5,7 +5,7 @@ import React from "react";
 import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
-  const response = await fetch("http://localhost:4200/student/all");
+  const response = await fetch("http://localhost:4200/admin/students/all");
   const data = await response.json();
   const paths = data.map((student) => {
     let id = student.student_id;
@@ -169,7 +169,7 @@ const Post = ({ teachers, blogs, stdId }) => {
     }
   };
 
-  console.log(session, day);
+  // console.log(session, day);
 
   return (
     <>

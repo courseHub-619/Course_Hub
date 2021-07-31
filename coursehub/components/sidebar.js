@@ -76,7 +76,7 @@ const DrawerPage = () => {
                     />
                   </svg>
                 </span>
-                <a href="#">
+                <a href="/">
                   <span class="ml-2">Homepage</span>
                 </a>
               </li>
@@ -97,7 +97,7 @@ const DrawerPage = () => {
                     />
                   </svg>
                 </span>
-                <a href="#">
+                <a href={`/posts`}>
                   <span class="ml-2">Courses</span>
                 </a>
               </li>
@@ -120,7 +120,7 @@ const DrawerPage = () => {
                     />
                   </svg>
                 </span>
-                <a href="#">
+                <a href={`/freeCourses`}>
                   <span class="ml-2">Free Courses</span>
                 </a>
               </li>
@@ -141,7 +141,7 @@ const DrawerPage = () => {
                     />
                   </svg>
                 </span>
-                <a href="#">
+                <a href={`/videoChat`}>
                   <span class="ml-2">Chat room</span>
                 </a>
               </li>
