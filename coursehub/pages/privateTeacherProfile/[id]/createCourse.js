@@ -80,12 +80,12 @@ const Course = ({ stdId }) => {
     console.log(typeof postDetails.teacher_id);
 
     const sendPost = await axios
-      .post(`http://localhost:4200/post`, {
+      .post(`http://localhost:4200/teacher/post`, {
         body: postDetails,
       })
-      .then(async (res) => {
+      .then((res) => {
         console.log(res);
-        await Swal.fire(
+        Swal.fire(
           "Done!",
           "Your post have been successfully created",
           "success"
@@ -111,6 +111,7 @@ const Course = ({ stdId }) => {
         spellCheck="false"
         placeholder="Describe everything about this post here"
         onChange={(e) => setBody(e.target.value)}
+        maxLength="300"
       ></textarea>
 
       <div className="icons flex text-gray-500 m-2">
@@ -164,7 +165,14 @@ const Course = ({ stdId }) => {
           Cancel
         </button>
         <button
-          onClick={submitValue}
+          onClick={async () => {
+            await submitValue();
+            // await Swal.fire(
+            //   "Done!",
+            //   "Your post have been successfully created",
+            //   "success"
+            // );
+          }}
           className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
         >
           Post

@@ -2,42 +2,35 @@ import { storage } from "../../../firebase";
 import Image from "next/image";
 import React, { useState } from "react";
 import axios from "axios";
-
-
+import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
-  const response = await fetch('http://localhost:4200/admin/teacher/all');
+  const response = await fetch("http://localhost:4200/admin/teacher/all");
   const data = await response.json();
   const paths = data.map((teacher) => {
-      let id = teacher.teacher_id;
-      // console.log("id", id)
-      return {
-          params: { id: id.toString() },
-      };
+    let id = teacher.teacher_id;
+    // console.log("id", id)
+    return {
+      params: { id: id.toString() },
+    };
   });
   return {
-      paths,
-      fallback: false,
+    paths,
+    fallback: false,
   };
 };
 export const getStaticProps = async (context) => {
-
- 
-
   const id = context.params.id;
-  
+
   return {
-      props: {
-           id 
-      },
+    props: {
+      id,
+    },
   };
 };
 
-
-
-const Post = ({id}) => {
-
-  console.log(id, "ahayaaaaaaaa")
+const Post = ({ id }) => {
+  console.log(id, "ahayaaaaaaaa");
 
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
@@ -125,16 +118,22 @@ const Post = ({id}) => {
         body,
         fileUrl,
         url,
-        id 
+        id,
       })
-      .then((res) => console.log(res.data))
+      .then(async (res) => {
+        await Swal.fire(
+          "Created!",
+          "Thank you for sharing information.",
+          "success"
+        );
+        console.log(res.data);
+      })
       .catch(function (error) {
         console.log(error);
       });
   };
 
   return (
-
     <body className="font-mono ">
       <div className="container mx-auto">
         <div className="flex justify-center px-6 my-12 ">
@@ -232,8 +231,13 @@ const Post = ({id}) => {
                 <hr className="mb-6 border-t" />
                 <div className="mb-6 text-center">
                   <button
-                    onClick={() => {
-                      postCourse();
+                    onClick={async () => {
+                      await postCourse();
+                      await Swal.fire(
+                        "Created!",
+                        "Thank you for sharing information.",
+                        "success"
+                      );
                     }}
                     className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                     type="button"

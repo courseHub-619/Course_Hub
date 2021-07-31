@@ -46,7 +46,8 @@ exports.signUp = async (req, res) => {
       Overall_rating: req.body.signupdata.Overall_rating,
       numberOfRates: 0,
       sumOfRates: 0,
-      description: "Describe yourself here"
+      description: "Describe yourself here", 
+      token : req.body.signupdata.email,
 
     };
 
@@ -281,6 +282,7 @@ exports.authenticateToken = (req, res, next) => {
 const generateAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '6d' })
 }
+
 
 
 

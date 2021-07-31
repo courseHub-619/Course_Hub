@@ -17,7 +17,8 @@ export default function SignIn() {
     education: "",
     age: 0,
     image: "",
-    wallet : 0
+    wallet : 0,
+    token: "",
   });
   const handleChange = (e) => {
     const name = e.target.name;

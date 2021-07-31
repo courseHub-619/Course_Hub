@@ -89,7 +89,7 @@ const Student = ({ student }) => {
                 </a>
               </Link>
               <a
-                href=""
+                href="http://localhost:3000/Payment"
                 className="bg font-bold text-sm text-yellow-600 w-full text-center py-3 hover:bg-yellow-600 hover:text-white hover:shadow-lg"
               >
                 Recharge wallet
@@ -100,6 +100,14 @@ const Student = ({ student }) => {
                   className="bg font-bold text-sm text-gray-600 w-full text-center py-3 hover:bg-gray-600 hover:text-white hover:shadow-lg"
                 >
                   Chat room
+                </a>
+              </Link>
+              <Link href={`/privateStudentProfile/${student.student_id}/form`}>
+                <a
+                  href=""
+                  className="bg font-bold text-sm text-blue-800 w-full text-center py-3 hover:bg-blue-800 hover:text-white hover:shadow-lg"
+                >
+                  Feedback
                 </a>
               </Link>
             </div>

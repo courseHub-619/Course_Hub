@@ -5,7 +5,7 @@ import React from "react";
 import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
-  const response = await fetch("http://localhost:4200/student/all");
+  const response = await fetch("http://localhost:4200/admin/students/all");
   const data = await response.json();
   const paths = data.map((student) => {
     let id = student.student_id;
@@ -25,7 +25,7 @@ export const getStaticProps = async (context) => {
 
   const res = await fetch(`http://localhost:4200/all/blogs`);
   const blogs = await res.json();
-  const tutor = await fetch(`http://localhost:4200/all/teachers`);
+  const tutor = await fetch(`http://localhost:4200/teacher/all/teachers`);
   const teachers = await tutor.json();
   return {
     props: {
@@ -99,7 +99,6 @@ const Post = ({ teachers, blogs, stdId }) => {
     } else if (data.wallet >= price) {
       console.log("sucess");
 
-
       const avail = await fetch(
         `http://localhost:4200/reservaition/available/${teacherId}`
       );
@@ -170,7 +169,7 @@ const Post = ({ teachers, blogs, stdId }) => {
     }
   };
 
-  console.log(session, day);
+  // console.log(session, day);
 
   return (
     <>
@@ -184,7 +183,7 @@ const Post = ({ teachers, blogs, stdId }) => {
               >
                 <div className=" grid-cols-3 min-w-full flex justify-between ">
                   <div className="text-gray-400 font-medium text-sm mb-6 mt-6 mx-3 px-2 min-h-full max-w-lg">
-                    <Image src={blog.Image} height={200} width={500} />
+                    <Image src={blog.Image} height={400} width={600} />
                   </div>
 
                   <div className=" relative pl-4 w-80">
@@ -193,7 +192,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                         href="#"
                         className=" cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
                       >
-                        <p className="block ml-2 font-bold">
+                        <p className="block ml-2 font-bold text-3xl">
                           {teacher.userName}
                         </p>
                       </a>
@@ -202,7 +201,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                       <div className="pt-1 ">
                         <div className="text-sm mb-2 flex  flex-start items-center">
                           <p className="font-bold ml-2">
-                            <span className="text-gray-700 font-medium text-2xl ml-3">
+                            <span className="text-gray-700 font-medium text-2xl ">
                               {blog.title}
                             </span>
                           </p>
@@ -210,7 +209,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                       </div>
                       <div className="text-sm mb-2 min-h-full flex flex-start items-center">
                         <p className="font-bold ml-2">
-                          <span className="text-gray-700 mx-auto font-medium ml-1">
+                          <span className="text-gray-700 mx-auto font-medium">
                             {blog.body}
                           </span>
                         </p>
@@ -277,6 +276,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                                 days.map((day) => {
                                   return (
                                     <button
+                                      key={days.indexOf(day)}
                                       onClick={() => setday(day)}
                                       className="p-2 text-blue-400"
                                     >
@@ -292,6 +292,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                                 sessions.map((session) => {
                                   return (
                                     <button
+                                      key={sessions.indexOf(session)}
                                       onClick={() => setsession(session)}
                                       className="p-2 text-blue-400"
                                     >
@@ -337,7 +338,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                           </div>
                         </div>
                       </div>
-                      <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                      <div className="bg-black bg-opacity-50 fixed inset-0 z-40 "></div>
                     </>
                   ) : null}
                 </>
