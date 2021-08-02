@@ -232,6 +232,12 @@ const Details = ({ data, blogs, teacherId }) => {
         {showModal ? (
           <>
             <form
+              style={{
+                backgroundImage:
+                  "url(https://images.unsplash.com/photo-1613963931023-5dc59437c8a6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZmVlZGJhY2t8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60)",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
               onSubmit={(e) => {
                 sendEmail(e);
                 setShowModal(false);
@@ -241,7 +247,7 @@ const Details = ({ data, blogs, teacherId }) => {
                   "success"
                 );
               }}
-              className=" bg-gray-100  justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+              className=" bg-gray-100 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
             >
               <div className="text-center relative w-auto my-6 mx-auto max-w-3xl">
                 {/*content*/}
