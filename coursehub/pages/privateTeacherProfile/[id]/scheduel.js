@@ -69,7 +69,7 @@ const Scheduel = ({ id, scheduel, students }) => {
             if (std.student_id === data.student) {
               return (
                 <div className=" flex justify-start w-3/4 bg-gray-100 shadow-2xl h-55 mx-auto mt-20 p-5">
-                  <div className=" relative flex justify-around">
+                  <div className=" relative flex ">
                     <Image
                       src="https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTd8fGNvdXJzZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
                       height={100}
@@ -77,7 +77,7 @@ const Scheduel = ({ id, scheduel, students }) => {
                       className="my-auto h-24 w-24 border-gray-500 rounded-full border-4"
                     />
                     <div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-start">
                         <p className="flex static text-justify text-xs sm:text-sm lg:text-lg my-auto p-3">
                           Day :
                         </p>
@@ -85,7 +85,7 @@ const Scheduel = ({ id, scheduel, students }) => {
                           {data.day}
                         </p>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-start">
                         <p className="flex static text-justify text-xs sm:text-sm lg:text-lg my-auto p-3">
                           session :
                         </p>
@@ -93,7 +93,7 @@ const Scheduel = ({ id, scheduel, students }) => {
                           {data.session}
                         </p>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-start">
                         <p className="flex static text-justify text-xs sm:text-sm lg:text-lg my-auto p-3">
                           student name :
                         </p>
@@ -101,7 +101,7 @@ const Scheduel = ({ id, scheduel, students }) => {
                           {std.userName}
                         </p>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-start">
                         <p className="flex static text-justify text-xs sm:text-sm lg:text-lg my-auto p-3">
                           student email:
                         </p>

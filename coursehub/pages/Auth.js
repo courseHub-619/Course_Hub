@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function Auth() {
   return (
     <div
@@ -20,25 +22,29 @@ function Auth() {
             </div>
             <form>
               <div className="flex items-center mt-3 justify-center">
-                <form action="http://localhost:3000/teacher/login">
-                  <button
-                    className={
-                      "bg-blue-700 hover:bg-blue-500 py-2 px-4 text-md text-white rounded border border-blue focus:outline-none focus:border-black"
-                    }
-                    value="Login"
-                  >
-                    teacher
-                  </button>
+                <form>
+                  <Link href={"/teacher/login"}>
+                    <button
+                      className={
+                        "bg-blue-700 hover:bg-blue-500 py-2 px-4 text-md text-white rounded border border-blue focus:outline-none focus:border-black"
+                      }
+                      value="Login"
+                    >
+                      teacher
+                    </button>
+                  </Link>
                 </form>
-                <form action="http://localhost:3000/student/login">
-                  <button
-                    className={
-                      "bg-blue-700 hover:bg-blue-500 py-2 px-4 text-md text-white rounded border border-blue focus:outline-none focus:border-black"
-                    }
-                    value="Login"
-                  >
-                    student
-                  </button>
+                <form>
+                  <Link href={"/student/login"}>
+                    <button
+                      className={
+                        "bg-blue-700 hover:bg-blue-500 py-2 px-4 text-md text-white rounded border border-blue focus:outline-none focus:border-black"
+                      }
+                      value="Login"
+                    >
+                      student
+                    </button>
+                  </Link>
                 </form>
               </div>
             </form>

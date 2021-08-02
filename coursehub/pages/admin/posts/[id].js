@@ -74,17 +74,17 @@ const Course = ({ course, teacher }) => {
             </h2>
             <a
               href="#"
-              className="py-2 text-2xl text-green-700 inline-flex items-center justify-center mb-2"
+              className="py-2 text-2xl  inline-flex items-center justify-center mb-2"
             >
-              {teacher.userName}
+             Teacher: {teacher.userName}
             </a>
 
           </div>
           <a
             href="#"
-            className="py-2 text-2xl text-green-700 inline-flex items-center justify-center mb-2"
+            className="py-2 text-2xl  inline-flex items-center justify-center mb-2"
           >
-            {teacher.email}
+           Email: {teacher.email}
           </a>
           <p
             className="py-2 text-black text-xl  items-center justify-center mb-2"

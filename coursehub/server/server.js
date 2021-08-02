@@ -101,11 +101,14 @@ app.post("/profile/student/form/feedback", async (req, res) => {
 app.get("/profile/student/form", async (req, res) => {
   let form = await prisma.feedback.findMany({});
   return res.status(200).send(form);
-})
-
+});
 
 app.get(`/all/blogs`, async (req, res) => {
-  let blogs = await prisma.post.findMany({});
+  let blogs = await prisma.post.findMany({
+    where: {
+      status: "Accepted",
+    },
+  });
   return res.status(200).send(blogs);
 });
 

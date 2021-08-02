@@ -95,6 +95,7 @@ export default function SignIn() {
     age: "",
     image: url,
     wallet: 0,
+    description: "",
   });
   const handleChange = (e) => {
     const name = e.target.name;
@@ -113,7 +114,8 @@ export default function SignIn() {
       signupdata.email === "" ||
       signupdata.education === "" ||
       signupdata.age === null ||
-      signupdata.image === ""
+      signupdata.image === "" ||
+      signupdata.description === ""
     ) {
       console.log("some inputs are empty !!");
     }
@@ -186,7 +188,7 @@ export default function SignIn() {
     );
   };
 
-  console.log(monday, "here");
+  console.log(signupdata.description, "here");
   return (
     <div className=" flex p-4">
       <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-1">
@@ -247,6 +249,16 @@ export default function SignIn() {
               type="number"
               onChange={handleChange}
               placeholder="age"
+              className={
+                "w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
+              }
+            />
+            <label className="text-left">Bio:</label>
+            <input
+              name="description"
+              type="test"
+              onChange={handleChange}
+              placeholder="Describe yourself briefly"
               className={
                 "w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
               }

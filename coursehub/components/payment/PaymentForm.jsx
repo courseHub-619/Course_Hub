@@ -2,6 +2,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 import React, { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const CARD_OPTIONS = {
   iconStyle: "solid",
@@ -24,6 +25,7 @@ const CARD_OPTIONS = {
 };
 
 export default function PaymentForm() {
+  const router = useRouter();
   const [success, setSuccess] = useState(false);
   const [amountData, setAmount] = useState({
     amount: 0,
@@ -72,6 +74,11 @@ export default function PaymentForm() {
                 })
                 .then((response) => {
                   console.log(response);
+                  setTimeout(() => {
+                    router.push(
+                      `/privateStudentProfile/${response.data.student_id}`
+                    );
+                  }, 3000);
                 })
                 .catch((err) => {
                   console.log(err);
@@ -92,7 +99,7 @@ export default function PaymentForm() {
   return (
     <>
       {!success ? (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="p-8">
           <div className="max-w-2xl flex items-center h-auto  flex-wrap mx-auto my-32 lg:my-0">
             <div
               className="w-full mx-auto rounded-lg bg-white shadow-lg p-5 text-gray-700"
