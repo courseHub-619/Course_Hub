@@ -17,7 +17,7 @@ model student {
   image      String
   email      String     @unique
   token      String     @unique @default("")
-  DM         DM[]
+  DM         feedback[]
   review     review[]
   schedule   schedule[]
 }
@@ -36,7 +36,7 @@ model teacher {
   token          String        @unique @default("")
   Overall_rating Int           @default(0)
   numberOfRates  Int           @default(0)
-  DM             DM[]
+  
   free_course    free_course[]
   post           post[]
   review         review[]
@@ -122,12 +122,10 @@ model free_course {
   teacher_id    teacher     @relation(fields: [teacher], references: [teacher_id])
 }
 
-model DM {
-  DM_id            Int     @id @default(autoincrement())
-  student          Int
-  teacher          Int
-  teacher_messages String
-  student_messages String
+model feedback {
+  feedback_id      Int     @id @default(autoincrement())
+  student          Int     @unique
+  stars            Int   
+  comment          String
   student_id       student @relation(fields: [student], references: [student_id])
-  teacher_id       teacher @relation(fields: [teacher], references: [teacher_id])
 }

@@ -134,9 +134,16 @@ const Post = ({ id }) => {
   };
 
   return (
-    <body className="font-mono ">
-      <div className="container mx-auto">
-        <div className="flex justify-center px-6 my-12 ">
+    <div
+      style={{
+        backgroundImage:
+          "url(https://images.unsplash.com/photo-1531685250784-7569952593d2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDh8fHdoaXRlfGVufDB8MHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60)",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="font-mono mx-auto p-4">
+        <div className="flex justify-center">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
             <div>
               <Image
@@ -148,11 +155,11 @@ const Post = ({ id }) => {
               />
             </div>
 
-            <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
+            <div className="w-full lg:w-7/12 bg-gray-100 p-5 rounded-lg lg:rounded-l-none">
               <h3 className="pt-4 text-2xl text-center">
                 Spread the knowledge!
               </h3>
-              <div className="px-8 pt-6 pb-8 mb-5 bg-white rounded">
+              <div className="px-8 pt-6 pb-8 mb-5 bg-gray-100 rounded">
                 <div className="mb-4 md:mr-2 md:mb-0">
                   <label className="block mb-2 text-sm font-bold text-gray-700">
                     Title
@@ -250,7 +257,7 @@ const Post = ({ id }) => {
           </div>
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 

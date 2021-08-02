@@ -18,9 +18,6 @@ require("dotenv").config({ path: "/custom/path/to/.env" });
 const { Server } = require("socket.io");
 const server = http.createServer(app);
 
-// server.use(express.json());
-// server.use(express.urlencoded({ extended: false }));
-
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -90,18 +87,33 @@ app.get("/profile/teacher/session/:id", async (req, res) => {
   return res.status(201).send(session);
 });
 
+app.post("/profile/student/form/feedback", async (req, res) => {
+  let form = await prisma.feedback.create({
+    data: {
+      student: Number(req.body.Sid),
+      stars: req.body.starsSelected,
+      comment: req.body.comment,
+    },
+  });
+  return res.status(201).send(form);
+});
+
+app.get("/profile/student/form", async (req, res) => {
+  let form = await prisma.feedback.findMany({});
+  return res.status(200).send(form);
+})
+
+
 app.get(`/all/blogs`, async (req, res) => {
   let blogs = await prisma.post.findMany({});
   return res.status(200).send(blogs);
 });
 
-// require("./routes/authTeachers.routes")(app);
 app.use("/api/auth/teacher", require("./routes/authTeachers.routes.js"));
 
-// require("./routes/authStudents.routes")(app);
 app.use("/api/auth/student", require("./routes/authStudents.routes.js"));
 
-app.use('/api',require("./routes/buyPointsStudent.routes.js"))
+app.use("/api", require("./routes/buyPointsStudent.routes.js"));
 
 app.use("/admin", require("./routes/admin.routes.js"));
 

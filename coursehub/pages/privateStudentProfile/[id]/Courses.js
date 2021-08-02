@@ -46,8 +46,8 @@ const Post = ({ teachers, blogs, stdId }) => {
   const [days, setdays] = React.useState(null);
   const [sessions, setsessions] = React.useState(null);
 
-  const [day, setday] = React.useState(null);
-  const [session, setsession] = React.useState(null);
+  const [day, setday] = React.useState("");
+  const [session, setsession] = React.useState("");
 
   const availability = async (TId) => {
     const available1 = await fetch(
@@ -256,7 +256,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                             {/*header*/}
                             <div className=" text-center flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                               <h3 className="text-3xl font-semibold text-center">
-                                Modal Title
+                                Reserve your session
                               </h3>
                               <button
                                 className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -304,6 +304,10 @@ const Post = ({ teachers, blogs, stdId }) => {
                             <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
                               Price: {blog.price} dt
                             </p>
+                            <p> Day chosen </p>
+                            <p> {day}</p>
+                            <p> Session chosen </p>
+                            <p> {session}</p>
                             <p className=" p-2 text-xs w-80">
                               NB: Sessions start from 8:00 AM, so session one is
                               from 8 to 10 Am , session two is from 10 to 12 pm,
@@ -338,7 +342,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                           </div>
                         </div>
                       </div>
-                      <div className="bg-black bg-opacity-50 fixed inset-0 z-40 "></div>
+                      <div className="bg-transparent bg-opacity-50 fixed inset-0 z-40 "></div>
                     </>
                   ) : null}
                 </>
