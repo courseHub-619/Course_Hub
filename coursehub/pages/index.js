@@ -8,15 +8,48 @@ import Card from "@material-ui/core/Card";
 import ReactCardFlip from "react-card-flip";
 import Link from "next/link";
 
-export default function Home() {
+export async function getStaticProps() {
+  const student = await fetch("http://localhost:4200/admin/students/all");
+  const students = await student.json();
+
+  const data = await fetch("http://localhost:4200/profile/student/form");
+  const form = await data.json();
+
+  return {
+    props: {
+      students,
+      form,
+    },
+  };
+}
+
+export default function Home({ students, form }) {
+  console.log(students, form);
+
+  function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  const mid = randomIntFromInterval(0, form.length);
+
   const [flip1, setflip1] = useState(false);
   const [flip2, setflip2] = useState(false);
   const [flip3, setflip3] = useState(false);
+
+  const [render, setrender] = useState(false);
+  const [noRender, setnoRender] = useState(true);
 
   function handleClick(e, func, val) {
     e.preventDefault();
     func(!val);
   }
+  function handleFeedback() {
+    if (students.length >= 3) {
+      setnoRender(false);
+      setrender(true);
+    }
+  }
+  handleFeedback();
 
   return (
     <>
@@ -97,138 +130,183 @@ export default function Home() {
             What CourseHub users think about us
           </h1>
         </div>
+        {noRender && (
+          <div
+            className="py-8 text-center text-xl font-serif font-medium"
+            style={{ color: "#3881AB" }}
+          >
+            {" "}
+            No available feedback{" "}
+          </div>
+        )}
 
-        <div className="flex justify-between p-8">
-          <ReactCardFlip isFlipped={flip1} flipDirection="horizontal">
-            <Card
-              style={{ width: "300px", height: "370px" }}
-              className="text-center"
-            >
-              <Image
-                src="/std.jpg"
-                width={300}
-                height={250}
+        {render && (
+          <div className="flex justify-between p-8">
+            <ReactCardFlip isFlipped={flip1} flipDirection="horizontal">
+              <Card
+                style={{ width: "300px", height: "370px" }}
                 className="text-center"
-                alt={""}
-              />
-              <div className="p-2">Angelina</div>
-              <div className="p-2">Science student</div>
-              <div style={{ color: "#3881AB" }}>
-                <button
+              >
+                <Image
+                  src={students[0].image}
+                  width={300}
+                  height={250}
                   className="text-center"
-                  onClick={(e) => handleClick(e, setflip1, flip1)}
-                >
-                  Read preview
-                </button>
-              </div>
-            </Card>
+                  alt={""}
+                />
+                <div className="p-2">{students[0].userName}</div>
+                <div className="p-2">{students[0].education} student</div>
+                <div style={{ color: "#3881AB" }}>
+                  <button
+                    className="text-center"
+                    onClick={(e) => handleClick(e, setflip1, flip1)}
+                  >
+                    Read preview
+                  </button>
+                </div>
+              </Card>
 
-            <Card
-              style={{ width: "300px", height: "370px" }}
-              className="text-center"
-            >
-              <div className="p-2">HelloWorld</div>
-              <p className="p-4">
-                I am a science student at Cambridge college. Coursehub really
-                helped to understand life
-              </p>
-              <div style={{ color: "#3881AB" }}>
-                <button
-                  className="text-center"
-                  onClick={(e) => handleClick(e, setflip1, flip1)}
-                >
-                  Click to flip
-                </button>
-              </div>
-            </Card>
-          </ReactCardFlip>
-          <ReactCardFlip isFlipped={flip2} flipDirection="horizontal">
-            <Card
-              style={{ width: "300px", height: "370px" }}
-              className="text-center"
-            >
-              <Image
-                src="/std3.jpg"
-                width={300}
-                height={250}
+              <Card
+                style={{ width: "300px", height: "370px" }}
                 className="text-center"
-                alt={""}
-              />
-              <div className="p-2">Joseph</div>
-              <div className="p-2">Science student</div>
-              <div style={{ color: "#3881AB" }}>
-                <button
-                  className="text-center"
-                  onClick={(e) => handleClick(e, setflip2, flip2)}
-                >
-                  Read preview
-                </button>
-              </div>
-            </Card>
-
-            <Card
-              style={{ width: "300px", height: "370px" }}
-              className="text-center"
-            >
-              <div className="p-2">HelloWorld</div>
-              <p className="p-4">
-                I am a science student at Cambridge college. Coursehub really
-                helped to understand life
-              </p>
-              <div style={{ color: "#3881AB" }}>
-                <button
-                  className="text-center"
-                  onClick={(e) => handleClick(e, setflip2, flip2)}
-                >
-                  Click to flip
-                </button>
-              </div>
-            </Card>
-          </ReactCardFlip>
-          <ReactCardFlip isFlipped={flip3} flipDirection="horizontal">
-            <Card
-              style={{ width: "300px", height: "370px" }}
-              className="text-center"
-            >
-              <Image
-                src="/std2.jpg"
-                width={300}
-                height={250}
+              >
+                <div className="p-2">FeedBack</div>
+                <p className="p-4">
+                  {form.map((data) => {
+                    if (data.student === students[0].student_id) {
+                      return (
+                        <div className="p-4" key={form.indexOf(data)}>
+                          {data.comment}
+                        </div>
+                      );
+                    }
+                  })}
+                </p>
+                <div style={{ color: "#3881AB" }}>
+                  <button
+                    className="text-center"
+                    onClick={(e) => handleClick(e, setflip1, flip1)}
+                  >
+                    Click to flip
+                  </button>
+                </div>
+              </Card>
+            </ReactCardFlip>
+            <ReactCardFlip isFlipped={flip2} flipDirection="horizontal">
+              <Card
+                style={{ width: "300px", height: "370px" }}
                 className="text-center"
-                alt={""}
-              />
-              <div className="p-2">Anna</div>
-              <div className="p-2">Science student</div>
-              <div style={{ color: "#3881AB" }}>
-                <button
+              >
+                <Image
+                  src={students[Math.floor(students.length / 2)].image}
+                  width={300}
+                  height={250}
                   className="text-center"
-                  onClick={(e) => handleClick(e, setflip3, flip3)}
-                >
-                  Read preview
-                </button>
-              </div>
-            </Card>
+                  alt={""}
+                />
+                <div className="p-2">
+                  {students[Math.floor(students.length / 2)].userName}
+                </div>
+                <div className="p-2">
+                  {students[Math.floor(students.length / 2)].education} student
+                </div>
+                <div style={{ color: "#3881AB" }}>
+                  <button
+                    className="text-center"
+                    onClick={(e) => handleClick(e, setflip2, flip2)}
+                  >
+                    Read preview
+                  </button>
+                </div>
+              </Card>
 
-            <Card
-              style={{ width: "300px", height: "370px" }}
-              className="text-center"
-            >
-              <div className="p-2">HelloWorld</div>
-              <p className="p-4">
-                I am a science student at Cambridge college. Coursehub really
-                helped to understand life
-              </p>
-              <div style={{ color: "#3881AB" }}>
-                <button
+              <Card
+                style={{ width: "300px", height: "370px" }}
+                className="text-center"
+              >
+                <div className="p-2">FeedBack</div>
+                <p className="p-4">
+                  {form.map((data) => {
+                    if (
+                      data.student ===
+                      students[Math.floor(students.length / 2)].student_id
+                    ) {
+                      return (
+                        <div className="p-4" key={form.indexOf(data)}>
+                          {data.comment}
+                        </div>
+                      );
+                    }
+                  })}
+                </p>
+                <div style={{ color: "#3881AB" }}>
+                  <button
+                    className="text-center"
+                    onClick={(e) => handleClick(e, setflip2, flip2)}
+                  >
+                    Click to flip
+                  </button>
+                </div>
+              </Card>
+            </ReactCardFlip>
+            <ReactCardFlip isFlipped={flip3} flipDirection="horizontal">
+              <Card
+                style={{ width: "300px", height: "370px" }}
+                className="text-center"
+              >
+                <Image
+                  src={students[students.length - 1].image}
+                  width={300}
+                  height={250}
                   className="text-center"
-                  onClick={(e) => handleClick(e, setflip3, flip3)}
-                >
-                  Click to flip
-                </button>
-              </div>
-            </Card>
-          </ReactCardFlip>
-        </div>
+                  alt={""}
+                />
+                <div className="p-2">
+                  {students[students.length - 1].userName}
+                </div>
+                <div className="p-2">
+                  {students[students.length - 1].education} student
+                </div>
+                <div style={{ color: "#3881AB" }}>
+                  <button
+                    className="text-center"
+                    onClick={(e) => handleClick(e, setflip3, flip3)}
+                  >
+                    Read preview
+                  </button>
+                </div>
+              </Card>
+
+              <Card
+                style={{ width: "300px", height: "370px" }}
+                className="text-center"
+              >
+                <div className="p-2">FeedBack</div>
+                <p className="p-4">
+                  {form.map((data) => {
+                    if (
+                      data.student === students[students.length - 1].student_id
+                    ) {
+                      return (
+                        <div className="p-4" key={form.indexOf(data)}>
+                          {data.comment}
+                        </div>
+                      );
+                    }
+                  })}
+                </p>
+                <div style={{ color: "#3881AB" }}>
+                  <button
+                    className="text-center text-black p-4"
+                    onClick={(e) => handleClick(e, setflip3, flip3)}
+                  >
+                    Click to flip
+                  </button>
+                </div>
+              </Card>
+            </ReactCardFlip>
+          </div>
+        )}
       </div>
     </>
   );

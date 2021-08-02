@@ -4,7 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 export default function LoginForm() {
-  const router = useRouter()
+  const router = useRouter();
   const [loginData, setloginData] = useState({
     email: "",
     password: "",
@@ -25,16 +25,20 @@ export default function LoginForm() {
 
       .then((response) => {
         console.log(response.data);
-        localStorage.setItem('token', response.data.result.token);
-        router.push(`/privateTeacherProfile/${response.data.result.teacher_id}`)
+        localStorage.setItem("token", response.data.result.token);
+        router.push(
+          `/privateTeacherProfile/${response.data.result.teacher_id}`
+        );
       })
       .catch((err) => {
-        console.log("something went wrong make sure the email and password are correct");
+        console.log(
+          "something went wrong make sure the email and password are correct"
+        );
         console.log(err);
       });
   };
   return (
-    <div className="h-screen flex bg-gray-100">
+    <div className="h-screen flex ">
       <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-1">
         <blockquote className="text-2xl font-medium text-center">
           <p className="text-lg font-semibold">Welcome to My-App</p>
