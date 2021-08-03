@@ -2,7 +2,11 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 exports.allFreecourses = async (req, res) => {
-  const course = await prisma.free_course.findMany({});
+  const course = await prisma.free_course.findMany({
+    where: {
+      Status: "Accepted",
+    },
+  });
   return res.status(201).send(course);
 };
 
