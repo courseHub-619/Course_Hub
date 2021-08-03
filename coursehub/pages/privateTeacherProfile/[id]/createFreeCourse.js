@@ -2,42 +2,35 @@ import { storage } from "../../../firebase";
 import Image from "next/image";
 import React, { useState } from "react";
 import axios from "axios";
-
-
+import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
-  const response = await fetch('http://localhost:4200/admin/teacher/all');
+  const response = await fetch("http://localhost:4200/admin/teacher/all");
   const data = await response.json();
   const paths = data.map((teacher) => {
-      let id = teacher.teacher_id;
-      // console.log("id", id)
-      return {
-          params: { id: id.toString() },
-      };
+    let id = teacher.teacher_id;
+    // console.log("id", id)
+    return {
+      params: { id: id.toString() },
+    };
   });
   return {
-      paths,
-      fallback: false,
+    paths,
+    fallback: false,
   };
 };
 export const getStaticProps = async (context) => {
-
- 
-
   const id = context.params.id;
-  
+
   return {
-      props: {
-           id 
-      },
+    props: {
+      id,
+    },
   };
 };
 
-
-
-const Post = ({id}) => {
-
-  console.log(id, "ahayaaaaaaaa")
+const Post = ({ id }) => {
+  console.log(id, "ahayaaaaaaaa");
 
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
@@ -125,19 +118,32 @@ const Post = ({id}) => {
         body,
         fileUrl,
         url,
-        id 
+        id,
       })
-      .then((res) => console.log(res.data))
+      .then(async (res) => {
+        await Swal.fire(
+          "Created!",
+          "Thank you for sharing information.",
+          "success"
+        );
+        console.log(res.data);
+      })
       .catch(function (error) {
         console.log(error);
       });
   };
 
   return (
-
-    <body className="font-mono ">
-      <div className="container mx-auto">
-        <div className="flex justify-center px-6 my-12 ">
+    <div
+      style={{
+        backgroundImage:
+          "url(https://images.unsplash.com/photo-1531685250784-7569952593d2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDh8fHdoaXRlfGVufDB8MHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60)",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="font-mono mx-auto p-4">
+        <div className="flex justify-center">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
             <div>
               <Image
@@ -149,11 +155,11 @@ const Post = ({id}) => {
               />
             </div>
 
-            <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
+            <div className="w-full lg:w-7/12 bg-gray-100 p-5 rounded-lg lg:rounded-l-none">
               <h3 className="pt-4 text-2xl text-center">
                 Spread the knowledge!
               </h3>
-              <div className="px-8 pt-6 pb-8 mb-5 bg-white rounded">
+              <div className="px-8 pt-6 pb-8 mb-5 bg-gray-100 rounded">
                 <div className="mb-4 md:mr-2 md:mb-0">
                   <label className="block mb-2 text-sm font-bold text-gray-700">
                     Title
@@ -232,8 +238,13 @@ const Post = ({id}) => {
                 <hr className="mb-6 border-t" />
                 <div className="mb-6 text-center">
                   <button
-                    onClick={() => {
-                      postCourse();
+                    onClick={async () => {
+                      await postCourse();
+                      await Swal.fire(
+                        "Created!",
+                        "Thank you for sharing information.",
+                        "success"
+                      );
                     }}
                     className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                     type="button"
@@ -246,7 +257,7 @@ const Post = ({id}) => {
           </div>
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 

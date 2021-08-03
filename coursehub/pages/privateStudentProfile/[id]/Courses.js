@@ -46,8 +46,8 @@ const Post = ({ teachers, blogs, stdId }) => {
   const [days, setdays] = React.useState(null);
   const [sessions, setsessions] = React.useState(null);
 
-  const [day, setday] = React.useState(null);
-  const [session, setsession] = React.useState(null);
+  const [day, setday] = React.useState("");
+  const [session, setsession] = React.useState("");
 
   const availability = async (TId) => {
     const available1 = await fetch(
@@ -183,7 +183,7 @@ const Post = ({ teachers, blogs, stdId }) => {
               >
                 <div className=" grid-cols-3 min-w-full flex justify-between ">
                   <div className="text-gray-400 font-medium text-sm mb-6 mt-6 mx-3 px-2 min-h-full max-w-lg">
-                    <Image src={blog.Image} height={200} width={500} />
+                    <Image src={blog.Image} height={400} width={600} />
                   </div>
 
                   <div className=" relative pl-4 w-80">
@@ -192,7 +192,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                         href="#"
                         className=" cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
                       >
-                        <p className="block ml-2 font-bold">
+                        <p className="block ml-2 font-bold text-3xl">
                           {teacher.userName}
                         </p>
                       </a>
@@ -201,7 +201,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                       <div className="pt-1 ">
                         <div className="text-sm mb-2 flex  flex-start items-center">
                           <p className="font-bold ml-2">
-                            <span className="text-gray-700 font-medium text-2xl ml-3">
+                            <span className="text-gray-700 font-medium text-2xl ">
                               {blog.title}
                             </span>
                           </p>
@@ -209,7 +209,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                       </div>
                       <div className="text-sm mb-2 min-h-full flex flex-start items-center">
                         <p className="font-bold ml-2">
-                          <span className="text-gray-700 mx-auto font-medium ml-1">
+                          <span className="text-gray-700 mx-auto font-medium">
                             {blog.body}
                           </span>
                         </p>
@@ -256,7 +256,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                             {/*header*/}
                             <div className=" text-center flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                               <h3 className="text-3xl font-semibold text-center">
-                                Modal Title
+                                Reserve your session
                               </h3>
                               <button
                                 className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -276,6 +276,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                                 days.map((day) => {
                                   return (
                                     <button
+                                      key={days.indexOf(day)}
                                       onClick={() => setday(day)}
                                       className="p-2 text-blue-400"
                                     >
@@ -291,6 +292,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                                 sessions.map((session) => {
                                   return (
                                     <button
+                                      key={sessions.indexOf(session)}
                                       onClick={() => setsession(session)}
                                       className="p-2 text-blue-400"
                                     >
@@ -302,6 +304,10 @@ const Post = ({ teachers, blogs, stdId }) => {
                             <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
                               Price: {blog.price} dt
                             </p>
+                            <p> Day chosen </p>
+                            <p> {day}</p>
+                            <p> Session chosen </p>
+                            <p> {session}</p>
                             <p className=" p-2 text-xs w-80">
                               NB: Sessions start from 8:00 AM, so session one is
                               from 8 to 10 Am , session two is from 10 to 12 pm,
@@ -336,7 +342,7 @@ const Post = ({ teachers, blogs, stdId }) => {
                           </div>
                         </div>
                       </div>
-                      <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                      <div className="bg-transparent bg-opacity-50 fixed inset-0 z-40 "></div>
                     </>
                   ) : null}
                 </>

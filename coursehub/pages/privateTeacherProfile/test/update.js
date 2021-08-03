@@ -127,8 +127,6 @@ const MakePost = () => {
   };
 
   return (
-
-   
     <div>
       <div className="flex h-screen bg-gray-200 items-center justify-center  mt-32 mb-32">
         <div className="grid bg-white rounded-lg shadow-xl w-11/12 md:w-9/12 lg:w-1/2">

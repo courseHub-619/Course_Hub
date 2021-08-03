@@ -1,6 +1,9 @@
 import React from "react";
 /* You'll need to install @reach/portal which simplify creating portal*/
 import Portal from "@reach/portal";
+import Link from "next/link";
+import Image from "next/image";
+
 const DrawerPage = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const toggle = () => {
@@ -26,19 +29,19 @@ const DrawerPage = () => {
       </svg>
 
       <Drawer isOpen={isOpen} toggle={toggle} position="left">
-        <DrawerHeader>
-          {" "}
-          <div class="w-1/2">
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/coursehub-619.appspot.com/o/posts%2Flogo%20(1).png?alt=media&token=f67f7d72-e742-4fa9-a2d7-1a0e659ff737"
-              class="mx-auto w-18 h-16 "
+        <DrawerHeader className="text-center">
+          <div className="w-1/2 ">
+            <Image
+              src="/logo123.png"
+                height={200}
+              width={300}
             />
           </div>
         </DrawerHeader>
         <DrawerBody>
-          <div class="mt-10 mb-4">
-            <ul class="ml-4">
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+          <div className="mt-10 mb-4">
+            <ul className="ml-4">
+              <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -56,10 +59,10 @@ const DrawerPage = () => {
                   </svg>
                 </span>
                 <a href="#">
-                  <span class="ml-2">profile</span>
+                  <span className="ml-2">profile</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -76,11 +79,11 @@ const DrawerPage = () => {
                     />
                   </svg>
                 </span>
-                <a href="/">
-                  <span class="ml-2">Homepage</span>
-                </a>
+                <Link href="/">
+                  <span className="ml-2">Homepage</span>
+                </Link>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -98,10 +101,10 @@ const DrawerPage = () => {
                   </svg>
                 </span>
                 <a href={`/posts`}>
-                  <span class="ml-2">Courses</span>
+                  <span className="ml-2">Courses</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -121,10 +124,10 @@ const DrawerPage = () => {
                   </svg>
                 </span>
                 <a href={`/freeCourses`}>
-                  <span class="ml-2">Free Courses</span>
+                  <span className="ml-2">Free Courses</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -142,10 +145,10 @@ const DrawerPage = () => {
                   </svg>
                 </span>
                 <a href={`/videoChat`}>
-                  <span class="ml-2">Chat room</span>
+                  <span className="ml-2">Chat room</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -163,14 +166,14 @@ const DrawerPage = () => {
                   </svg>
                 </span>
                 <a href="#">
-                  <span class="ml-2">About us</span>
+                  <span className="ml-2">About us</span>
                 </a>
               </li>
             </ul>
           </div>
         </DrawerBody>
         <DrawerFooter>
-          <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row object-bottom  border-gray-300 hover:text-black align end  hover:bg-gray-300  hover:font-bold rounded ">
+          <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row object-bottom  border-gray-300 hover:text-black align end  hover:bg-gray-300  hover:font-bold rounded ">
             <span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +191,7 @@ const DrawerPage = () => {
               </svg>
             </span>
             <a href="#">
-              <span class="ml-2">Log out</span>
+              <span className="ml-2">Log out</span>
             </a>
           </li>
         </DrawerFooter>

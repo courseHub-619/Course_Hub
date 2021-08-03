@@ -6,9 +6,9 @@ CREATE TABLE "student" (
     "education" TEXT NOT NULL,
     "age" INTEGER NOT NULL,
     "wallet" INTEGER NOT NULL DEFAULT 0,
-    "token" TEXT NOT NULL DEFAULT E'',
     "image" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
 
     PRIMARY KEY ("student_id")
 );
@@ -26,8 +26,9 @@ CREATE TABLE "teacher" (
     "age" INTEGER NOT NULL,
     "wallet" INTEGER NOT NULL DEFAULT 0,
     "image" TEXT NOT NULL,
+    "Availability" TEXT NOT NULL,
     "Overall_rating" INTEGER NOT NULL DEFAULT 0,
-    "token" TEXT NOT NULL DEFAULT E'',
+    "token" TEXT NOT NULL,
 
     PRIMARY KEY ("teacher_id")
 );
@@ -133,10 +134,10 @@ CREATE TABLE "DM" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "student.token_unique" ON "student"("token");
+CREATE UNIQUE INDEX "student.email_unique" ON "student"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "student.email_unique" ON "student"("email");
+CREATE UNIQUE INDEX "student.token_unique" ON "student"("token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "teacher.email_unique" ON "teacher"("email");

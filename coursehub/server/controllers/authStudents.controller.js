@@ -30,6 +30,8 @@ exports.signUp = async (req, res) => {
       age: req.body.signupdata.age,
       wallet: req.body.signupdata.wallet,
       image: req.body.url,
+      token : req.body.signupdata.email,
+
     };
 
     //here we are going to check if the user we trying to create already exist or not
