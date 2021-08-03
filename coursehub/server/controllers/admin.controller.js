@@ -286,4 +286,58 @@ exports.deletePost = async (req, res) => {
     })
 
     return res.status(201).send("Updated");
-}
+};
+
+
+
+
+
+
+
+exports.logIn = (req, res) => {
+    let result;
+    //that's the username and password the the user typed
+    const user = {
+      userName: req.body.userName,
+      password: req.body.password,
+    };
+  
+    prisma.admin.findUnique({
+        where: { userName: req.body.userName },
+      })
+      .then(async (data) => {
+        console.log("yooo", data);
+  
+        if (!data) {
+            
+          return res.sendStatus(404);
+        }
+  
+        //here we will compare the typed password against the one saved in the DATABASe
+        const validPassword = user.password=== data.password
+  
+        if (validPassword) {
+          //this is how we get our accessToken when we log in
+          // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+          //each time we get a token we need to set a refresh token too
+          // refreshTokens.push(refreshToken);
+          // console.log(refreshTokens);
+          res.status(201).send({
+            message: "the password is correct",
+          });
+  
+          console.log("the password matches");
+        } else if (!validPassword || user.password!== data.password) {
+          console.log("the password does not match");
+          res.status(201).send({
+            message: "the password is incorrect",
+          });
+        }
+      })
+      .catch(async (err) => {
+        console.log(err);
+        await res.status(500).send({
+          message: "Error finding the sudents",
+        });
+      });
+  };

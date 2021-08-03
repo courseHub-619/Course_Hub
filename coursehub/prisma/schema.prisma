@@ -50,6 +50,16 @@ model teacher {
   sessions    sessions[]
 }
 
+model admin {
+
+admin_id  Int @id @default(autoincrement())
+ userName       String @unique
+  password       String
+
+
+
+}
+
 model weekDay {
   weekDay_id Int     @id @default(autoincrement())
   teacher_id Int     @unique
