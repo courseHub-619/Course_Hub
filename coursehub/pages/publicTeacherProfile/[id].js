@@ -4,6 +4,8 @@ import ReactStars from "react-rating-stars-component";
 import Image from "next/image";
 import { useState } from "react";
 import moment from "moment";
+import emailjs from "emailjs-com";
+import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
   // const id = context.params.teacher_id;
@@ -38,13 +40,37 @@ export const getStaticProps = async (context) => {
   return {
     props: {
       data: data,
-      blogs: blogs,
-      teacherId: teacherId,
+
+      teacherId: teacher_id,
     },
   };
 };
 
 const Details = ({ data, blogs, teacherId }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "gmail",
+        "template_izjng9t",
+        e.target,
+        "user_UzMl7QfuqJZRbXB7KItH6"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+
+    e.target.reset();
+  };
+
   console.log(teacherId, "where man");
   return (
     <div>
@@ -83,11 +109,11 @@ const Details = ({ data, blogs, teacherId }) => {
             <p className="pt-8 text-sm">{data.description}</p>
 
             <div className="pt-12 pb-8 flex justify-evenly">
-              <button className=" bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
-                Get In Touch
-              </button>
-              <button className=" bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
-                schedule a lecture
+              <button
+                onClick={() => setShowModal(true)}
+                className=" bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full"
+              >
+                Send anonymous feedback
               </button>
             </div>
 
@@ -189,19 +215,96 @@ const Details = ({ data, blogs, teacherId }) => {
           {data.image ? (
             <Image
               src={data.image}
-              width={800}
-              height={800}
+              width={600}
+              height={600}
               className="rounded-none h-80 w-2/3 lg:rounded-lg shadow-2xl hidden lg:block"
             />
           ) : (
             <Image
               src="https://firebasestorage.googleapis.com/v0/b/coursehub-619.appspot.com/o/posts%2F109815470-man-avatar-profile-male-face-icon-vector-illustration-.jpg?alt=media&token=63ccf798-686d-48db-9df7-2d17f16faac4"
-              width={800}
-              height={800}
+              width={600}
+              height={600}
               className="rounded-none h-80 w-2/3 lg:rounded-lg shadow-2xl hidden lg:block"
             />
           )}
         </div>
+
+        {showModal ? (
+          <>
+            <form
+              style={{
+                backgroundImage:
+                  "url(https://images.unsplash.com/photo-1613963931023-5dc59437c8a6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZmVlZGJhY2t8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60)",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
+              onSubmit={(e) => {
+                sendEmail(e);
+                setShowModal(false);
+                Swal.fire(
+                  "Done!",
+                  "Thank you for sharing your feedback",
+                  "success"
+                );
+              }}
+              className=" bg-gray-100 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+            >
+              <div className="text-center relative w-auto my-6 mx-auto max-w-3xl">
+                {/*content*/}
+                <div className=" text-center border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                  {/*header*/}
+                  <div className=" text-center font-medium text-2xl p-5 border-b border-solid border-blueGray-200 rounded-t">
+                    Your feedback is valuable
+                  </div>
+                  {/*body*/}
+                  <div className="relative p-2 flex-auto"></div>
+                  <input
+                    className="my-4 text-blueGray-500 text-lg leading-relaxed invisible"
+                    name="user_email"
+                    value={data.email}
+                  />
+                  {/* {data.email} */}
+
+                  <textarea
+                    placeholder="type here"
+                    className="border p-2 "
+                    name="message"
+                  ></textarea>
+                  <input
+                    className="my-4 text-blueGray-500 text-lg leading-relaxed invisible"
+                    name="to_name"
+                    value={data.userName}
+                  />
+
+                  {/*footer*/}
+                  <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                    <button
+                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setShowModal(false)}
+                    >
+                      Cancel
+                    </button>
+                    {/* <button
+                      type="submit"
+                      type="button"
+                      onClick={(e) => {
+                        sendEmail(e);
+                      }}
+                    >
+                      Send E-mail
+                    </button> */}
+                    <input
+                      type="submit"
+                      className="bg-emerald-500 text-black active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div className="bg-transparent bg-opacity-50 fixed inset-0 z-40 "></div>
+          </>
+        ) : null}
 
         {/* <div className="absolute top-0 right-0 h-12 w-18 p-4">
           <button className="js-change-theme focus:outline-none">🌙</button>
@@ -209,7 +312,7 @@ const Details = ({ data, blogs, teacherId }) => {
       </div>
 
       {/* posts for now it's just one and later it'll be a map */}
-      {blogs &&
+      {/* {blogs &&
         blogs.map((blog, index) => {
           // console.log(blog)
           return (
@@ -279,7 +382,7 @@ const Details = ({ data, blogs, teacherId }) => {
               </div>
             </div>
           );
-        })}
+        })} */}
       {/*posts ends here */}
     </div>
   );

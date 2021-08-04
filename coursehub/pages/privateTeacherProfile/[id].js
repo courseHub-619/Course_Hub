@@ -148,12 +148,26 @@ const Teacher = ({ teacher, days, sessions }) => {
                   Chat room
                 </a>
               </Link>
-              <a
-                href=""
-                className="bg font-bold text-sm text-gray-600 w-full text-center py-3 hover:bg-gray-600 hover:text-white hover:shadow-lg"
+              <Link
+                href={`/privateTeacherProfile/${teacher.teacher_id}/update`}
               >
-                Update information
-              </a>
+                <a
+                  href=""
+                  className="bg font-bold text-sm text-gray-600 w-full text-center py-3 hover:bg-gray-600 hover:text-white hover:shadow-lg"
+                >
+                  Update information
+                </a>
+              </Link>
+              <Link
+                href={`/privateTeacherProfile/${teacher.teacher_id}/updateschedule`}
+              >
+                <a
+                  href=""
+                  className="bg font-bold text-sm text-yellow-600 w-full text-center py-3 hover:bg-yellow-600 hover:text-white hover:shadow-lg"
+                >
+                  update scheduel
+                </a>
+              </Link>
             </div>
 
             <div className="w-full">

@@ -98,24 +98,24 @@ const Course = ({ stdId }) => {
     <div
       style={{
         backgroundImage:
-          "url(https://images.unsplash.com/photo-1422207258071-70754198c4a2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fGJsYWNrJTIwYmFja2dyb3VuZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60)",
+          "url(https://images.unsplash.com/photo-1518655048521-f130df041f66?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTB8fGJsb2d8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60)",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}
     >
       <div className=" bg-transparent  editor mx-auto  w-10/12 flex flex-col text-gray-800 bordershadow-lg max-w-2xl">
-        <div className="heading text-center font-bold text-2xl m-5 text-white">
+        <div className="heading text-center font-bold text-2xl m-5 text-black">
           New Post
         </div>
         <input
-          className="title bg-transparent border border-gray-300 p-2 mb-4 outline-none text-white"
+          className="title bg-transparent border border-gray-300 p-2 mb-4 outline-none text-black"
           spellCheck="false"
           placeholder="Title"
           type="text"
           onChange={(e) => setTitle(e.target.value)}
         ></input>
         <textarea
-          className="description bg-transparent sec p-3 h-60 border border-gray-300 outline-none text-white"
+          className="description bg-transparent sec p-3 h-60 border border-gray-300 outline-none text-black"
           spellCheck="false"
           placeholder="Describe everything about this post here"
           onChange={(e) => setBody(e.target.value)}
@@ -157,11 +157,11 @@ const Course = ({ stdId }) => {
         <progress
           max="100"
           value={progressImage}
-          className="bg-teal text-xs leading-none py-1 text-center text-white"
+          className="bg-teal text-xs leading-none py-1 text-center text-black"
           style={{ width: "100%" }}
         />
         <input
-          className="title bg-transparent border border-gray-300 p-2 mb-4 outline-none text-white"
+          className="title bg-transparent border border-gray-300 p-2 mb-4 outline-none text-black"
           spellCheck="false"
           placeholder="Price"
           type="text"

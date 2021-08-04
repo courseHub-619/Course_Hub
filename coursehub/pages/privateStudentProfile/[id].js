@@ -96,12 +96,11 @@ const Student = ({ student }) => {
                   Courses
                 </a>
               </Link>
-              <a
-                href="http://localhost:3000/Payment"
-                className="bg font-bold text-sm text-yellow-600 w-full text-center py-3 hover:bg-yellow-600 hover:text-white hover:shadow-lg"
-              >
-                Recharge wallet
-              </a>
+              <Link href={`/Payment`}>
+                <p className="bg font-bold text-sm text-yellow-600 w-full text-center py-3 hover:bg-yellow-600 hover:text-white hover:shadow-lg">
+                  Recharge wallet
+                </p>
+              </Link>
               <Link href={`/videoChat`}>
                 <a
                   href=""
