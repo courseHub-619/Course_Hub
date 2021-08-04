@@ -7,6 +7,7 @@ import { Carousel } from "react-responsive-carousel";
 import Card from "@material-ui/core/Card";
 import ReactCardFlip from "react-card-flip";
 import Link from "next/link";
+import ReactStars from "react-rating-stars-component";
 
 export async function getStaticProps() {
   const student = await fetch("http://localhost:4200/admin/students/all");
@@ -36,20 +37,20 @@ export default function Home({ students, form }) {
   const [flip2, setflip2] = useState(false);
   const [flip3, setflip3] = useState(false);
 
-  const [render, setrender] = useState(false);
-  const [noRender, setnoRender] = useState(true);
+  const [render, setrender] = useState(true);
+  const [noRender, setnoRender] = useState(false);
 
   function handleClick(e, func, val) {
     e.preventDefault();
     func(!val);
   }
-  function handleFeedback() {
-    if (students.length >= 3) {
-      setnoRender(false);
-      setrender(true);
-    }
-  }
-  handleFeedback();
+  // function handleFeedback() {
+  //   if (students.length >= 3) {
+  //     setnoRender(false);
+  //     setrender(true);
+  //   }
+  // }
+  // handleFeedback();
 
   return (
     <>
@@ -175,13 +176,26 @@ export default function Home({ students, form }) {
                   {form.map((data) => {
                     if (data.student === students[0].student_id) {
                       return (
-                        <div className="p-4" key={form.indexOf(data)}>
-                          {data.comment}
+                        <div className="text-center justify-center ">
+                          <div className="p-4" key={form.indexOf(data)}>
+                            {data.comment}
+                          </div>
+                          <div className=" content-center ml-20 px-2">
+                            <ReactStars
+                              className="  "
+                              edit={false}
+                              count={5}
+                              size={20}
+                              value={Number(data.stars)}
+                              activeColor="#FFD700"
+                            />
+                          </div>
                         </div>
                       );
                     }
                   })}
                 </p>
+
                 <div style={{ color: "#3881AB" }}>
                   <button
                     className="text-center"
@@ -232,13 +246,33 @@ export default function Home({ students, form }) {
                       students[Math.floor(students.length / 2)].student_id
                     ) {
                       return (
-                        <div className="p-4" key={form.indexOf(data)}>
-                          {data.comment}
-                        </div>
+                        <>
+                          <div className="p-4" key={form.indexOf(data)}>
+                            {data.comment}
+                          </div>
+                          <div className=" content-center ml-20 px-2">
+                            <ReactStars
+                              className="  "
+                              edit={false}
+                              count={5}
+                              size={20}
+                              value={Number(data.stars)}
+                              activeColor="#FFD700"
+                            />
+                          </div>
+                        </>
                       );
                     }
                   })}
                 </p>
+                {/* <ReactStars
+                  className=""
+                  edit={false}
+                  count={5}
+                  size={20}
+                  value={Number(data.)}
+                  activeColor="#FFD700"
+                /> */}
                 <div style={{ color: "#3881AB" }}>
                   <button
                     className="text-center"
@@ -288,9 +322,20 @@ export default function Home({ students, form }) {
                       data.student === students[students.length - 1].student_id
                     ) {
                       return (
-                        <div className="p-4" key={form.indexOf(data)}>
-                          {data.comment}
-                        </div>
+                        <>
+                          <div className="p-4" key={form.indexOf(data)}>
+                            {data.comment}
+                          </div>
+                          <div className=" content-center ml-20 px-2">
+                            <ReactStars
+                              edit={false}
+                              count={5}
+                              size={20}
+                              value={Number(data.stars)}
+                              activeColor="#FFD700"
+                            />
+                          </div>
+                        </>
                       );
                     }
                   })}
