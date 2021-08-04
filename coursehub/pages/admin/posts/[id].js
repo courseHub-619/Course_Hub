@@ -5,9 +5,10 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-
 export const getStaticPaths = async () => {
-  const response = await fetch('http://localhost:4200/admin/post/all');
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/admin/post/all`
+  );
   const data = await response.json();
   const paths = data.map((course) => {
     let id = course.post_id;
@@ -24,45 +25,51 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const id = context.params.id;
-  const res = await fetch(`http://localhost:4200/admin/posts/all/${id}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/admin/posts/all/${id}`
+  );
   const data = await res.json();
 
+  console.log(data, "dataaaaaaa");
+
   const teacher_id = context.params.id;
-  const teacher = await fetch(`http://localhost:4200/admin/posts/teacher/1`);
+  const teacher = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/admin/posts/teacher/${data.author_id}`
+  );
   const TeacherName = await teacher.json();
 
   return {
     props: {
       course: data,
-      teacher: TeacherName
+      teacher: TeacherName,
     },
   };
 };
 
 const Course = ({ course, teacher }) => {
-  console.log(course, teacher);
+  console.log(course, "etste");
 
   const [status, setStatus] = useState(course.status);
   const router = useRouter();
   // console.log(course.image, "image here")
   const Update = () => {
-    axios.put(`http://localhost:4200/admin/post/update/${course.post_id}`)
-      .then(result => {
-        console.log(result)
-        setStatus("Accepted")
+    axios
+      .put(`http://localhost:4200/admin/post/update/${course.post_id}`)
+      .then((result) => {
+        console.log(result);
+        setStatus("Accepted");
       })
-      .catch(err => console.log(err))
-
-  }
+      .catch((err) => console.log(err));
+  };
   const Delete = () => {
-    axios.delete(`http://localhost:4200/admin/post/delete/${course.post_id}`)
-      .then(result => {
-        console.log(result)
-        router.push("/admin/posts")
+    axios
+      .delete(`http://localhost:4200/admin/post/delete/${course.post_id}`)
+      .then((result) => {
+        console.log(result);
+        router.push("/admin/posts");
       })
-      .catch(err => console.log(err))
-
-  }
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -76,19 +83,16 @@ const Course = ({ course, teacher }) => {
               href="#"
               className="py-2 text-2xl  inline-flex items-center justify-center mb-2"
             >
-             Teacher: {teacher.userName}
+              Teacher: {teacher.userName}
             </a>
-
           </div>
           <a
             href="#"
             className="py-2 text-2xl  inline-flex items-center justify-center mb-2"
           >
-           Email: {teacher.email}
+            Email: {teacher.email}
           </a>
-          <p
-            className="py-2 text-black text-xl  items-center justify-center mb-2"
-          >
+          <p className="py-2 text-black text-xl  items-center justify-center mb-2">
             status: {status}
           </p>
           <Image
@@ -135,17 +139,25 @@ const Course = ({ course, teacher }) => {
                   />
                 </div>
               </div>
-              <Link href={`/admin/teachers/${teacher.teacher_id}`} ><button className="px-2 py-1 text-gray-100 bg-green-700 flex w-full items-center justify-center rounded">
-                Check profile
-                <i className="bx bx-user-plus ml-2"></i>
-              </button></Link>
+              <Link href={`/admin/teachers/${teacher.teacher_id}`}>
+                <button className="px-2 py-1 text-gray-100 bg-green-700 flex w-full items-center justify-center rounded">
+                  Check profile
+                  <i className="bx bx-user-plus ml-2"></i>
+                </button>
+              </Link>
             </div>
           </div>
         </div>
-        <button onClick={Update} className=" bg-gray-300 hover:bg-green-500 text-gray-800 font-bold p-2 rounded inline-flex items-center">
+        <button
+          onClick={Update}
+          className=" bg-gray-300 hover:bg-green-500 text-gray-800 font-bold p-2 rounded inline-flex items-center"
+        >
           Accept course
         </button>
-        <button onClick={Delete} className=" bg-gray-300 hover:bg-red-500 text-gray-800 font-bold p-2 rounded inline-flex items-center">
+        <button
+          onClick={Delete}
+          className=" bg-gray-300 hover:bg-red-500 text-gray-800 font-bold p-2 rounded inline-flex items-center"
+        >
           Delete course
         </button>
       </main>

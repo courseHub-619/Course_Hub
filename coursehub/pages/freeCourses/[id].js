@@ -33,7 +33,7 @@ export const getStaticProps = async (context) => {
   const teacher_id = context.params.id;
 
   const teacher = await fetch(
-    `http://localhost:4200/freecourse/teacher/${data.teacher}`
+    `${process.env.NEXT_PUBLIC_SERVER}/freecourse/teacher/${data.teacher}`
   );
   const TeacherName = await teacher.json();
 

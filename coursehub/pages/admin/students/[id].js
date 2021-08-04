@@ -4,7 +4,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 
 export const getStaticPaths = async () => {
-    const response = await fetch('http://localhost:4200/admin/students/all');
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/students/all`);
     const data = await response.json();
     const paths = data.map((student) => {
         let id = student.student_id;
@@ -21,7 +21,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
 
     const student_id = context.params.id;
-    const student = await fetch(`http://localhost:4200/admin/student/one/${student_id}`);
+    const student = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/student/one/${student_id}`);
     const studentProfile = await student.json();
 
     return {
@@ -38,7 +38,7 @@ const Student = ({ student }) => {
     console.log(student);
     const router = useRouter()
     const deleteProfile = () => {
-        axios.delete(`http://localhost:4200/admin/student/delete/${student.student_id}`)
+        axios.delete(`${process.env.NEXT_PUBLIC_SERVER}/admin/student/delete/${student.student_id}`)
             .then(result => {
                 console.log(result)
                 router.push("/admin/students")

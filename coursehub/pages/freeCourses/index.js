@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export async function getStaticProps() {
-  const response = await fetch("http://localhost:4200/freecourse/all");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/freecourse/all`);
   const data = await response.json();
-  const teacher = await fetch("http://localhost:4200/freecourse/all/teacher");
+  const teacher = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/freecourse/all/teacher`);
   const teacherList = await teacher.json();
   return {
     props: {

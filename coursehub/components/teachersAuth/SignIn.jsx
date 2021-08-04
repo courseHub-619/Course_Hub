@@ -141,7 +141,7 @@ export default function SignIn() {
     };
 
     axios
-      .post(" http://localhost:4200/api/auth/teacher/signUp", data)
+      .post(`${process.env.NEXT_PUBLIC_SERVER}/api/auth/teacher/signUp`, data)
 
       .then(async (response) => {
         console.log(response);
@@ -300,15 +300,6 @@ export default function SignIn() {
               style={{ width: "100%" }}
             />
             <label className="text-left"> Weekdays available:</label>
-            {/* <input
-              name="availability"
-              type="text"
-              onChange={handleChange}
-              placeholder="availability"
-              className={
-                "w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
-              }
-            /> */}
           </form>
           <section className="container mx-auto px-6 my-1 flex flex-wrap -m-4">
             <div className="p-2 md:w-40 ">

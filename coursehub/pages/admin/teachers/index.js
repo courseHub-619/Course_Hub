@@ -7,7 +7,7 @@ import ReactStars from "react-rating-stars-component";
 export async function getStaticProps() {
 
     const teacher = await fetch(
-        'http://localhost:4200/admin/all/teacher'
+        `${process.env.NEXT_PUBLIC_SERVER}/admin/all/teacher`
     )
     const teacherList = await teacher.json()
 

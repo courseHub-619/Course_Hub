@@ -5,7 +5,7 @@ import React from "react";
 import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
-  const response = await fetch("http://localhost:4200/admin/students/all");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/students/all`);
   const data = await response.json();
   const paths = data.map((student) => {
     let id = student.student_id;
@@ -23,9 +23,9 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   const stdId = context.params.id;
 
-  const res = await fetch(`http://localhost:4200/all/blogs`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/all/blogs`);
   const blogs = await res.json();
-  const tutor = await fetch(`http://localhost:4200/teacher/all/teachers`);
+  const tutor = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/teacher/all/teachers`);
   const teachers = await tutor.json();
   return {
     props: {
@@ -51,11 +51,11 @@ const Post = ({ teachers, blogs, stdId }) => {
 
   const availability = async (TId) => {
     const available1 = await fetch(
-      `http://localhost:4200/reservaition/day/available/${TId}`
+      `${process.env.NEXT_PUBLIC_SERVER}/reservaition/day/available/${TId}`
     );
 
     const available2 = await fetch(
-      `http://localhost:4200/reservaition/session/available/${TId}`
+      `${process.env.NEXT_PUBLIC_SERVER}/reservaition/session/available/${TId}`
     );
     const data1 = await available1.json();
     const data2 = await available2.json();
@@ -81,7 +81,7 @@ const Post = ({ teachers, blogs, stdId }) => {
     let test = false;
     console.log(price);
     const Balance = await fetch(
-      `http://localhost:4200/reservaition/balance/${id}`
+      `${process.env.NEXT_PUBLIC_SERVER}/reservaition/balance/${id}`
     );
 
     const data = await Balance.json();
@@ -100,7 +100,7 @@ const Post = ({ teachers, blogs, stdId }) => {
       console.log("sucess");
 
       const avail = await fetch(
-        `http://localhost:4200/reservaition/available/${teacherId}`
+        `${process.env.NEXT_PUBLIC_SERVER}/reservaition/available/${teacherId}`
       );
       const resAval = await avail.json();
 
@@ -117,7 +117,7 @@ const Post = ({ teachers, blogs, stdId }) => {
       // console.log(Ressessions, "sesssionzzzzz");
       if (Resdays.length !== 0) {
         const SessAvail = await fetch(
-          `http://localhost:4200/reservaition/available/${teacherId}/${day}`
+          `${process.env.NEXT_PUBLIC_SERVER}/reservaition/available/${teacherId}/${day}`
         );
 
         const resSession = await SessAvail.json();
@@ -144,12 +144,12 @@ const Post = ({ teachers, blogs, stdId }) => {
       } else {
         await axios
           .put(
-            `http://localhost:4200/reservaition/balance/${id}/${price}/${teacherId}`
+            `${process.env.NEXT_PUBLIC_SERVER}/reservaition/balance/${id}/${price}/${teacherId}`
           )
           .then(async (result) => {
             console.log(result);
             await axios
-              .post(`http://localhost:4200/reservaition/scheduel`, {
+              .post(`${process.env.NEXT_PUBLIC_SERVER}/reservaition/scheduel`, {
                 id,
                 teacherId,
                 session,

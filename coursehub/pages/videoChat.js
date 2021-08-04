@@ -9,7 +9,7 @@ import { FiPhoneCall } from "react-icons/fi";
 
 import emailjs from "emailjs-com";
 
-const socket = io.connect("http://localhost:4200");
+const socket = io.connect(process.env.NEXT_PUBLIC_SERVER);
 
 const Chat = () => {
   const [me, setMe] = useState("");

@@ -5,7 +5,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
-  const response = await fetch("http://localhost:4200/admin/teacher/all");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/teacher/all`);
   const data = await response.json();
   const paths = data.map((teacher) => {
     let id = teacher.teacher_id;
@@ -112,7 +112,7 @@ const Post = ({ id }) => {
   const postCourse = () => {
     console.log(fileUrl, "url file");
     axios
-      .post("http://localhost:4200/freecourse/post", {
+      .post(`${process.env.NEXT_PUBLIC_SERVER}/freecourse/post`, {
         title,
         category,
         body,

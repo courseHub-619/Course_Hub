@@ -72,7 +72,7 @@ export default function SignIn() {
     signupdata.age = Number(signupdata.age);
 
     axios
-      .post(" http://localhost:4200/api/auth/student/signUp", {
+      .post(`${process.env.NEXT_PUBLIC_SERVER}/api/auth/student/signUp`, {
         signupdata,
         url,
       })

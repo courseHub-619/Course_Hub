@@ -9,11 +9,11 @@ import ReactStars from "react-rating-stars-component";
 export async function getStaticProps() {
 
     const teacher = await fetch(
-        'http://localhost:4200/admin/all/teacher'
+        `${process.env.NEXT_PUBLIC_SERVER}/admin/all/teacher`
     )
     const teacherList = await teacher.json()
     const post = await fetch(
-        'http://localhost:4200/admin/post/all'
+        `${process.env.NEXT_PUBLIC_SERVER}/admin/post/all`
     )
     const posts = await post.json()
     return {

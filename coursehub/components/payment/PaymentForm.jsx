@@ -52,23 +52,23 @@ export default function PaymentForm() {
         const { id } = paymentMethod;
         amountData.amount = Number(amountData.amount);
 
-        const response = await axios.post("http://localhost:4200/api/payment", {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/api/payment`, {
           amount: amountData.amount * 100,
           id,
           email: amountData.email,
         });
 
         if (response.data.success) {
-          console.log("Successful payment");
+          console.log(`Successful payment`);
           setSuccess(true);
           axios
-            .post("http://localhost:4200/api/getOldBalence", {
+            .post(`${process.env.NEXT_PUBLIC_SERVER}/api/getOldBalence`, {
               email: amountData.email,
             })
             .then((response) => {
               let newWallet = response.data.wallet + amountData.amount;
               axios
-                .post(`http://localhost:4200/api/setNewBalence`, {
+                .post(`${process.env.NEXT_PUBLIC_SERVER}/api/setNewBalence`, {
                   id: response.data.student_id,
                   newWallet: newWallet,
                 })
@@ -85,7 +85,7 @@ export default function PaymentForm() {
                 });
             })
             .catch((err) => {
-              console.log("error from get unique user", err);
+              console.log(`error from get unique user`, err);
             });
         }
       } catch (error) {

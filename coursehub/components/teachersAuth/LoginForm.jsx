@@ -21,7 +21,7 @@ export default function LoginForm() {
     }
     console.log(loginData);
     axios
-      .post("http://localhost:4200/api/auth/teacher/logIn", loginData)
+      .post(`${process.env.NEXT_PUBLIC_SERVER}/api/auth/teacher/logIn`, loginData)
 
       .then((response) => {
         console.log(response.data);

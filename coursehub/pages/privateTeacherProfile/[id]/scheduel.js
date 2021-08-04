@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 export const getStaticPaths = async () => {
-  const response = await fetch("http://localhost:4200/admin/teacher/all");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/teacher/all`);
   const data = await response.json();
   const paths = data.map((teacher) => {
     let id = teacher.teacher_id;
@@ -22,10 +22,10 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const id = context.params.id;
-  const data = await fetch(`http://localhost:4200/reservaition/scheduel/${id}`);
+  const data = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/reservaition/scheduel/${id}`);
   const scheduel = await data.json();
 
-  const student = await fetch("http://localhost:4200/admin/students/all");
+  const student = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/students/all`);
   const students = await student.json();
 
   return {
@@ -45,7 +45,7 @@ const Scheduel = ({ id, scheduel, students }) => {
 
   const deleteScheduel = async (sId) => {
     await axios
-      .delete(`http://localhost:4200/reservaition/scheduel/delete/${sId}`)
+      .delete(`${process.env.NEXT_PUBLIC_SERVER}/reservaition/scheduel/delete/${sId}`)
       .then((res) => {
         console.log(res.data);
         router.push(`/privateTeacherProfile/${Id}/scheduel`);

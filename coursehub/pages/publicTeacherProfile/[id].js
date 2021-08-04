@@ -8,10 +8,10 @@ import emailjs from "emailjs-com";
 import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
-  // const id = context.params.teacher_id;
-  const res = await fetch(`http://localhost:4200/teacher/user/teachers`);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/teacher/user/teachers`);
   const data = await res.json();
-  // console.log(data, "kimochiiiiiiiiiiiiiiiiiiiii");
+  
   const paths = data.map((path) => {
     let id = path.teacher_id;
     return {
@@ -28,12 +28,12 @@ export const getStaticProps = async (context) => {
   const teacher_id = context.params.id;
   console.log(teacher_id);
   const teacher = await fetch(
-    `http://localhost:4200/teacher/oneUser/${teacher_id}`
+    `${process.env.NEXT_PUBLIC_SERVER}/teacher/oneUser/${teacher_id}`
   );
   let data = await teacher.json();
   let id = context.params.id;
   const posts = await fetch(
-    `http://localhost:4200/teacher/all/posts/${teacher_id}`
+    `${process.env.NEXT_PUBLIC_SERVER}/teacher/all/posts/${teacher_id}`
   );
   let blogs = await posts.json();
   // console.log(blogs, "blogs here ");
@@ -250,21 +250,20 @@ const Details = ({ data, blogs, teacherId }) => {
               className=" bg-gray-100 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
             >
               <div className="text-center relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
+              
                 <div className=" text-center border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                  {/*header*/}
+             
                   <div className=" text-center font-medium text-2xl p-5 border-b border-solid border-blueGray-200 rounded-t">
                     Your feedback is valuable
                   </div>
-                  {/*body*/}
+               
                   <div className="relative p-2 flex-auto"></div>
                   <input
                     className="my-4 text-blueGray-500 text-lg leading-relaxed invisible"
                     name="user_email"
                     value={data.email}
                   />
-                  {/* {data.email} */}
-
+          
                   <textarea
                     placeholder="type here"
                     className="border p-2 "
@@ -276,7 +275,6 @@ const Details = ({ data, blogs, teacherId }) => {
                     value={data.userName}
                   />
 
-                  {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                     <button
                       className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -285,15 +283,7 @@ const Details = ({ data, blogs, teacherId }) => {
                     >
                       Cancel
                     </button>
-                    {/* <button
-                      type="submit"
-                      type="button"
-                      onClick={(e) => {
-                        sendEmail(e);
-                      }}
-                    >
-                      Send E-mail
-                    </button> */}
+                   
                     <input
                       type="submit"
                       className="bg-emerald-500 text-black active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -306,88 +296,14 @@ const Details = ({ data, blogs, teacherId }) => {
           </>
         ) : null}
 
-        {/* <div className="absolute top-0 right-0 h-12 w-18 p-4">
-          <button className="js-change-theme focus:outline-none">🌙</button>
-        </div> */}
+       
       </div>
 
-      {/* posts for now it's just one and later it'll be a map */}
-      {/* {blogs &&
-        blogs.map((blog, index) => {
-          // console.log(blog)
-          return (
-            <div
-              key={index}
-              className=" flex  max-w-4xl my-10 bg-gray-100 shadow-md rounded-lg overflow-hidden mx-auto"
-            >
-              <div className=" grid-cols-3 min-w-full flex justify-between ">
-                <div className="text-gray-400 font-medium text-sm mb-6 mt-6 mx-3 px-2 min-h-full max-w-lg">
-                  <Image
-                    className="rounded justify-center"
-                    alt="Description"
-                    src={blog.Image}
-                    height={100}
-                    width={250}
-                  />
-                </div>
-
-                <div className=" relative pl-4 w-80">
-                  <header className="border-b border-grey-400">
-                    <a
-                      href="#"
-                      className=" cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
-                    >
-                      <Image
-                        // src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-                        className="h-16 w-16 rounded-full object-cover"
-                        alt="user"
-                        src={data.image}
-                        height={100}
-                        width={200}
-                      />
-                      <p className="block ml-2 font-bold">{data.userName}</p>
-                    </a>
-                    <p className="text-xs text-right text-gray-500 ">
-                      {moment(blog.createdAt).fromNow()}
-                    </p>
-                  </header>
-                  <div>
-                    <div className="pt-1 ">
-                      <div className="text-sm mb-2 flex  flex-start items-center">
-                        <p className="font-bold ml-2">
-                          <span className="text-gray-700 font-medium text-2xl ml-3">
-                            {blog.title}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-sm mb-2 min-h-full flex flex-start items-center">
-                      <p className="font-bold ml-2">
-                        <span className="text-gray-700 mx-auto font-medium ml-1">
-                          {blog.body}{" "}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex place-content-end justify-between md:gap-8 gap-4 pr-4 pt-8 pb-4">
-                    <button className="w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2">
-                      button 1
-                    </button>
-                    <button className="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2">
-                      button 2
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })} */}
-      {/*posts ends here */}
+      
     </div>
   );
 };
 
 export default Details;
 
-// {moment(oneBlog.createdAt).fromNow()}
+

@@ -5,14 +5,14 @@ import { HiArrowCircleRight } from "react-icons/hi";
 import ReactStars from "react-rating-stars-component";
 
 export async function getStaticProps() {
-  const response = await fetch("http://localhost:4200/admin/freeCourse/all");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/freeCourse/all`);
   const dataOne = await response.json();
   const data = dataOne.slice(0, 2);
-  const student = await fetch("http://localhost:4200/admin/students/all");
+  const student = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/students/all`);
   const students = await student.json();
-  const teacher = await fetch("http://localhost:4200/admin/all/teacher");
+  const teacher = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/all/teacher`);
   const teacherList = await teacher.json();
-  const post = await fetch("http://localhost:4200/admin/post/all");
+  const post = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/post/all`);
   const postsOne = await post.json();
   const posts = postsOne.slice(0, 2);
 

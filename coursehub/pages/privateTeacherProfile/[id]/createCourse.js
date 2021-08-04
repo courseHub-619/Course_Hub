@@ -4,7 +4,7 @@ import { storage } from "../../../firebase";
 import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
-  const response = await fetch("http://localhost:4200/admin/teacher/all");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/teacher/all`);
   const data = await response.json();
   const paths = data.map((teacher) => {
     let id = teacher.teacher_id;
@@ -80,7 +80,7 @@ const Course = ({ stdId }) => {
     console.log(typeof postDetails.teacher_id);
 
     const sendPost = await axios
-      .post(`http://localhost:4200/teacher/post`, {
+      .post(`${process.env.NEXT_PUBLIC_SERVER}/teacher/post`, {
         body: postDetails,
       })
       .then((res) => {

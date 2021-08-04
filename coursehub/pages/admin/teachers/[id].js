@@ -4,7 +4,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 
 export const getStaticPaths = async () => {
-    const response = await fetch('http://localhost:4200/admin/teacher/all');
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/teacher/all`);
     const data = await response.json();
     const paths = data.map((teacher) => {
         let id = teacher.teacher_id;
@@ -22,7 +22,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
 
     const teacher_id = context.params.id;
-    const teacher = await fetch(`http://localhost:4200/admin/teacher/one/${teacher_id}`);
+    const teacher = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/teacher/one/${teacher_id}`);
     const TeacherProfile = await teacher.json();
 
     return {

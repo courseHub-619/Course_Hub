@@ -1,14 +1,15 @@
 import Card from "@material-ui/core/Card";
 import Image from "next/image";
 import Link from "next/link";
-import { Carousel } from "react-responsive-carousel";
-import { HiArrowCircleRight } from "react-icons/hi";
-import ReactStars from "react-rating-stars-component";
 
 export async function getStaticProps() {
-  const response = await fetch("http://localhost:4200/admin/freeCourse/all");
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/admin/freeCourse/all`
+  );
   const data = await response.json();
-  const teacher = await fetch("http://localhost:4200/admin/all/teacher");
+  const teacher = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}admin/all/teacher`
+  );
   const teacherList = await teacher.json();
   return {
     props: {

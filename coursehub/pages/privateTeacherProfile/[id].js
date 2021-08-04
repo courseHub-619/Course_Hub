@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 export const getStaticPaths = async () => {
-  const response = await fetch("http://localhost:4200/admin/teacher/all");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/teacher/all`);
   const data = await response.json();
   const paths = data.map((teacher) => {
     let id = teacher.teacher_id;
@@ -23,16 +23,16 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   const teacher_id = context.params.id;
   const teacher = await fetch(
-    `http://localhost:4200/admin/teacher/one/${teacher_id}`
+    `${process.env.NEXT_PUBLIC_SERVER}/admin/teacher/one/${teacher_id}`
   );
 
   const days = await fetch(
-    `http://localhost:4200/profile/teacher/week/${teacher_id}`
+    `${process.env.NEXT_PUBLIC_SERVER}/profile/teacher/week/${teacher_id}`
   );
   const AvDays = await days.json();
 
   const sessions = await fetch(
-    `http://localhost:4200/profile/teacher/session/${teacher_id}`
+    `${process.env.NEXT_PUBLIC_SERVER}/profile/teacher/session/${teacher_id}`
   );
   const AvSession = await sessions.json();
 

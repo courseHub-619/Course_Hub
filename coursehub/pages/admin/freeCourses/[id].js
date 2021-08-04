@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 export const getStaticPaths = async () => {
-  const response = await fetch("http://localhost:4200/admin/freecourse/all");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/freecourse/all`);
   const data = await response.json();
   const paths = data.map((course) => {
     let id = course.freeCourse_id;
@@ -23,19 +23,19 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const id = context.params.id;
-  const res = await fetch(`http://localhost:4200/admin/freecourse/all/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/freecourse/all/${id}`);
   const data = await res.json();
 
   const teacher_id = context.params.id;
   const teacher = await fetch(
-    `http://localhost:4200/admin/freecourse/teacher/${id}`
+    `${process.env.NEXT_PUBLIC_SERVER}/admin/freecourse/teacher/${id}`
   );
   const TeacherName = await teacher.json();
 
   const att_id = context.params.id;
   console.log(att_id, "attachement id");
   const response = await fetch(
-    `http://localhost:4200/admin/freecourse/attachement/${att_id}`
+    `${process.env.NEXT_PUBLIC_SERVER}/admin/freecourse/attachement/${att_id}`
   );
   const attachement = await response.json();
 
@@ -56,7 +56,7 @@ const Course = ({ course, attachement, teacher }) => {
   const Update = () => {
     axios
       .put(
-        `http://localhost:4200/admin/freeCourse/update/${course.freeCourse_id}`
+        `${process.env.NEXT_PUBLIC_SERVER}/admin/freeCourse/update/${course.freeCourse_id}`
       )
       .then((result) => {
         console.log(result);
@@ -67,7 +67,7 @@ const Course = ({ course, attachement, teacher }) => {
   const Delete = () => {
     axios
       .delete(
-        `http://localhost:4200/admin/freeCourse/delete/${course.freeCourse_id}`
+        `${process.env.NEXT_PUBLIC_SERVER}/admin/freeCourse/delete/${course.freeCourse_id}`
       )
       .then((result) => {
         console.log(result);

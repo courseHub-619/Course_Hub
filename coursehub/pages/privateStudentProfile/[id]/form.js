@@ -7,7 +7,7 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 
 export const getStaticPaths = async () => {
-  const response = await fetch("http://localhost:4200/admin/students/all");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/admin/students/all`);
   const data = await response.json();
   const paths = data.map((student) => {
     let id = student.student_id;
@@ -41,7 +41,7 @@ const StarRating = ({ totalStars, stdId }) => {
   // const sendFeedback = async () => {
   //   console.log(starsSelected, comment);
   //   const feedback = await axios
-  //     .put(`http://localhost:4200/teacher/form/feedback/${Sid}`, {
+  //     .put(`${process.env.NEXT_PUBLIC_SERVER}/teacher/form/feedback/${Sid}`, {
   //       body: {
   //         student_id: Sid,
   //         average: starsSelected,
@@ -55,7 +55,7 @@ const StarRating = ({ totalStars, stdId }) => {
   const sendFeedback = async () => {
     console.log(starsSelected, comment);
     const feedback = await axios
-      .post(`http://localhost:4200/profile/student/form/feedback`, {
+      .post(`${process.env.NEXT_PUBLIC_SERVER}/profile/student/form/feedback`, {
         Sid,
         starsSelected,
         comment,
