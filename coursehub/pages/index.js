@@ -9,6 +9,8 @@ import ReactCardFlip from "react-card-flip";
 import Link from "next/link";
 import ReactStars from "react-rating-stars-component";
 
+require("dotenv").config();
+
 export async function getStaticProps() {
   const student = await fetch("http://localhost:4200/admin/students/all");
   const students = await student.json();
@@ -27,30 +29,32 @@ export async function getStaticProps() {
 export default function Home({ students, form }) {
   console.log(students, form);
 
-  function randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
-  const mid = randomIntFromInterval(0, form.length);
+  console.log(process.env.server, "processsss");
 
   const [flip1, setflip1] = useState(false);
   const [flip2, setflip2] = useState(false);
   const [flip3, setflip3] = useState(false);
 
-  const [render, setrender] = useState(true);
-  const [noRender, setnoRender] = useState(false);
+  const [render, setrender] = useState(false);
+  const [noRender, setnoRender] = useState(true);
+  const [renderOne, setrenderOne] = useState(false);
 
   function handleClick(e, func, val) {
     e.preventDefault();
     func(!val);
   }
-  // function handleFeedback() {
-  //   if (students.length >= 3) {
-  //     setnoRender(false);
-  //     setrender(true);
-  //   }
-  // }
-  // handleFeedback();
+  function handleFeedback() {
+    if (students && renderOne === false) {
+      setrenderOne(true);
+      if (students.length >= 3) {
+        setnoRender(false);
+        setrender(true);
+        return;
+      }
+    }
+    return;
+  }
+  handleFeedback();
 
   return (
     <>
@@ -111,12 +115,12 @@ export default function Home({ students, form }) {
               Join our community now!{" "}
             </p>
             <div className="text-center">
-              <Link href="/posts">
+              <Link href="/freeCourses">
                 <button
                   style={{ backgroundColor: "#1B4D70" }}
                   className=" text-white text-2xl  font-bold py-2 px-4 rounded"
                 >
-                  Check courses
+                  Check free courses
                 </button>
               </Link>
             </div>
