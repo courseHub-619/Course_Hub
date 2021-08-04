@@ -9,6 +9,8 @@ import ReactCardFlip from "react-card-flip";
 import Link from "next/link";
 import ReactStars from "react-rating-stars-component";
 
+require("dotenv").config();
+
 export async function getStaticProps() {
   const student = await fetch("http://localhost:4200/admin/students/all");
   const students = await student.json();
@@ -26,6 +28,8 @@ export async function getStaticProps() {
 
 export default function Home({ students, form }) {
   console.log(students, form);
+
+  console.log(process.env.server, "processsss");
 
   const [flip1, setflip1] = useState(false);
   const [flip2, setflip2] = useState(false);
