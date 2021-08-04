@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import React from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -197,7 +199,7 @@ const DrawerPage = (props) => {
                   <span class="ml-2">profile</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -214,32 +216,12 @@ const DrawerPage = (props) => {
                     />
                   </svg>
                 </span>
-                <a href="/">
-                  <span class="ml-2">Homepage</span>
-                </a>
+                <Link href="/">
+                  <span className="ml-2">Homepage</span>
+                </Link>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                </span>
-                <a href={`/posts`}>
-                  <span class="ml-2">Courses</span>
-                </a>
-              </li>
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+
+              <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -259,10 +241,10 @@ const DrawerPage = (props) => {
                   </svg>
                 </span>
                 <a href={`/freeCourses`}>
-                  <span class="ml-2">Free Courses</span>
+                  <span className="ml-2">Free Courses</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -280,10 +262,10 @@ const DrawerPage = (props) => {
                   </svg>
                 </span>
                 <a href={`/videoChat`}>
-                  <span class="ml-2">Chat room</span>
+                  <span className="ml-2">Chat room</span>
                 </a>
               </li>
-              <li class="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
+              <li className="mb-2 px-4 py-4 text-gray-600 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded ">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -301,7 +283,7 @@ const DrawerPage = (props) => {
                   </svg>
                 </span>
                 <a href="#">
-                  <span class="ml-2">About us</span>
+                  <span className="ml-2">About us</span>
                 </a>
               </li>
             </ul>

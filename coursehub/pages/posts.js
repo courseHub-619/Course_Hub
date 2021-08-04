@@ -28,7 +28,7 @@ const Post = ({ teachers, blogs }) => {
               >
                 <div className=" grid-cols-3 min-w-full flex justify-between ">
                   <div className="text-gray-400  font-medium text-sm mb-6 mt-6 mx-3 px-2 min-h-full max-w-lg">
-                    <img
+                    <Image
                       className="rounded object-cover "
                       // src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
                       // src="https://www.publicbooks.org/wp-content/uploads/2017/01/book-e1484158615982.jpg"
@@ -36,6 +36,8 @@ const Post = ({ teachers, blogs }) => {
                       // src="https://img.freepik.com/free-psd/book-cover-mockup_125540-572.jpg?size=626&ext=jpg&ga=GA1.2.1686120001.1627257600"
                       alt="Description"
                       src={blog.Image}
+                      width={300}
+                      height={150}
                     />
                   </div>
 
@@ -45,11 +47,13 @@ const Post = ({ teachers, blogs }) => {
                         href="#"
                         className=" cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
                       >
-                        <img
-                          src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                        <Image
+                          // src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
                           className="h-16  w-16 rounded-full object-cover"
                           alt="user"
                           src={teacher.image}
+                          height={200}
+                          width={150}
                         />
                         <p className="block ml-2 font-bold">
                           {teacher.userName}

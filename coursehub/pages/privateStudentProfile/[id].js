@@ -38,7 +38,15 @@ const Student = ({ student }) => {
   const router = useRouter();
 
   return (
-    <div className="container mx-auto my-20">
+    <div
+      className=" p-6"
+      style={{
+        backgroundImage:
+          "url(https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8c3R1ZGVudHxlbnwwfDB8MHx8&auto=format&fit=crop&w=800&q=60)",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+    >
       <div>
         <div className="bg-white relative shadow-xl w-5/6 md:w-4/6  lg:w-3/6 xl:w-2/6 mx-auto">
           <div className="flex justify-center">
@@ -88,18 +96,25 @@ const Student = ({ student }) => {
                   Courses
                 </a>
               </Link>
-              <a
-                href="http://localhost:3000/Payment"
-                className="bg font-bold text-sm text-yellow-600 w-full text-center py-3 hover:bg-yellow-600 hover:text-white hover:shadow-lg"
-              >
-                Recharge wallet
-              </a>
+              <Link href={`/Payment`}>
+                <p className="bg font-bold text-sm text-yellow-600 w-full text-center py-3 hover:bg-yellow-600 hover:text-white hover:shadow-lg">
+                  Recharge wallet
+                </p>
+              </Link>
               <Link href={`/videoChat`}>
                 <a
                   href=""
                   className="bg font-bold text-sm text-gray-600 w-full text-center py-3 hover:bg-gray-600 hover:text-white hover:shadow-lg"
                 >
                   Chat room
+                </a>
+              </Link>
+              <Link href={`/privateStudentProfile/${student.student_id}/form`}>
+                <a
+                  href=""
+                  className="bg font-bold text-sm text-blue-800 w-full text-center py-3 hover:bg-blue-800 hover:text-white hover:shadow-lg"
+                >
+                  Feedback
                 </a>
               </Link>
             </div>

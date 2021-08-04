@@ -7,7 +7,7 @@ const admin = require("../controllers/admin.controller.js");
 
 router.get("/freeCourse/all", admin.getFreeCourses);
 
-router.get("/post/all", admin.getFreeCourses);
+router.get("/post/all", admin.getPosts);
 
 router.get("/all/teacher", admin.getTeachers);
 

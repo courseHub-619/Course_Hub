@@ -31,8 +31,9 @@ export const getStaticProps = async (context) => {
   const attachement = await response.json();
 
   const teacher_id = context.params.id;
+
   const teacher = await fetch(
-    `http://localhost:4200/freecourse/teacher/${teacher_id}`
+    `http://localhost:4200/freecourse/teacher/${data.teacher}`
   );
   const TeacherName = await teacher.json();
 
@@ -48,6 +49,7 @@ export const getStaticProps = async (context) => {
 const course = ({ course, attachement, teacher }) => {
   console.log(attachement);
   // console.log(course.image, "image here")
+  console.log(course, "dataaaaa");
   return (
     <div className="max-w-screen-lg mx-auto">
       <main className="mt-10 p-2">
