@@ -22,12 +22,15 @@ const Footer = () => {
                             <li className="p-1"><a href="">Courses</a></li>
                             <li className="p-1"><a href="">Partners</a></li>
                             <li className="p-1"><a href="">Team</a></li>
+
                         </ul>
                     </div>
                     <div className="p-4">
                         <ul >
                             <li className="p-1"><a href="">Support</a></li>
                             <li className="p-1"> <Link href="/about"><a>About</a></Link></li>
+                            <li className="p-1"> <Link href="/admin/login"><a>Admin Space</a></Link></li>
+
                         </ul>
                     </div>
                     <div className="p-4">

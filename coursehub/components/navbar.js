@@ -13,35 +13,65 @@ const Navbar = () => {
     const [token,settoken] = useState("")
     const router = useRouter()
     const [loggedIn,setloggedIn] = useState(true);
+    const [id,setid] = useState(null);
+    const [path,setpath] = useState("");
+    const [courses,setcourses] = useState(null);
+    const [userdata,setuserdata] = useState(null);
+    
     
     useEffect(() => {
-        settoken(localStorage.getItem('token'))
+        settoken(localStorage.getItem('token'));
+        if (token !== "" || localStorage.getItem('token')) {
+            axios.post('http://localhost:4200/api/auth/student/getOneByToken',{
+                token : token || localStorage.getItem('token')
+            })
+            .then(response =>{
+                setcourses(true)
+                setuserdata(response.data)
+                setid(response.data.student_id)
+                setpath("privateStudentProfile")
+            })
+            .catch(()=>{
+                axios.post('http://localhost:4200/api/auth/teacher/getOneByToken',{
+                    token : token || localStorage.getItem('token')
+                })
+                .then(response =>{
+                    setcourses(false)
+                    setuserdata(response.data)
+
+                    setid(response.data.teacher_id)
+                    setpath("privateTeacherProfile")
+    
+                })
+                .catch(err=>{
+                    setcourses(false)
+                    console.log(err);
+                })  
+            })
+
+          
+        }
+
          
-         console.log(token);
     },[])
-const logout = (e) => {
-            
-  setloggedIn(false)
-   
-            localStorage.clear();
-            router.push(`/`)
 
 
-}
-
-    const checkToken = (e)=>{
+    const checkToken = ()=>{
 
    
-        if (!token || token.length<100 && !loggedIn) {
+        if (id !== null) {
             return     ( <div className="p-4">
-            <FaUserCircle size={35} color={"#3881AB"} />
+                <IconButton>
+            <FaUserCircle size={35} color={"#3881AB"} onClick={()=>router.push(`/${path}/${id}`)
+} />
+</IconButton>
         </div>)
         }
-        else if (token.length>100 && loggedIn){
+        else if (id ===null){
             return (<div>
-                <IconButton onClick={logout}>
-                    logout
-                    <ExitToAppIcon/>
+                <IconButton onClick={()=>router.push(`/Auth`)}>
+                    LOGIN
+              
                 </IconButton>
             </div>)
 
@@ -53,7 +83,9 @@ const logout = (e) => {
     return (
         <div className="flex justify-between bg-gray-100">
             <div className="p-4 text-center">
-                <Sidebar />
+            <IconButton>
+                <Sidebar id = {id} path={path} courses ={courses}/>
+                </IconButton>
             </div>
             <div>
             <Image src="/logo.png" width={100} height={60} alt={""} />

@@ -37,21 +37,28 @@ export default function Home({ students, form }) {
   const [flip2, setflip2] = useState(false);
   const [flip3, setflip3] = useState(false);
 
-  const [render, setrender] = useState(true);
-  const [noRender, setnoRender] = useState(false);
+  const [render, setrender] = useState(false);
+  const [noRender, setnoRender] = useState(true);
+  const [renderOne, setrenderOne] = useState(false);
+
 
   function handleClick(e, func, val) {
     e.preventDefault();
     func(!val);
   }
-  // function handleFeedback() {
-  //   if (students.length >= 3) {
-  //     setnoRender(false);
-  //     setrender(true);
-  //   }
-  // }
-  // handleFeedback();
 
+  function handleFeedback() {
+    if (students && renderOne === false) {
+      setrenderOne(true);
+      if (students.length >= 3) {
+        setnoRender(false);
+        setrender(true);
+        return;
+      }
+    }
+    return;
+  }
+  handleFeedback();
   return (
     <>
       <Head>

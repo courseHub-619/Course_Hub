@@ -9,9 +9,8 @@ var router = require("express").Router();
     router.post("/logIn",  users.logIn);
 
 
-    // router.post("/token",users.token);
+    router.post("/getOneByToken",users.getUserByToken);
     router.get('/trying',users.authenticateToken,users.trying);
-    // router.delete('/logout',users.logout);
 
 
     

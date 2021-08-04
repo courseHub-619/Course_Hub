@@ -41,6 +41,8 @@ router.put("/post/update/:id", admin.updatePost);
 
 router.delete("/post/delete/:id", admin.deletePost);
 
+router.post("/login", admin.logIn);
+
 
 
 module.exports = router;
