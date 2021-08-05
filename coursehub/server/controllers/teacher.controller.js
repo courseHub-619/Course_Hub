@@ -89,3 +89,39 @@ exports.getTeachers = async (req, res) => {
   let teachers = await prisma.teacher.findMany({});
   return res.status(201).send(teachers);
 };
+
+exports.updateDays = async (req, res) => {
+  // console.log(req.params.id, req.body);
+  let days = await prisma.weekDay.update({
+    where: {
+      teacher_id: Number(req.params.id),
+    },
+    data: {
+      monday: req.body.monday,
+      tuesday: req.body.tuesday,
+      wednesday: req.body.wednesday,
+      thursday: req.body.thursday,
+      friday: req.body.friday,
+      saturday: req.body.saturday,
+      sunday: req.body.sunday,
+    },
+  });
+};
+
+exports.updateSessions = async (req, res) => {
+  console.log(req.params.id, req.body);
+
+  let sessions = await prisma.sessions.update({
+    where: {
+      teacher_id: Number(req.params.id),
+    },
+    data: {
+      one: req.body.one,
+      two: req.body.two,
+      three: req.body.three,
+      four: req.body.four,
+      five: req.body.five,
+      six: req.body.six,
+    },
+  });
+};

@@ -20,4 +20,8 @@ router.get(`/all/blogs`, teacher.getAllPosts); //
 
 router.get(`/all/teachers`, teacher.getTeachers); //
 
+router.post(`/days/:id`, teacher.updateDays);
+
+router.post(`/sessions/:id`, teacher.updateSessions);
+
 module.exports = router;
