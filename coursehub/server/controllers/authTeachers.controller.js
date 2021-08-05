@@ -262,3 +262,20 @@ const generateAccessToken = (user) => {
 // refreshTokens = refreshTokens.filter(token => token !== req.body.token)
 // res.sendStatus(204)
 // }
+
+
+
+
+exports.getUserByToken = (req,res)=>{
+  let {token} = req.body;
+teachers.findUnique({where : {
+  token : token
+}})
+.then(response => {
+  console.log(response,"we found the user from the token");
+  res.send(response)
+})
+.catch(err => {
+  console.log(err, "something werong can't find user with this token");
+})
+}

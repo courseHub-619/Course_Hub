@@ -2,9 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { currentUserId } from "../../store/actions/profileAction";
+
+
 
 export default function LoginForm() {
   const router = useRouter();

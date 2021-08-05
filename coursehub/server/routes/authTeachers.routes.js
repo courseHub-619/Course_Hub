@@ -9,6 +9,8 @@ var router = require("express").Router();
     router.post("/signUp", users.signUp);
     router.post("/logIn",  users.logIn);
     router.get('/trying',users.authenticateToken,users.trying);
+    router.post("/getOneByToken",users.getUserByToken);
+
   
 
 module.exports = router;
